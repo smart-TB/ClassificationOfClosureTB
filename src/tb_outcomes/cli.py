@@ -658,6 +658,70 @@ def run_temporal_holdout_cmd() -> None:
     typer.echo(f"[temporal] {n_ok}/{len(result.status_rows)} pares ok -> {out}")
 
 
+GITHUB_URL = "https://github.com/smart-TB/ClassificationOfClosureTB"
+DEPOSIT_CREATORS = [
+    "Abade, Andre da Silva", "Arcêncio, Ricardo Alexandre", "Tavares, Reginaldo Bazon Vaz",
+    "Alves, Yan Mathias", "Campos, Marco Donisete de", "Borges, Maraísa Delmut",
+    "Yamamura, Mellina", "Lima, Jaqueline Costa", "Scholze, Alessandro Rolim",
+    "Diaz-Quijano, Fredi Alexander", "Alves, Josilene Dalia",
+]
+
+
+@app.command("build-deposit")
+def build_deposit_cmd(
+    out: Path = typer.Option(Path("deposit"), "--out", help="diretório de saída"),
+    embargo: str = typer.Option(..., "--embargo",
+                                help="data de abertura do registro (AAAA-MM-DD)"),
+    version: str = typer.Option("1.0.0", "--version", help="versão do depósito"),
+    skip_restricted: bool = typer.Option(
+        False, "--skip-restricted", help="monta só o registro aberto (mais rápido)"),
+) -> None:
+    """Monta a árvore do depósito com DOI (§8, passo 7), em dois registros.
+
+    `open/` leva resultados e artefatos de auditoria, sem nenhuma linha por paciente, sob
+    embargo até a data informada. `restricted/` leva as predições e o SHAP por paciente,
+    cujo regime de acesso é decisão do PI. O microdado harmonizado não entra em nenhum dos
+    dois: a fonte é pública e o caminho é reproduzir a extração.
+    """
+    import json
+    from datetime import date
+
+    from tb_outcomes.deposit import build, zenodo_metadata
+
+    try:
+        date.fromisoformat(embargo)
+    except ValueError:
+        raise typer.BadParameter(f"--embargo deve ser AAAA-MM-DD, recebido {embargo!r}")
+
+    git = prov.git_state()
+    if not git.get("available"):
+        typer.echo("AVISO: sem git — o depósito não fica amarrado a uma versão do código.")
+    elif git.get("dirty"):
+        typer.echo("AVISO: árvore de trabalho suja; o commit registrado pode não "
+                   "corresponder ao que gerou os artefatos.")
+
+    resumo = build(Path("."), out, embargo, git, include_restricted=not skip_restricted)
+
+    for nome, restrito in (("open", False), ("restricted", True)):
+        base = Path(out) / nome
+        if not base.exists():
+            continue
+        meta = zenodo_metadata(embargo, version, GITHUB_URL, DEPOSIT_CREATORS,
+                               restricted=restrito)
+        with (base / ".zenodo.json").open("w", encoding="utf-8") as fh:
+            json.dump(meta, fh, ensure_ascii=False, indent=2)
+
+    for nome in ("open", "restricted"):
+        r = resumo[nome]
+        if r["n_arquivos"]:
+            typer.echo(f"[deposit] {nome}: {r['n_arquivos']} arquivos, "
+                       f"{r['bytes'] / 1048576:.1f} MB")
+        if r["faltando"]:
+            typer.echo(f"[deposit] {nome}: FALTANDO {len(r['faltando'])} obrigatório(s): "
+                       f"{r['faltando']}")
+    typer.echo(f"[deposit] embargo até {embargo} | {out}/")
+
+
 @app.command("compute-cost-report")
 def compute_cost_report_cmd() -> None:
     """Tempo e custo computacional por modelo (§6) + manifesto de execução com sementes,
