@@ -30,20 +30,37 @@ def test_registro_aberto_nao_referencia_material_por_paciente():
 
 def test_o_restrito_contem_exatamente_o_que_e_por_paciente():
     origens = [o for _, o, _ in RESTRICTED_LAYOUT]
-    assert any("oof_predictions" in o for o in origens)
     assert any("shap_values" in o for o in origens)
     assert any("outer_folds" in o for o in origens)
     # o microdado harmonizado não entra em NENHUM registro: a fonte é pública
     assert not any("harmonized" in o or "sinnan" in o for o in origens)
+    # o OOF NÃO é copiado inteiro: é recortado ao par final (ver extract_final_oof)
+    assert not any("oof_predictions" in o for o in origens)
 
 
 def _projeto_falso(tmp_path):
     root = tmp_path / "proj"
-    for rel in ["data/benchmark_metrics.csv", "data/oof_predictions.parquet",
-                "data/shap_values.parquet", "data/outer_folds.parquet"]:
+    for rel in ["data/shap_values.parquet", "data/outer_folds.parquet"]:
         p = root / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text("x,y\n1,2\n", encoding="utf-8")
+
+    # leaderboard mínimo: 'campeao' vence 'perdedor' na métrica global agregada
+    linhas = []
+    for modelo, valor in (("campeao", 0.60), ("perdedor", 0.30)):
+        linhas.append({"kind": "aggregate", "model": modelo, "strategy": "cost",
+                       "metric": "f1_macro", "class": "__global__", "mean": valor})
+    (root / "data").mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(linhas).to_csv(root / "data/benchmark_metrics.csv", index=False)
+
+    # OOF com DOIS pares: só o do campeão pode ser depositado
+    oof = pd.concat([
+        pd.DataFrame({"record_pos": range(5), "model": m, "strategy": "cost",
+                      "y_true": 0, "proba_0": 0.5})
+        for m in ("campeao", "perdedor")
+    ], ignore_index=True)
+    oof.to_parquet(root / "data/oof_predictions.parquet", index=False)
+
     (root / "artifacts/figures/data").mkdir(parents=True, exist_ok=True)
     (root / "artifacts/figures/01_teste.png").write_bytes(b"\x89PNG fake")
     (root / "artifacts/figures/data/01_teste.csv").write_text("a\n1\n", encoding="utf-8")
@@ -52,13 +69,40 @@ def _projeto_falso(tmp_path):
     return root
 
 
+def test_deposita_apenas_o_par_do_modelo_final(tmp_path):
+    """O arquivo de origem tem os 70 pares do benchmark; só o campeão vai ao depósito."""
+    root = _projeto_falso(tmp_path)
+    out = tmp_path / "deposito"
+    r = build(root, out, "2027-06-01", {})
+
+    d = pd.read_parquet(out / "restricted" / "oof" / "final_model.parquet")
+    assert set(d["model"].unique()) == {"campeao"}
+    assert "perdedor" not in set(d["model"])
+    assert r["restricted"]["modelo_final"]["model"] == "campeao"
+    # e o arquivo com os 70 pares NÃO é copiado inteiro
+    assert not (out / "restricted" / "oof" / "main_k50.parquet").exists()
+
+
+def test_o_modelo_final_vem_do_leaderboard_nao_do_codigo(tmp_path):
+    """Trocar quem vence no artefato tem de trocar o que é depositado."""
+    from tb_outcomes.deposit import final_model_pair
+
+    root = _projeto_falso(tmp_path)
+    assert final_model_pair(root)[0] == "campeao"
+
+    invertido = pd.read_csv(root / "data/benchmark_metrics.csv")
+    invertido.loc[invertido.model == "perdedor", "mean"] = 0.99
+    invertido.to_csv(root / "data/benchmark_metrics.csv", index=False)
+    assert final_model_pair(root)[0] == "perdedor"
+
+
 def test_build_separa_os_dois_registros(tmp_path):
     root = _projeto_falso(tmp_path)
     out = tmp_path / "deposito"
     r = build(root, out, "2027-06-01", {"available": True, "commit": "abc123"})
 
     assert (out / "open" / "results/main/benchmark_metrics.csv").exists()
-    assert (out / "restricted" / "oof/main_k50.parquet").exists()
+    assert (out / "restricted" / "oof/final_model.parquet").exists()
     # nada por paciente do lado aberto
     abertos = [p.name for p in (out / "open").rglob("*") if p.is_file()]
     assert not any(any(x in n for x in PADROES_PACIENTE) for n in abertos)

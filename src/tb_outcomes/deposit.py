@@ -97,17 +97,41 @@ OPEN_TREES: list[tuple[str, str, str, bool]] = [
     ("protocol/configs", "configs", "*.yaml", True),
 ]
 
+# Material por paciente. Decisão do PI (2026-08-31): depositar SÓ o OOF do modelo final,
+# não os 70 pares do benchmark. O par campeão é o que sustenta equidade, utilidade,
+# calibração e SHAP — é o que um revisor precisa para verificar no nível do indivíduo. Os
+# demais pares são reproduzíveis pelo código, e as métricas deles já estão no registro
+# aberto. Efeito: 1.667 MB -> ~31 MB.
 RESTRICTED_LAYOUT: list[tuple[str, str, bool]] = [
-    ("oof/main_k50.parquet", "data/oof_predictions.parquet", True),
-    ("oof/sweep_k27.parquet", "data/sweep/k27/oof_predictions.parquet", False),
-    ("oof/sweep_k75.parquet", "data/sweep/k75/oof_predictions.parquet", False),
-    ("oof/temporal_2024.parquet", "data/temporal/oof_predictions.parquet", False),
-    ("oof/ablation_individual.parquet", "data/ablation/individual/oof_predictions.parquet", False),
-    ("oof/ablation_municipal.parquet", "data/ablation/municipal/oof_predictions.parquet", False),
-    ("oof/clinical_baseline.parquet", "data/clinical_baseline/oof_predictions.parquet", False),
     ("shap/shap_values.parquet", "data/shap_values.parquet", True),
     ("folds/outer_folds.parquet", "data/outer_folds.parquet", True),
 ]
+
+
+def final_model_pair(root: Path) -> tuple[str, str]:
+    """Modelo final = topo do leaderboard k=50, lido do artefato, não fixado no código."""
+    from tb_outcomes.robustness import leaderboard
+
+    lb = leaderboard(pd.read_csv(root / "data" / "benchmark_metrics.csv"))
+    topo = lb.sort_values("f1_macro", ascending=False).iloc[0]
+    return str(topo["model"]), str(topo["best_strategy"])
+
+
+def extract_final_oof(root: Path, destino: Path) -> dict | None:
+    """Recorta o OOF do par campeão do arquivo de 70 pares."""
+    origem = root / "data" / "oof_predictions.parquet"
+    # sem o OOF ou sem o leaderboard não há como saber QUAL par é o final; ausência é
+    # reportada como artefato faltando, não improvisada.
+    if not origem.exists() or not (root / "data" / "benchmark_metrics.csv").exists():
+        return None
+    model, strategy = final_model_pair(root)
+    d = pd.read_parquet(origem, filters=[("model", "==", model),
+                                         ("strategy", "==", strategy)])
+    if d.empty:
+        raise ValueError(f"o OOF não contém o par final {model} × {strategy}")
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    d.to_parquet(destino, index=False)
+    return {"model": model, "strategy": strategy, "linhas": int(len(d))}
 
 
 def _sha256(path: Path) -> str:
@@ -159,8 +183,20 @@ def build(root: Path, out: Path, embargo_date: str, git_state: dict,
 
     aberto, faltando_aberto = _copiar(root, out / "open", OPEN_LAYOUT, OPEN_TREES)
     restrito, faltando_restrito = ([], [])
+    par_final = None
     if include_restricted:
         restrito, faltando_restrito = _copiar(root, out / "restricted", RESTRICTED_LAYOUT)
+        # o OOF do modelo final é RECORTADO, não copiado: o arquivo de origem tem os 70
+        # pares do benchmark e só o par campeão é depositado.
+        alvo = out / "restricted" / "oof" / "final_model.parquet"
+        par_final = extract_final_oof(root, alvo)
+        if par_final is None:
+            faltando_restrito.append("data/oof_predictions.parquet")
+        else:
+            restrito.append({"arquivo": "oof/final_model.parquet",
+                             "origem": (f"data/oof_predictions.parquet "
+                                        f"[{par_final['model']} × {par_final['strategy']}]"),
+                             "bytes": alvo.stat().st_size, "sha256": _sha256(alvo)})
 
     for nome, registros in (("open", aberto), ("restricted", restrito)):
         if not registros:
@@ -182,7 +218,11 @@ def build(root: Path, out: Path, embargo_date: str, git_state: dict,
                  "faltando": faltando_aberto},
         "restricted": {"n_arquivos": len(restrito),
                        "bytes": sum(r["bytes"] for r in restrito),
-                       "faltando": faltando_restrito},
+                       "faltando": faltando_restrito,
+                       "modelo_final": par_final,
+                       "escopo": ("apenas o OOF do modelo final; os demais pares do "
+                                  "benchmark são reproduzíveis pelo código e suas "
+                                  "métricas estão no registro aberto")},
     }
     with (out / "DEPOSIT_SUMMARY.json").open("w", encoding="utf-8") as fh:
         json.dump(resumo, fh, ensure_ascii=False, indent=2)

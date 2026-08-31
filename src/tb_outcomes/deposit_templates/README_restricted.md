@@ -26,15 +26,18 @@ a theoretical one. Access requests are reviewed by the depositor.
 
 ### `oof/`
 
-Out-of-fold predictions, one file per analytical arm: the main spatial benchmark at
-k = 50, the granularity sweep at k = 27 and 75, the temporal holdout on 2024, the two
-territorial ablation arms, and the simple clinical baseline.
-
-Each row is one notification in the fold where it was held out. Columns: `record_pos`,
-`outer_fold`, `model`, `strategy`, `y_true`, the decisions under both rules
+Out-of-fold predictions for the **final model only** — the pair at the top of the primary
+leaderboard. One row per notification, in the fold where it was held out. Columns:
+`record_pos`, `outer_fold`, `model`, `strategy`, `y_true`, the decisions under both rules
 (`pred_argmax`, `pred_policy`), and per class the raw score and the calibrated probability.
 
-Every metric in the open record can be recomputed from these files.
+This is the file behind the equity, calibration, programmatic-utility and SHAP analyses, so
+each of those can be recomputed and checked at the individual level.
+
+The other model–strategy pairs of the benchmark are deliberately **not** deposited. Their
+aggregate metrics are in the open record, and the predictions themselves are reproducible
+from the code and the public sources — depositing all seventy would multiply the exposure
+of patient-level data more than fiftyfold for no added verifiability.
 
 ### `shap/`
 
