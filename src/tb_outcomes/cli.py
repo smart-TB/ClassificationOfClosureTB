@@ -5,6 +5,7 @@ os tipos dos parâmetros por introspecção em tempo de execução, e anotaçõe
 adiadas (strings) fazem `--config` deixar de receber valor.
 """
 import logging
+import os
 from pathlib import Path
 
 import pandas as pd
@@ -655,6 +656,96 @@ def run_temporal_holdout_cmd() -> None:
     write_benchmark_artifacts(result, out)
     n_ok = sum(1 for r in result.status_rows if r["status"] == "ok")
     typer.echo(f"[temporal] {n_ok}/{len(result.status_rows)} pares ok -> {out}")
+
+
+@app.command("compute-cost-report")
+def compute_cost_report_cmd() -> None:
+    """Tempo e custo computacional por modelo (§6) + manifesto de execução com sementes,
+    ambiente e hardware. Lê os logs das corridas; não reexecuta nada."""
+    import json
+    import platform
+    import subprocess
+
+    from tb_outcomes.compute_cost import collect, summarize_by_model
+
+    fontes = {
+        "sweep_k27_k75": DATA_DIR / "sweep" / "run-sweep.log",
+        "sweep_backfill_k27_ft": DATA_DIR / "sweep" / "backfill_k27_ft.log",
+        "sweep_backfill_k75": DATA_DIR / "sweep" / "backfill_k75_chain.log",
+        "ablacao_territorial": DATA_DIR / "ablation-run.log",
+        "holdout_temporal": DATA_DIR / "temporal-run.log",
+        "baseline_clinico": DATA_DIR / "clinical-baseline.log",
+    }
+    presentes = {k: v for k, v in fontes.items() if v.exists()}
+    ausentes = sorted(set(fontes) - set(presentes))
+
+    d = collect(presentes)
+    if d.empty:
+        raise typer.BadParameter(f"nenhum log com cronometragem em {list(fontes.values())}")
+    g = summarize_by_model(d)
+
+    p1 = DATA_DIR / "compute_cost_by_pair.csv"
+    p2 = DATA_DIR / "compute_cost_by_model.csv"
+    d.to_csv(p1, index=False)
+    g.to_csv(p2, index=False)
+
+    # manifesto de execução: sementes, ambiente e hardware (§6, R3 #2)
+    cfg = load_config(ANALYSIS)
+    exec_cfg = load_executor_config(EXECUTOR)
+
+    def _versao(mod):
+        try:
+            return __import__(mod).__version__
+        except Exception:  # noqa: BLE001
+            return None
+
+    def _gpus():
+        try:
+            out = subprocess.run(
+                ["nvidia-smi", "--query-gpu=name,memory.total", "--format=csv,noheader"],
+                capture_output=True, text=True, timeout=20)
+            return [x.strip() for x in out.stdout.strip().splitlines() if x.strip()]
+        except Exception:  # noqa: BLE001
+            return []
+
+    manifesto = {
+        "git": prov.git_state(),
+        "sementes": {"python": cfg.seeds.python, "numpy": cfg.seeds.numpy,
+                     "executor_random_state": exec_cfg.random_state,
+                     "modo_deterministico_torch": False,
+                     "nota": ("os modelos clássicos reproduzem sob semente fixa; os DL NÃO "
+                              "são bit-a-bit reprodutíveis — nenhum modo determinístico de "
+                              "framework é ativado")},
+        "ambiente": {
+            "python": platform.python_version(),
+            "so": f"{platform.system()} {platform.release()}",
+            **{m: _versao(m) for m in ("numpy", "pandas", "sklearn", "lightgbm",
+                                       "catboost", "xgboost", "shap", "torch")},
+        },
+        "hardware": {
+            "cpu_threads": os.cpu_count(),
+            "gpus": _gpus(),
+            "nota_openmp": ("um job de treino por vez: o wrapper sklearn do LightGBM ignora "
+                            "OMP_NUM_THREADS e a sobreassinatura degrada fits pequenos em "
+                            "ordens de magnitude"),
+        },
+        "cobertura": {
+            "logs_lidos": {k: str(v) for k, v in presentes.items()},
+            "logs_ausentes": ausentes,
+            "pares_cronometrados": int(len(d)),
+            "horas_totais": round(float(d["segundos"].sum()) / 3600, 2),
+            "limitacao": ("o benchmark principal k=50 rodou antes da instrumentação de log "
+                          "desta sessão e NÃO está coberto; os tempos aqui cobrem sweep, "
+                          "ablação, holdout temporal e baseline clínico"),
+        },
+    }
+    p3 = DATA_DIR / "compute_manifest.json"
+    with p3.open("w", encoding="utf-8") as fh:
+        json.dump(manifesto, fh, ensure_ascii=False, indent=2)
+
+    typer.echo(f"[compute-cost] {len(d)} pares | {manifesto['cobertura']['horas_totais']} h "
+               f"| {p1}, {p2}, {p3}")
+    typer.echo(g.to_string(index=False))
 
 
 @app.command("utility-report")

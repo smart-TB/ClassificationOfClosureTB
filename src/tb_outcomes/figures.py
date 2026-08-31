@@ -7,13 +7,19 @@ laranja #eb6834, violeta #4a3aa7, vermelho #e34948. Cores seguem a ENTIDADE
 """
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
+logger = logging.getLogger("tb_outcomes")
+
 FIG_DIR = Path("artifacts/figures")
 DATA_DIR = Path("data")
+# acompanhamento numérico de cada figura (§6); não confundir com DATA_DIR, que é a
+# fonte de dados das figuras.
+FIG_DATA_DIR = FIG_DIR / "data"
 
 # paleta categórica validada (light surface)
 CAT = ["#2a78d6", "#008300", "#e87ba4", "#eda100", "#1baf7a", "#eb6834", "#4a3aa7", "#e34948"]
@@ -64,9 +70,24 @@ def _titles(ax, title: str, subtitle: str) -> None:
 
 
 def _save(fig, name: str) -> Path:
+    """Salva a figura e, ao lado dela, o CSV com os números que a originaram (§6).
+
+    O acompanhamento numérico é extraído dos artistas do matplotlib, então descreve o que
+    foi de fato desenhado. A extração NUNCA derruba a gravação da figura: se falhar, a
+    figura sai e o erro fica no log.
+    """
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     path = FIG_DIR / f"{name}.png"
     fig.savefig(path, bbox_inches="tight", facecolor="white")
+    try:
+        from tb_outcomes.figure_data import extract_figure
+
+        dados = extract_figure(fig, name)
+        if not dados.empty:
+            FIG_DATA_DIR.mkdir(parents=True, exist_ok=True)
+            dados.to_csv(FIG_DATA_DIR / f"{name}.csv", index=False)
+    except Exception:  # noqa: BLE001 — acompanhamento não pode custar a figura
+        logger.warning("não foi possível extrair os dados da figura %s", name, exc_info=True)
     plt.close(fig)
     return path
 
