@@ -1,0 +1,93 @@
+[tool.poetry]
+packages = [{ include = "tb_outcomes", from = "src" }]
+
+name = "tb-outcomes"
+version = "0.1.0"
+description = "Reanálise auditável do benchmark de desfechos de tuberculose (SINAN-TB + IBGE/IPEA + CNES)"
+authors = ["André Abade <andre.abade@ifmt.edu.br>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+# Python fixado no minor: 3.10.12 é o interpretador em que o pipeline de
+# ingestão foi executado e validado.
+python = ">=3.10,<3.11"
+
+# --- núcleo científico ---
+pandas = "2.1.4"
+numpy = "1.26.2"
+scipy = "1.11.4"
+scikit-learn = "1.4.2"
+statsmodels = "^0.14"
+pyarrow = "14.0.2"
+
+# --- desbalanceamento ---
+imbalanced-learn = "0.14.0"
+
+# --- boosting ---
+xgboost = "2.1.0"
+lightgbm = "4.4.0"
+catboost = "1.2.8"
+
+# --- deep learning tabular ---
+torch = "2.1.2"
+pytorch-lightning = "2.6.5"
+pytorch_tabular = "1.2.0"
+
+# --- explicabilidade ---
+shap = "0.49.1"
+
+# --- espaço/geografia (clusters municipais, projeção métrica, mapas) ---
+geopandas = "1.1.3"
+pyproj = "3.6.1"
+
+# --- busca de hiperparâmetros ---
+optuna = "3.6.1"
+
+# --- figuras ---
+matplotlib = "3.5.1"
+seaborn = "0.13.1"
+
+# --- configuração e CLI ---
+pydantic = "2.11.7"
+pyyaml = "6.0.1"
+# Typer >=0.15 é o primeiro compatível com Click >=8.2, que mudou a assinatura
+# de Parameter.make_metavar() para exigir 'ctx'. Com typer 0.12 + click 8.4 a
+# CLI falha ao registrar as opções.
+typer = ">=0.15,<1.0"
+rich = "13.9.4"
+
+# --- ingestão: dependências do bot_data_SINNAN_IBGE_CNES.py ---
+requests = "2.31.0"
+dbfread = "2.0.7"
+pyreaddbc = "1.2.0"
+beautifulsoup4 = "4.12.2"
+unidecode = "1.3.7"
+lxml = "4.8.0"
+html5lib = "1.1"
+pytorch-tabnet = "^4.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "9.1.1"
+pytest-cov = "^6.0"
+ruff = "^0.8"
+
+[tool.poetry.scripts]
+tb-outcomes = "tb_outcomes.cli:app"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# A raiz do projeto entra no sys.path para que 'tests.fixtures.synthetic' seja
+# importável; o pacote em si vive em src/ e é instalado pelo Poetry.
+pythonpath = ["."]
+markers = [
+    "integration: teste de integração sobre fixture sintética completa",
+    "regression: comparação contra o snapshot histórico",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

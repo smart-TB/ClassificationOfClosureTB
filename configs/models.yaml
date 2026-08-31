@@ -1,0 +1,44 @@
+# Registry declarativo dos modelos. class_weight NUNCA aparece aqui:
+# o desbalanceamento é externo (SP4b). Perfis do SP4a; estratégias do SP4b.
+baselines:
+  majority_class:      {family: baseline,   preprocess_profile: onehot_unscaled, tuning_tier: default_benchmark}
+  stratified_random:   {family: baseline,   preprocess_profile: onehot_unscaled, tuning_tier: default_benchmark}
+  logistic_plain:      {family: linear,     preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+
+models:
+  decision_tree:       {family: tree,       preprocess_profile: onehot_unscaled, tuning_tier: default_benchmark}
+  random_forest:       {family: tree,       preprocess_profile: onehot_unscaled, tuning_tier: tuned_core}
+  extra_trees:         {family: tree,       preprocess_profile: onehot_unscaled, tuning_tier: default_benchmark}
+  gradient_boosting:   {family: boosting,   preprocess_profile: onehot_unscaled, tuning_tier: tuned_core}
+  hist_gradient_boost: {family: boosting,   preprocess_profile: native_categorical, tuning_tier: tuned_core}
+  xgboost:             {family: boosting,   preprocess_profile: native_categorical, tuning_tier: tuned_core}
+  lightgbm:            {family: boosting,   preprocess_profile: native_categorical, tuning_tier: tuned_core}
+  catboost:            {family: boosting,   preprocess_profile: native_categorical, tuning_tier: tuned_core}
+  adaboost:            {family: boosting,   preprocess_profile: onehot_unscaled, tuning_tier: default_benchmark}
+  logistic_regression: {family: linear,     preprocess_profile: onehot_scaled,   tuning_tier: tuned_core}
+  ridge_classifier:    {family: linear,     preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  linear_svc:          {family: svm,        preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  rbf_svm:             {family: svm,        preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  gaussian_nb:         {family: nb,         preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  multinomial_nb:      {family: nb,         preprocess_profile: nonnegative,     tuning_tier: default_benchmark}
+  bernoulli_nb:        {family: nb,         preprocess_profile: binary,          tuning_tier: default_benchmark}
+  complement_nb:       {family: nb,         preprocess_profile: nonnegative,     tuning_tier: default_benchmark}
+  lda:                 {family: discriminant, preprocess_profile: onehot_scaled, tuning_tier: default_benchmark}
+  qda:                 {family: discriminant, preprocess_profile: onehot_scaled, tuning_tier: default_benchmark}
+  knn:                 {family: neighbors,  preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  mlp:                 {family: neural,     preprocess_profile: onehot_scaled,   tuning_tier: default_benchmark}
+  category_embedding:  {family: dl,         preprocess_profile: native_categorical, tuning_tier: default_benchmark}
+  tabnet:              {family: dl,         preprocess_profile: native_categorical, tuning_tier: default_benchmark}
+  tab_transformer:     {family: dl,         preprocess_profile: native_categorical, tuning_tier: tuned_core}
+  ft_transformer:      {family: dl,         preprocess_profile: native_categorical, tuning_tier: tuned_core}
+
+hyperparameters:
+  random_forest:       {n_estimators: [200, 500], max_depth: [null, 10, 20]}
+  gradient_boosting:   {n_estimators: [100, 300], learning_rate: [0.05, 0.1]}
+  hist_gradient_boost: {max_iter: [200, 400], learning_rate: [0.05, 0.1]}
+  xgboost:             {n_estimators: [200, 500], max_depth: [4, 6, 8], learning_rate: [0.05, 0.1]}
+  lightgbm:            {n_estimators: [200, 500], num_leaves: [31, 63], learning_rate: [0.05, 0.1]}
+  catboost:            {iterations: [300, 600], depth: [4, 6, 8]}
+  logistic_regression: {C: [0.1, 1.0, 10.0]}
+  tab_transformer:     {learning_rate: [0.001, 0.0005]}
+  ft_transformer:      {learning_rate: [0.001, 0.0005]}

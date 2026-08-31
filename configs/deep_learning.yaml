@@ -1,0 +1,12 @@
+# Treino DL sob a Opção A (defaults, sem busca). max_epochs e o early stopping são
+# pré-registrados; o split de validação sai do PRÓPRIO treino interno (nunca do EVAL).
+max_epochs: 50
+early_stopping_patience: 8
+validation_split: 0.15
+batch_size: 1024
+seed: 42
+# SP4g: 0 (sem workers de dataloader). Tentamos 4, mas num_workers>0 provoca DEADLOCK de
+# DataLoader com CUDA neste executor (workers forkados após o CUDA já inicializado): travou
+# o ft_transformer na produção k=27 (thread principal em busy-spin, GPU 0%, log congelado
+# ~24min). 0 é o regime do k=50 (rodou os mesmos DL sem hang) e não muda a matemática.
+num_workers: 0

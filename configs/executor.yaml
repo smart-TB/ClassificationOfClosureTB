@@ -1,0 +1,101 @@
+# Executor da validação espacial aninhada (ESPECIFICACAO §1; SP4e).
+# Opção A: benchmark de defaults, sem busca. Grade de 3 estratégias (none fora).
+outcome_schema: sensitive_tb_3class
+strategies: [random_undersampling, random_oversampling, local_cost_sensitive]
+n_outer_folds: 5
+n_inner_folds: 5
+fold_method: binpack        # binpack (principal) | random_group (sensibilidade)
+k: 50                       # k de produção; a sanidade sobrescreve para um valor pequeno
+random_state: 42
+sanity_subsample: 800       # nº de registros na rodada de sanidade (só valida o encanamento)
+# 26 modelos: 3 baselines + 19 famílias sklearn + 4 DL (SP4f).
+# Excluídos a priori (declarar no manuscrito), ambos SVC/liblinear que NÃO escalam sob
+# validação espacial aninhada em ~10^6 registros:
+#   - rbf_svm: SVC-RBF exato, O(n^2)-O(n^3) + kernel denso.
+#   - linear_svc: LinearSVC/liblinear não converge em escala (travou 6,75h; ridge fez o
+#     mesmo tamanho em 8,7min). Papel de margem-linear coberto por logistic_regression/ridge.
+# Ordem do MAIS BARATO ao MAIS CARO: knn (predict pesado) fica por último.
+models:
+  - majority_class
+  - stratified_random
+  - logistic_plain
+  - logistic_regression
+  - ridge_classifier
+  - gaussian_nb
+  - multinomial_nb
+  - bernoulli_nb
+  - complement_nb
+  - lda
+  - qda
+  - decision_tree
+  - adaboost
+  - random_forest
+  - extra_trees
+  - gradient_boosting
+  - hist_gradient_boost
+  - xgboost
+  - lightgbm
+  - catboost
+  - mlp
+  - category_embedding
+  - tabnet
+  - tab_transformer
+  - ft_transformer
+  - knn
+
+# Sweep de granularidade espacial (SP4g): robustez do leaderboard a k.
+# k=50 é o braço de referência (já rodado); o sweep roda só 27 e 75, no conjunto
+# contendor (topo + 2 baselines de piso + âncora linear). devices=1, checkpoint por par.
+sweep:
+  ks: [27, 75]
+  out_root: data/sweep
+  models:
+    - majority_class
+    - stratified_random
+    - logistic_regression
+    - lightgbm
+    - hist_gradient_boost
+    # gradient_boosting cortado do sweep (2026-07-27): redundante com hist_gradient_boost,
+    # que o supera no k=50 (F1-macro 0,555 vs 0,545). Corte de ~3 dias de compute, custo
+    # científico ~zero. Segue na grade de produção (run-benchmark), só sai do sweep de k.
+    - catboost
+    - random_forest
+    - extra_trees
+    - ft_transformer
+    - tabnet
+    - adaboost
+
+# Ablação territorial (ESPECIFICACAO §3.3): "determinante real ou proxy da qualidade da
+# notificação?". Três braços, MESMO protocolo (k=50, mesmas dobras, mesmas estratégias):
+#   individual = as variáveis que descrevem a PESSOA notificada (SINAN + derivadas);
+#   municipal  = as contextuais do MUNICÍPIO (IBGE/IPEA/CNES + geografia derivada);
+#   combined   = o X inteiro — JÁ RODADO, é a produção k=50 em data/. Por isso não
+#                aparece em `scopes`: o relatório reaproveita o artefato existente.
+# O corte individual×municipal vem do campo `contextual` do FeatureSpec, não de heurística
+# de nome (features.classify_feature_scope).
+# Conjunto: as 5 famílias de árvore/boosting que dominam o leaderboard. Sem DL (~4h por
+# par) e sem lineares — a pergunta é sobre o sinal das variáveis, não sobre a família.
+# Holdout temporal (ESPECIFICACAO §4.1): treina no passado, avalia no ano reservado.
+# O ano de teste vem de `study.temporal_test_period` em analysis_decisions.yaml (2024) —
+# NÃO se repete aqui, para não haver duas fontes de verdade.
+#
+# DIVERGÊNCIA DECLARADA contra a §4.1, que pede "treinar até 2022, avaliar em 2023-2024":
+# 2023 NÃO é holdout limpo. Só 2024 foi reservado antes do tuning (decisão congelada em
+# 2026-07-15); 2023 participou do desenvolvimento inteiro — sweep de k, seleção de modelo,
+# ablação. Avaliá-lo seria medir em dado visto. Então: treino = tudo antes de 2024.
+#
+# Conjunto: o mesmo contendor do sweep, para o leaderboard temporal ser comparável ao
+# espacial linha a linha.
+temporal:
+  out_root: data/temporal
+  models_from_sweep: true
+
+ablation:
+  scopes: [individual, municipal]
+  out_root: data/ablation
+  models:
+    - lightgbm
+    - hist_gradient_boost
+    - random_forest
+    - extra_trees
+    - catboost

@@ -1,0 +1,76 @@
+# .gitignore — repositório PÚBLICO (github.com/smart-TB/ClassificationOfClosureTB)
+#
+# POLÍTICA (decisão do PI, 2026-08-31): este repositório publica APENAS o que um revisor
+# precisa para verificar o MÉTODO — código, configuração e testes. Não publica:
+#
+#   (a) dado de paciente, em nenhuma forma;
+#   (b) RESULTADOS — tabelas, métricas e figuras são o conteúdo do manuscrito e não
+#       podem ser tornados públicos antes da publicação;
+#   (c) documentos internos de trabalho, incluindo o plano analítico e a correspondência
+#       de revisão por pares, que é confidencial.
+#
+# Resultados e artefatos de auditoria vão para o depósito de dados (Zenodo), que aceita
+# embargo até a publicação e acesso restrito — não para cá.
+#
+# ATENÇÃO: em .gitignore o `#` só inicia comentário no INÍCIO da linha. Comentário à
+# direita de um padrão vira parte do padrão e o quebra em silêncio.
+
+# ---------------------------------------------------------------------------
+# 1. Dados e resultados — TUDO fora
+# ---------------------------------------------------------------------------
+# Cobre o microdado (827.866 registros individuais com raça/cor, escolaridade, HIV,
+# situação de rua e privação de liberdade), as predições por paciente, os valores SHAP,
+# e também as MÉTRICAS AGREGADAS, que são resultado de publicação.
+/data/
+
+# Figuras do manuscrito e manifestos de execução.
+/artifacts/
+
+# ---------------------------------------------------------------------------
+# 2. Documentos internos — não públicos
+# ---------------------------------------------------------------------------
+# Documento de trabalho do grupo.
+/briefing.md
+# Plano analítico da reanálise; cita os comentários dos revisores (confidenciais).
+/ESPECIFICACAO_REANALISE.md
+# Histórico de desenvolvimento com os resultados científicos em detalhe.
+/CHANGELOG.md
+# Especificações, planos e protocolo interno.
+/docs/
+
+# ---------------------------------------------------------------------------
+# 3. Artefatos de execução — pesados e regeneráveis
+# ---------------------------------------------------------------------------
+/.venv/
+# 3,4 GB de checkpoints de modelo
+/saved_models/
+# ~1.800 diretórios de treino DL
+/lightning_logs/
+/catboost_info/
+/.pt_tmp/
+# scripts de investigação ad-hoc
+/scratchpad/
+*.log
+
+# ---------------------------------------------------------------------------
+# 4. Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# ---------------------------------------------------------------------------
+# 5. Ambiente local e SO
+# ---------------------------------------------------------------------------
+# config de venv local (in-project), não é do projeto
+poetry.toml
+.env
+.envrc
+.DS_Store
+Thumbs.db
+*.swp

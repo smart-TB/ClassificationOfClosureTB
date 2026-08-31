@@ -1,0 +1,22 @@
+# Desbalanceamento. Fonte de verdade: briefing §13.
+strategies: [none, random_oversampling, random_undersampling, local_cost_sensitive]
+
+# Estrato do peso local. PRIMÁRIO: year_region — ano x macrorregião.
+# A versão year_municipality reproduz a fórmula histórica COM o defeito de
+# degeneração (59,4% dos pesos no piso); fica como sensibilidade documentada.
+cost_stratum: year_region       # year_region | year_uf | year_municipality | year
+
+# Parâmetros históricos da fórmula (§13.2).
+R: 4.0
+w_min: 0.15
+w_max: 1.0
+rescale_mean_one: true
+
+# Cap do oversampling: razão máxima majoritária:minoritária (não balanceia 1:1, que na
+# coorte real explodia o treino para ~1,9M). Com 3, a minoritária sobe até majoritária/3.
+oversample_max_ratio: 3
+
+sensitivity:
+  cost_strata: [year_municipality]   # roda em paralelo para documentar a degeneração
+  R: [2.0, 4.0, 6.0]
+  w_min: [0.10, 0.15, 0.25]

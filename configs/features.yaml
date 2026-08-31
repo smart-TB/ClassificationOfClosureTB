@@ -1,0 +1,2872 @@
+# Classificação de disponibilidade de cada coluna da coorte harmonizada.
+#
+# Fonte da evidência: Dicionário de Dados SINAN NET 5.0, agravo Tuberculose
+# https://portalsinan.saude.gov.br/images/documentos/Agravos/Tuberculose/DICI_DADOS_Tuberculose.pdf
+#
+# availability:
+#   at_notification -- informação existe no momento da primeira notificação
+#   post_baseline   -- existe, mas só depois (exame cujo resultado demora)
+#   followup        -- preenchido durante o acompanhamento
+#   outcome         -- é o desfecho, ou deriva dele
+#   internal        -- controle do sistema, não é informação clínica
+#   unknown         -- indefinido: BLOQUEIA o conjunto primário até revisão clínica
+#
+# Só 'at_notification' pode ter in_notification_set: true. Nenhuma feature do X
+# pode derivar de DT_ENCERRA ou SITUA_ENCE -- ver COLUNAS_DE_DESFECHO em features.py.
+#
+# As features derivadas (IDADE, *_BIN, *_NORM) são criadas em features.py e
+# declaram sua procedência em derived_from.
+features:
+- raw_name: TP_NOT
+  harmonized_name: tp_not
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_AGRAVO
+  harmonized_name: id_agravo
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_NOTIFIC
+  harmonized_name: dt_notific
+  form_field: null
+  type: date
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Data disponível na notificação, usada para derivar e para o cálculo de seguimento;
+    não entra crua no X
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: NU_ANO
+  harmonized_name: nu_ano
+  form_field: null
+  type: numeric
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Ano da notificação — ESTRATO de peso, nunca feature (ESPECIFICACAO §1.1 regra 4)
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SG_UF_NOT
+  harmonized_name: sg_uf_not
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: UF de notificação — a geografia da análise segue a residência
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_MUNICIP
+  harmonized_name: id_municip
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Município de notificação — chave; a geografia da análise usa ID_MUNIC_ANALISE
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_REGIONA
+  harmonized_name: id_regiona
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Regional de saúde da notificação — VIF de 1.238,7 contra ID_RG_RESI: são a mesma
+    informação. Redundante com a geografia municipal. Removida do X por decisão do PI em 2026-07-16: redundância.
+    Mantida no dicionário de features para rastreabilidade, mas fora do conjunto primário.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: true
+- raw_name: DT_DIAG
+  harmonized_name: dt_diag
+  form_field: null
+  type: date
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Data disponível na notificação, usada para derivar e para o cálculo de seguimento;
+    não entra crua no X
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ANO_NASC
+  harmonized_name: ano_nasc
+  form_field: null
+  type: numeric
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Disponível na notificação; origem de IDADE, que é a feature derivada
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: NU_IDADE_N
+  harmonized_name: nu_idade_n
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Disponível na notificação; origem de IDADE, que é a feature derivada
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: CS_SEXO
+  harmonized_name: cs_sexo
+  form_field: 9
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campos 9-12: características do paciente informadas na ficha de notificação'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: true
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: CS_GESTANT
+  harmonized_name: cs_gestant
+  form_field: 10
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 10: situação gestacional na notificação O código 0 é a codificação de ausência
+    anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado para <NA>. Sem
+    isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: CS_RACA
+  harmonized_name: cs_raca
+  form_field: 9
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campos 9-12: características do paciente informadas na ficha de notificação O
+    código 0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta
+    no dicionário: mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria
+    como categoria quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: true
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: CS_ESCOL_N
+  harmonized_name: cs_escol_n
+  form_field: 9
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campos 9-12: características do paciente informadas na ficha de notificação'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: true
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SG_UF
+  harmonized_name: sg_uf
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'UF de residência em código — redundante com REGIAO e com LAT_MUNIC/LONG_MUNIC,
+    que já situam o município. Duplica SIGLA_UF (a mesma UF em sigla). Removida do X por decisão do PI
+    em 2026-07-16: redundância. Mantida no dicionário de features para rastreabilidade, mas fora do conjunto
+    primário.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: true
+- raw_name: ID_MN_RESI
+  harmonized_name: id_mn_resi
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Município de residência — ESTRATO/chave de agrupamento espacial, nunca feature
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_RG_RESI
+  harmonized_name: id_rg_resi
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Regional de saúde de residência — VIF de 1.238,4 contra ID_REGIONA: são a mesma
+    informação. Redundante com a geografia municipal. Removida do X por decisão do PI em 2026-07-16: redundância.
+    Mantida no dicionário de features para rastreabilidade, mas fora do conjunto primário.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: true
+- raw_name: ID_PAIS
+  harmonized_name: id_pais
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: País de residência — praticamente invariante numa coorte nacional (99%+ Brasil),
+    sem poder discriminante. Removida do X por decisão do PI em 2026-07-16. Mantida no dicionário de features
+    para rastreabilidade.
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: true
+- raw_name: NDUPLIC_N
+  harmonized_name: nduplic_n
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IN_VINCULA
+  harmonized_name: in_vincula
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_DIGITA
+  harmonized_name: dt_digita
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSUS
+  harmonized_name: dt_transus
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSDM
+  harmonized_name: dt_transdm
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSSM
+  harmonized_name: dt_transsm
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSRM
+  harmonized_name: dt_transrm
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSRS
+  harmonized_name: dt_transrs
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_TRANSSE
+  harmonized_name: dt_transse
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: CS_FLXRET
+  harmonized_name: cs_flxret
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: FLXRECEBI
+  harmonized_name: flxrecebi
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: MIGRADO_W
+  harmonized_name: migrado_w
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_OCUPA_N
+  harmonized_name: id_ocupa_n
+  form_field: 9
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Ocupação — AUSÊNCIA ESTRUTURAL: campo da ficha antiga que a v5 não coleta. Apenas
+    10 registros com valor em 808.889 notificações pós-2018. A coluna sobrevive no DBF, a pergunta não
+    existe mais. Removida do X por decisão do PI em 2026-07-16: ausência estrutural decorrente da mudança
+    de ficha não é perda aleatória e não pode ser imputada — nenhum tratamento de ausência a recupera.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: true
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: TRATAMENTO
+  harmonized_name: tratamento
+  form_field: 32
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 32: tipo de entrada, informado na notificação'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: INSTITUCIO
+  harmonized_name: institucio
+  form_field: 33
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Institucionalização — AUSÊNCIA ESTRUTURAL: 80 registros com valor em 808.889 pós-2018.
+    Campo da ficha antiga, não coletado na v5. Removida do X por decisão do PI em 2026-07-16: ausência
+    estrutural decorrente da mudança de ficha não é perda aleatória e não pode ser imputada — nenhum tratamento
+    de ausência a recupera.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: RAIOX_TORA
+  harmonized_name: raiox_tora
+  form_field: 39
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 39: radiografia do tórax no diagnóstico O código 0 é a codificação de ausência
+    anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado para <NA>. Sem
+    isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: TESTE_TUBE
+  harmonized_name: teste_tube
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo: prova tuberculínica (PPD) — reação cutânea em milímetros, lida 48-72h após
+    a aplicação. Dicionário: 1 Não reator, 2 Reator Fraco, 3 Reator Forte, 4 Não realizado; não possui
+    código ''Em andamento''. VARIÁVEL MORTA na janela 2015-2025: apenas 45 registros com resultado real
+    (1/2/3) em 1.070.227. O PPD foi abandonado para diagnóstico de TB ativa com a entrada do Xpert (~2014);
+    no SINAN inteiro há 37.837 resultados, quase todos em 2012-2014.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: FORMA
+  harmonized_name: forma
+  form_field: 35
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campos 35-36: forma clínica e sítio extrapulmonar, definidos no diagnóstico O
+    código 0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta
+    no dicionário: mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria
+    como categoria quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: EXTRAPU1_N
+  harmonized_name: extrapu1_n
+  form_field: 35
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: Segundo sítio extrapulmonar — código sujo (valores '.', '/' misturados aos códigos)
+    e baixo valor preditivo. Fora do X por decisão do PI em 2026-07-16.
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: EXTRAPU2_N
+  harmonized_name: extrapu2_n
+  form_field: 35
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Segundo sítio extrapulmonar — AUSÊNCIA ESTRUTURAL: 5.041 registros (0,6%) em 808.889
+    pós-2018. Removida do X por decisão do PI em 2026-07-16: ausência estrutural decorrente da mudança
+    de ficha não é perda aleatória e não pode ser imputada — nenhum tratamento de ausência a recupera.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: EXTRAPUL_O
+  harmonized_name: extrapul_o
+  form_field: null
+  type: text
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Texto livre: exigiria processamento de linguagem natural, fora do escopo deste
+    sub-projeto'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: AGRAVAIDS
+  harmonized_name: agravaids
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria quase perfeitamente
+    colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVALCOO
+  harmonized_name: agravalcoo
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria quase perfeitamente
+    colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVDIABE
+  harmonized_name: agravdiabe
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria quase perfeitamente
+    colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVDOENC
+  harmonized_name: agravdoenc
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria quase perfeitamente
+    colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVOUTRA
+  harmonized_name: agravoutra
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo 37 (outros agravos) — na prática é TEXTO LIVRE: os valores incluem ''X''
+    e digitação não codificada, como o AGRAVOUTDE. Fora do X por decisão do PI em 2026-07-16; o AGRAVOUTRA_BIN
+    derivado saía 100% vazio.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: AGRAVOUTDE
+  harmonized_name: agravoutde
+  form_field: null
+  type: text
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Texto livre: exigiria processamento de linguagem natural, fora do escopo deste
+    sub-projeto'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_E
+  harmonized_name: bacilosc_e
+  form_field: 38
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 38: baciloscopia de escarro do diagnóstico — resultado em horas O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria
+    quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: BACILOS_E2
+  harmonized_name: bacilos_e2
+  form_field: 38
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Baciloscopia de escarro, 2ª amostra — AUSÊNCIA ESTRUTURAL: 108 registros com valor
+    em 808.889 pós-2018. Removida do X por decisão do PI em 2026-07-16: ausência estrutural decorrente
+    da mudança de ficha não é perda aleatória e não pode ser imputada — nenhum tratamento de ausência
+    a recupera.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: BACILOSC_O
+  harmonized_name: bacilosc_o
+  form_field: 38
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 38: baciloscopia de escarro do diagnóstico — resultado em horas O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: CULTURA_ES
+  harmonized_name: cultura_es
+  form_field: 43
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 43: cultura — resultado leva semanas'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: CULTURA_OU
+  harmonized_name: cultura_ou
+  form_field: 43
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 43: cultura — resultado leva semanas'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: HIV
+  harmonized_name: hiv
+  form_field: 40
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 40: HIV precede TB. A ausência é sobretudo linha de base — 18,5 pp entre
+    óbito e cura A TEMPO IGUAL (0-7 dias). Ver spec §3.1; entra colapsada e com indicador de ausência
+    O código 0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta
+    no dicionário: mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria
+    como categoria quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: HISTOPATOL
+  harmonized_name: histopatol
+  form_field: 42
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 42: histopatologia — resultado retorna após a notificação'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_INIC_TR
+  harmonized_name: dt_inic_tr
+  form_field: null
+  type: date
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: data de início do tratamento — posterior à notificação por definição.
+    Não é feature; usada apenas para documentação de disponibilidade.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: RIFAMPICIN
+  harmonized_name: rifampicin
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: ISONIAZIDA
+  harmonized_name: isoniazida
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: ETAMBUTOL
+  harmonized_name: etambutol
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: ESTREPTOMI
+  harmonized_name: estreptomi
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: PIRAZINAMI
+  harmonized_name: pirazinami
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: ETIONAMIDA
+  harmonized_name: etionamida
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: OUTRAS
+  harmonized_name: outras
+  form_field: 46
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: OUTRAS_DES
+  harmonized_name: outras_des
+  form_field: null
+  type: text
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 46: esquema terapêutico, registrado quando o TRATAMENTO COMEÇA — posterior
+    à notificação. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: TRAT_SUPER
+  harmonized_name: trat_super
+  form_field: 60
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campo 60: tratamento supervisionado INDICADO — não necessariamente realizado.
+    RESSALVA OBRIGATÓRIA: não é medida de adesão, de conclusão do tratamento nem de realização efetiva
+    do TDO; se aparecer em resultados, não pode ser lida como tal. Preenchida DURANTE o tratamento: nas
+    curas, a disponibilidade sobe de 1,1% (0-7 dias) para 25,7% (121-365 dias) — padrão de artefato de
+    registro, não de linha de base. Decisão clínica do PI em 2026-07-16.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: NU_CONTATO
+  harmonized_name: nu_contato
+  form_field: 47
+  type: numeric
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 47: total de contatos identificados na investigação inicial'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DOENCA_TRA
+  harmonized_name: doenca_tra
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: Doença relacionada ao trabalho, informada na notificação
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SG_UF_AT
+  harmonized_name: sg_uf_at
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_MUNIC_A
+  harmonized_name: id_munic_a
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_NOTI_AT
+  harmonized_name: dt_noti_at
+  form_field: null
+  type: date
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SG_UF_2
+  harmonized_name: sg_uf_2
+  form_field: 53
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 53-54: município/UF de RESIDÊNCIA ATUAL (co_municipio_residencia_atual).
+    O dicionário os lista na ficha de notificação E no acompanhamento: o valor final reflete atualizações
+    posteriores à notificação. Redundantes com ID_MN_RESI, que é a chave geográfica da análise.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: ID_MUNIC_2
+  harmonized_name: id_munic_2
+  form_field: 53
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 53-54: município/UF de RESIDÊNCIA ATUAL (co_municipio_residencia_atual).
+    O dicionário os lista na ficha de notificação E no acompanhamento: o valor final reflete atualizações
+    posteriores à notificação. Redundantes com ID_MN_RESI, que é a chave geográfica da análise.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: BACILOSC_1
+  harmonized_name: bacilosc_1
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_2
+  harmonized_name: bacilosc_2
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_3
+  harmonized_name: bacilosc_3
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_4
+  harmonized_name: bacilosc_4
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_5
+  harmonized_name: bacilosc_5
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BACILOSC_6
+  harmonized_name: bacilosc_6
+  form_field: 58
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 58-59: ''realizada em amostra colhida ao final do 1º mês'' — acompanhamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: TRATSUP_AT
+  harmonized_name: tratsup_at
+  form_field: 60
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 60-61: acompanhamento do tratamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_MUDANCA
+  harmonized_name: dt_mudanca
+  form_field: null
+  type: date
+  source: SINAN
+  availability: followup
+  dictionary_evidence: Data de mudança de esquema — ocorre durante o tratamento
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: NU_COMU_EX
+  harmonized_name: nu_comu_ex
+  form_field: 60
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: 'Campos 60-61: acompanhamento do tratamento'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SITUA_9_M
+  harmonized_name: situa_9_m
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: Situação no 9º/12º mês — acompanhamento
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SITUA_12_M
+  harmonized_name: situa_12_m
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: Situação no 9º/12º mês — acompanhamento
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SITUA_ENCE
+  harmonized_name: situa_ence
+  form_field: 62
+  type: categorical
+  source: SINAN
+  availability: outcome
+  dictionary_evidence: 'Campo 62: situação de encerramento do caso notificado — é o alvo'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: DT_ENCERRA
+  harmonized_name: dt_encerra
+  form_field: 66
+  type: date
+  source: SINAN
+  availability: outcome
+  dictionary_evidence: 'Campo 66: data de encerramento — define o desfecho'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: TPUNINOT
+  harmonized_name: tpuninot
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: internal
+  dictionary_evidence: 'Campo interno/somente leitura do Sinan: controle do sistema, não informação clínica'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: POP_LIBER
+  harmonized_name: pop_liber
+  form_field: 33
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 33: populações especiais declaradas na notificação. Mantidas SEPARADAS:
+    o briefing §20.1 exige equidade por situação de rua e privação de liberdade individualmente O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: POP_RUA
+  harmonized_name: pop_rua
+  form_field: 33
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 33: populações especiais declaradas na notificação. Mantidas SEPARADAS:
+    o briefing §20.1 exige equidade por situação de rua e privação de liberdade individualmente O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: POP_SAUDE
+  harmonized_name: pop_saude
+  form_field: 33
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 33: populações especiais declaradas na notificação. Mantidas SEPARADAS:
+    o briefing §20.1 exige equidade por situação de rua e privação de liberdade individualmente O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: POP_IMIG
+  harmonized_name: pop_imig
+  form_field: 33
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 33: populações especiais declaradas na notificação. Mantidas SEPARADAS:
+    o briefing §20.1 exige equidade por situação de rua e privação de liberdade individualmente O código
+    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
+    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: BENEF_GOV
+  harmonized_name: benef_gov
+  form_field: 34
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 34: beneficiário de programa governamental O código 0 é a codificação de
+    ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado para
+    <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado antes
+    de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVDROGA
+  harmonized_name: agravdroga
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: AGRAVTABAC
+  harmonized_name: agravtabac
+  form_field: 37
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 37: agravos associados declarados na notificação O código 0 é a codificação
+    de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado
+    para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
+    antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: true
+- raw_name: TEST_MOLEC
+  harmonized_name: test_molec
+  form_field: 44
+  type: categorical
+  source: SINAN
+  availability: at_notification
+  dictionary_evidence: 'Campo 44: Teste Molecular Rápido TB (TMR-TB / Xpert MTB/RIF), Campo Essencial.
+    Códigos 1-5 (detectável sensível a R, detectável resistente a R, não detectável, inconclusivo, não
+    realizado): NÃO possui código ''Em andamento'', portanto não sofre a reescrita retroativa do campo
+    62 que atinge HIV e Cultura. Introduzido na v5 da ficha; a janela 2015-2025 é toda v5 e a cobertura
+    vai de 86,1% (2015) a 95,7% (2025). O Xpert retorna em ~2h: a disponibilidade nas curas é PLANA em
+    ~35-38% independente da duração — o valor não se acumula com o tempo. Resíduo declarado: nos óbitos
+    sobe de 28,7% (0-7 dias) para 38,4% (8-14) e estabiliza; gap a tempo igual de 7,5 pp, menos da metade
+    dos 17,8 pp do HIV. Decisão do PI em 2026-07-16. O código 0 é a codificação de ausência anterior a
+    2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado para <NA>. Sem isso, 0
+    entraria como categoria válida quase perfeitamente colinear com ''notificado antes de 2018''.'
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: true
+- raw_name: TEST_SENSI
+  harmonized_name: test_sensi
+  form_field: 45
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 45: habilitado ''caso campo 43 (Cultura) = 1 (Positiva)'' — depende da cultura'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ANT_RETRO
+  harmonized_name: ant_retro
+  form_field: 41
+  type: categorical
+  source: SINAN
+  availability: post_baseline
+  dictionary_evidence: 'Campo 41: ''Terapia Antirretroviral para HIV/AIDS durante o tratamento de tuberculose'''
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: include_antiretro_postbaseline
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: BAC_APOS_6
+  harmonized_name: bac_apos_6
+  form_field: null
+  type: categorical
+  source: SINAN
+  availability: followup
+  dictionary_evidence: Baciloscopia após o 6º mês de tratamento — acompanhamento
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: TRANSF
+  harmonized_name: transf
+  form_field: 63
+  type: categorical
+  source: SINAN
+  availability: outcome
+  dictionary_evidence: 'Campos 63-65: preenchidos quando o encerramento é transferência'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: UF_TRANSF
+  harmonized_name: uf_transf
+  form_field: 63
+  type: categorical
+  source: SINAN
+  availability: outcome
+  dictionary_evidence: 'Campos 63-65: preenchidos quando o encerramento é transferência'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: MUN_TRANSF
+  harmonized_name: mun_transf
+  form_field: 63
+  type: categorical
+  source: SINAN
+  availability: outcome
+  dictionary_evidence: 'Campos 63-65: preenchidos quando o encerramento é transferência'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ANO_DIAG
+  harmonized_name: ano_diag
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Ano do diagnóstico — chave de merge contextual, nunca feature
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: ID_MUNIC_ANALISE
+  harmonized_name: id_munic_analise
+  form_field: null
+  type: categorical
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Município de análise resolvido — chave de agrupamento espacial, nunca feature
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: NOME_MUNIC
+  harmonized_name: nome_munic
+  form_field: null
+  type: text
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Nome do município — identificador, redundante com o código
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: SIGLA_UF
+  harmonized_name: sigla_uf
+  form_field: null
+  type: categorical
+  source: derived
+  availability: at_notification
+  dictionary_evidence: 'UF de residência em sigla — redundante com SG_UF (mesma UF em código) e com REGIAO/LAT_MUNIC/LONG_MUNIC.
+    Removida do X por decisão do PI em 2026-07-16: redundância. Mantida no dicionário de features para
+    rastreabilidade, mas fora do conjunto primário.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: REGIAO
+  harmonized_name: regiao
+  form_field: null
+  type: categorical
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LAT_UF
+  harmonized_name: lat_uf
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: 'Centróide de UF/região derivado de SG_UF_NOT (notificação), enquanto o resto da
+    geografia segue a residência: incoerente e redundante com SIGLA_UF/REGIAO. Fora do X por decisão.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LONG_UF
+  harmonized_name: long_uf
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: 'Centróide de UF/região derivado de SG_UF_NOT (notificação), enquanto o resto da
+    geografia segue a residência: incoerente e redundante com SIGLA_UF/REGIAO. Fora do X por decisão.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LAT_MUNIC
+  harmonized_name: lat_munic
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LONG_MUNIC
+  harmonized_name: long_munic
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LAT_REG
+  harmonized_name: lat_reg
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: 'Centróide de UF/região derivado de SG_UF_NOT (notificação), enquanto o resto da
+    geografia segue a residência: incoerente e redundante com SIGLA_UF/REGIAO. Fora do X por decisão.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: LONG_REG
+  harmonized_name: long_reg
+  form_field: null
+  type: numeric
+  source: derived
+  availability: at_notification
+  dictionary_evidence: 'Centróide de UF/região derivado de SG_UF_NOT (notificação), enquanto o resto da
+    geografia segue a residência: incoerente e redundante com SIGLA_UF/REGIAO. Fora do X por decisão.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: false
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: QT_PROFISSIONAIS_TOTAL
+  harmonized_name: qt_profissionais_total
+  form_field: null
+  type: numeric
+  source: CNES
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: QT_ESTABELECIMENTOS_TOTAL
+  harmonized_name: qt_estabelecimentos_total
+  form_field: null
+  type: numeric
+  source: CNES
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_PESSOAL_OCUPADO
+  harmonized_name: ibge_pessoal_ocupado
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_SALARIO_MEDIO_MENSAL
+  harmonized_name: ibge_salario_medio_mensal
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_ESTAB_DE_SAUDE_SUS
+  harmonized_name: ibge_estab_de_saude_sus
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: 'Estabelecimentos de saúde SUS (IBGE) — mede o mesmo que QT_ESTABELECIMENTOS_TOTAL
+    (CNES), por outra fonte. Removida do X por decisão do PI em 2026-07-16: redundância. Mantida no dicionário
+    de features para rastreabilidade, mas fora do conjunto primário.'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: andre.abade@ifmt.edu.br
+  clinical_approved_date: '2026-07-16'
+  zero_means_missing: false
+- raw_name: IBGE_MORTALIDADE_INFANTIL
+  harmonized_name: ibge_mortalidade_infantil
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_PIB_PER_CAPITA
+  harmonized_name: ibge_pib_per_capita
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_NUMERO_DE_ESTAB_DE_ENSINO_FUNDAMENTAL
+  harmonized_name: ibge_numero_de_estab_de_ensino_fundamental
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_NUMERO_DE_ESTAB_DE_ENSINO_MEDIO
+  harmonized_name: ibge_numero_de_estab_de_ensino_medio
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_ARBORIZACAO_DE_VIAS_PUBLICAS
+  harmonized_name: ibge_arborizacao_de_vias_publicas
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_ESGOTAMENTO_SANITARIO_ADEQUADO
+  harmonized_name: ibge_esgotamento_sanitario_adequado
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_URBANIZACAO_DE_VIAS_PUBLICAS
+  harmonized_name: ibge_urbanizacao_de_vias_publicas
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_INTERNACOES_POR_DIARREIA_SUS
+  harmonized_name: ibge_internacoes_por_diarreia_sus
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_POPULACAO_OCUPADA
+  harmonized_name: ibge_populacao_ocupada
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_POPULACAO_C_RENDIMENTO_1
+  harmonized_name: ibge_populacao_c_rendimento_1
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_TAXA_DE_ESCOLARIZACAO_6
+  harmonized_name: ibge_taxa_de_escolarizacao_6
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_BIOMA
+  harmonized_name: ibge_bioma
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_IDEB_ANOS_INICIAIS_REDE
+  harmonized_name: ibge_ideb_anos_iniciais_rede
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_IDEB_ANOS_FINAIS_REDE
+  harmonized_name: ibge_ideb_anos_finais_rede
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_SISTEMA_COSTEIRO_MARINHO
+  harmonized_name: ibge_sistema_costeiro_marinho
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_AREA_URBANIZADA
+  harmonized_name: ibge_area_urbanizada
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IBGE_DENSIDADE_DEMOGRAFICA
+  harmonized_name: ibge_densidade_demografica
+  form_field: null
+  type: numeric
+  source: IBGE
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_IDHM
+  harmonized_name: ipea_idhm
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_IDHM_ANO_CENSO
+  harmonized_name: ipea_idhm_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_ADENSAMENTO_DOMICILIAR
+  harmonized_name: ipea_pct_adensamento_domiciliar
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_ADENSAMENTO_DOMICILIAR_ANO_CENSO
+  harmonized_name: ipea_pct_adensamento_domiciliar_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_AGUA_ESGOTO_INADEQUADO
+  harmonized_name: ipea_pct_agua_esgoto_inadequado
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_AGUA_ESGOTO_INADEQUADO_ANO_CENSO
+  harmonized_name: ipea_pct_agua_esgoto_inadequado_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_VULNERAVEIS_POBREZA
+  harmonized_name: ipea_pct_vulneraveis_pobreza
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_VULNERAVEIS_POBREZA_ANO_CENSO
+  harmonized_name: ipea_pct_vulneraveis_pobreza_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_EXTREMAMENTE_POBRES
+  harmonized_name: ipea_pct_extremamente_pobres
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_EXTREMAMENTE_POBRES_ANO_CENSO
+  harmonized_name: ipea_pct_extremamente_pobres_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_INDICE_GINI
+  harmonized_name: ipea_indice_gini
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_INDICE_GINI_ANO_CENSO
+  harmonized_name: ipea_indice_gini_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_RENDA_PER_CAPITA
+  harmonized_name: ipea_renda_per_capita
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_RENDA_PER_CAPITA_ANO_CENSO
+  harmonized_name: ipea_renda_per_capita_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_ANALFABETISMO_15MAIS
+  harmonized_name: ipea_taxa_analfabetismo_15mais
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_ANALFABETISMO_15MAIS_ANO_CENSO
+  harmonized_name: ipea_taxa_analfabetismo_15mais_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_DESEMPREGO_18MAIS
+  harmonized_name: ipea_taxa_desemprego_18mais
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_DESEMPREGO_18MAIS_ANO_CENSO
+  harmonized_name: ipea_taxa_desemprego_18mais_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_ESPERANCA_VIDA
+  harmonized_name: ipea_esperanca_vida
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_ESPERANCA_VIDA_ANO_CENSO
+  harmonized_name: ipea_esperanca_vida_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_MORTALIDADE_ATE_1ANO
+  harmonized_name: ipea_mortalidade_ate_1ano
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_MORTALIDADE_ATE_1ANO_ANO_CENSO
+  harmonized_name: ipea_mortalidade_ate_1ano_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_PAREDE_INADEQUADA
+  harmonized_name: ipea_pct_parede_inadequada
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_PAREDE_INADEQUADA_ANO_CENSO
+  harmonized_name: ipea_pct_parede_inadequada_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_AGUA_ENCANADA
+  harmonized_name: ipea_pct_agua_encanada
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_AGUA_ENCANADA_ANO_CENSO
+  harmonized_name: ipea_pct_agua_encanada_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_COLETA_LIXO
+  harmonized_name: ipea_pct_coleta_lixo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_COLETA_LIXO_ANO_CENSO
+  harmonized_name: ipea_pct_coleta_lixo_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_TRABALHO_FORMAL
+  harmonized_name: ipea_pct_trabalho_formal
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_PCT_TRABALHO_FORMAL_ANO_CENSO
+  harmonized_name: ipea_pct_trabalho_formal_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_RAZAO_DEPENDENCIA
+  harmonized_name: ipea_razao_dependencia
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_RAZAO_DEPENDENCIA_ANO_CENSO
+  harmonized_name: ipea_razao_dependencia_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_ENVELHECIMENTO
+  harmonized_name: ipea_taxa_envelhecimento
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_TAXA_ENVELHECIMENTO_ANO_CENSO
+  harmonized_name: ipea_taxa_envelhecimento_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_POPULACAO_TOTAL
+  harmonized_name: ipea_populacao_total
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_POPULACAO_TOTAL_ANO_CENSO
+  harmonized_name: ipea_populacao_total_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_INDICE_THEIL
+  harmonized_name: ipea_indice_theil
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: at_notification
+  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
+    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  in_notification_set: true
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false
+- raw_name: IPEA_INDICE_THEIL_ANO_CENSO
+  harmonized_name: ipea_indice_theil_ano_censo
+  form_field: null
+  type: numeric
+  source: IPEA
+  availability: internal
+  dictionary_evidence: 'Metadado: ano do Censo de origem do indicador, não é feature'
+  in_notification_set: false
+  derived_from: []
+  sensitivity_only: null
+  protected: false
+  contextual: true
+  clinical_review: approved
+  clinical_approved_by: null
+  clinical_approved_date: null
+  zero_means_missing: false

@@ -1,0 +1,93 @@
+# Regras de encerramento. Dicionário SINAN NET 5.0, agravo Tuberculose, campo 62
+# (SITUA_ENCE), verificado contra o PDF oficial do Ministério da Saúde em 2026-07-15:
+# https://portalsinan.saude.gov.br/images/documentos/Agravos/Tuberculose/DICI_DADOS_Tuberculose.pdf
+#
+# Código 6 (Mudança de Diagnóstico) é válido no dicionário e tem ZERO registros no
+# snapshot 2012-2025. A regra permanece: a ausência é fato do dado, não da regra.
+#
+# 'null' representa <NA>. Ausência de encerramento tem duas codificações por era:
+# '0' literal até 2017, campo vazio de 2018 em diante. As duas mapeiam para
+# unresolved_or_censored — tratá-las de forma diferente criaria um degrau
+# artificial em 2018.
+dictionary_version: "SINAN-NET-5.0-tuberculose"
+
+labels:
+  1: "Cura"
+  2: "Abandono"
+  3: "Óbito por TB"
+  4: "Óbito por outras causas"
+  5: "Transferência"
+  6: "Mudança de Diagnóstico"
+  7: "TB-DR"
+  8: "Mudança de Esquema"
+  9: "Falência"
+  10: "Abandono Primário"
+  0: "Sem encerramento (codificação até 2017)"
+  null: "Sem encerramento (codificação de 2018 em diante)"
+
+schemas:
+  legacy_3class:
+    1: "cure"
+    2: "treatment_interruption"
+    3: "tb_attributed_death"
+    4: "excluded"
+    5: "excluded"
+    6: "excluded"
+    7: "excluded"
+    8: "excluded"
+    9: "excluded"
+    10: "excluded"
+    0: "unresolved_or_censored"
+    null: "unresolved_or_censored"
+
+  revised_4class:
+    1: "cure"
+    2: "treatment_interruption_after_start"
+    3: "death_all_cause"
+    4: "death_all_cause"
+    5: "other_closure"
+    6: "other_closure"
+    7: "other_closure"
+    8: "other_closure"
+    9: "other_closure"
+    10: "other_closure"
+    0: "unresolved_or_censored"
+    null: "unresolved_or_censored"
+
+  actionable_binary:
+    1: "no_additional_risk_flag"
+    2: "enhanced_followup_candidate"
+    3: "enhanced_followup_candidate"
+    4: "enhanced_followup_candidate"
+    9: "enhanced_followup_candidate"
+    10: "enhanced_followup_candidate"
+    5: "excluded"
+    6: "excluded"
+    7: "excluded"
+    8: "excluded"
+    0: "unresolved_or_censored"
+    null: "unresolved_or_censored"
+
+  # Benchmark fechado nos 3 desfechos de maior impacto para o tratamento da TB
+  # sensível (decisão clínica do PI, 2026-07-19). Modelo condicional:
+  # P(Y=k | Y ∈ {cura, interrupção, óbito-TB}, X).
+  #  - óbito = SÓ código 3 (por TB); código 4 (outras causas) é risco competitivo -> excluído.
+  #  - interrupção = códigos 2 E 10; tempo zero = NOTIFICAÇÃO, então o abandono primário
+  #    (inclui quem nunca iniciou) é população em risco e entra como não-início/interrupção.
+  #  - escopo TB sensível: 7 (TB-DR), 8 (mudança de esquema), 9 (falência) excluídos.
+  #  - 5 (transferência) e 6 (mudança de diagnóstico) excluídos (não-avaliável / não era TB).
+  #  - análise por-notificação: sem linkage de paciente (dado de-identificado); a possível
+  #    contaminação treino/teste por paciente transferido é declarada como limitação.
+  sensitive_tb_3class:
+    1: "cure"
+    2: "treatment_interruption"
+    10: "treatment_interruption"
+    3: "tb_death"
+    4: "excluded"
+    5: "excluded"
+    6: "excluded"
+    7: "excluded"
+    8: "excluded"
+    9: "excluded"
+    0: "unresolved_or_censored"
+    null: "unresolved_or_censored"

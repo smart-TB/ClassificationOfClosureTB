@@ -4,8 +4,10 @@ Analysis code for the study **"Predicting Cure, Treatment Interruption, and Deat
 
 The study develops and internally validates multiclass prediction models for the three closure outcomes of tuberculosis treatment, using ten years of Brazil's national notification records harmonized with municipal contextual indicators.
 
-> **Status:** manuscript under preparation. This repository is being populated ahead of submission.
+> **Status:** manuscript under preparation; this repository holds the reanalysis pipeline.
 > <!-- TODO: substituir por DOI/link do artigo quando publicado -->
+> <!-- TODO: o título citado abaixo diz "25 Models Under Spatially Blocked Validation";
+>      a reanálise usa 26 na grade e acrescentou holdout temporal. Decisão do PI. -->
 
 ---
 
@@ -13,17 +15,19 @@ The study develops and internally validates multiclass prediction models for the
 
 | | |
 |---|---|
-| **Design** | Retrospective, population-based cohort; model development with internal validation only |
-| **Cohort** | 755,550 tuberculosis notifications, Brazil, 2015–2024 (window applied on `DT_NOTIFIC`) |
-| **Outcomes** | Cure (`SITUA_ENCE` = 1), treatment interruption (= 2), death attributed to tuberculosis (= 3) |
-| **Class balance** | 77.48% / 17.56% / 4.96% |
-| **Models** | 25 (21 classical machine learning, 4 tabular deep learning) |
-| **Imbalance strategies** | Random oversampling, random undersampling, custom cost-sensitive reweighting |
-| **Validation** | Spatially blocked: K-means clusters on municipal coordinates, held intact across folds |
+| **Design** | Retrospective, population-based cohort; model development with internal validation |
+| **Cohort** | 1,070,227 notifications declared for 2015–2025; 827,866 analytic after eligibility and ≥365-day follow-up |
+| **Outcomes** | Cure (`SITUA_ENCE` = 1), treatment interruption (= 2 or 10), death attributed to tuberculosis (= 3) |
+| **Class balance** | 76.67% cure / 18.57% interruption / 4.76% death |
+| **Models** | 26 in the grid (3 baselines, 19 classical machine learning, 4 tabular deep learning); 2 support-vector variants excluded a priori because they do not scale to ~10⁶ records |
+| **Imbalance strategies** | Random oversampling (capped at 3:1), random undersampling, cost-sensitive reweighting by year × region |
+| **Validation** | Nested and spatially blocked: K-means clusters on municipal coordinates, held intact across outer folds; calibration and thresholds fitted only on the inner out-of-fold of each training partition |
+| **Robustness to granularity** | Leaderboard re-run at k ∈ {27, 50, 75} municipality clusters |
+| **Temporal holdout** | Trained on 2015–2023, evaluated on 2024, reserved before any tuning |
 | **Primary metric** | Macro-averaged F1 |
 | **Reporting guideline** | TRIPOD+AI |
 
-There is **no external validation and no temporal holdout**. Performance transfers across Brazilian municipalities within the study window; nothing here supports transfer to other countries, other surveillance systems, or future years.
+There is **no external validation** — no independent surveillance system exists for tuberculosis in Brazil. The study does carry a temporal holdout: 2024 was set aside before any model selection and never entered training, calibration, or threshold fitting.
 
 ---
 
@@ -35,97 +39,122 @@ The study uses three public sources. **None is redistributed here.**
 |---|---|---|
 | SINAN | Individual tuberculosis notification records | <http://datasus.saude.gov.br> |
 | IBGE Cidades | Municipal demographic and socioeconomic indicators | <https://cidades.ibge.gov.br> |
+| IPEA Data | Municipal development, income and inequality indicators | <http://www.ipeadata.gov.br> |
 | CNES | Health-service capacity indicators | <http://cnes.datasus.gov.br> |
 
 Records carry no direct identifiers. The finest geographic resolution is the municipality of residence; the latitude and longitude attached to each record are municipal reference coordinates, never patient addresses.
 
-The pipeline consumes a pre-processed file, `data/SINAN_PreProcess.csv`, produced by an upstream harmonization step.
-<!-- TODO: descrever ou incluir o passo de pre-processamento que gera SINAN_PreProcess.csv,
-     incluindo a regra que deriva HIV positivo a partir do campo de AIDS -->
+`bot_data_SINNAN_IBGE_CNES.py` downloads and harmonizes all four sources into `data/harmonized.parquet`; `src/tb_outcomes/data.py` is a faithful port of its harmonization steps, guarded by a regression test that requires exact reproduction of the reference parquet. The AIDS ⇒ HIV derivation rule lives in `src/tb_outcomes/features.py` as `hiv_pos_model`.
+
+**What this repository does and does not contain.** Aggregated results — metrics by model, strategy and fold, equity tables, ablation, sweep, temporal holdout and programmatic utility — are versioned here. Individual-level material is not: the harmonized cohort (827,866 records with race/colour, schooling, HIV status, homelessness and incarceration), the out-of-fold predictions and the SHAP values all carry one row per patient and are excluded by `.gitignore`. They belong to the data deposit, under access terms set by the principal investigator.
 
 ---
 
 ## Pipeline
 
-The comparison runs in **two stages**, and the distinction governs how the results should be read.
+Every model runs under one protocol: **nested, spatially blocked cross-validation at library defaults**, with no hyperparameter search. There is no separate tuning stage, and no model is promoted on the strength of a first pass — a two-stage design would let selection see the evaluation data.
 
-**Stage 1 — leaderboard.** All 25 models are fitted under each of the three imbalance strategies. The 21 classical models run at their **library defaults with no hyperparameter search**; the 4 deep learning architectures receive a search restricted to learning rate and weight decay over four trials. No probability calibration is applied. This stage produces Table 2 of the paper, the confusion matrices, and the discrimination curves.
+For each of the 5 outer folds:
 
-**Stage 2 — calibration and tuning.** The models ranked highest by macro-averaged F1 are carried forward, and grid search plus isotonic probability calibration are applied to them. This stage produces the bootstrap comparison (Figure 6 of the paper).
+1. The outer fold is held out entirely. The remaining data is the development set.
+2. Inside the development set, a 5-fold inner cross-validation — blocked on the same municipality clusters — produces out-of-fold scores.
+3. The probability calibrator and the per-class decision thresholds are fitted **on those inner out-of-fold scores only**.
+4. The model is refitted on the full development set and applied **once** to the held-out fold; the calibrator and thresholds are carried over unchanged.
 
-Because selection into stage 2 is made on untuned performance, the second stage refines the ordering established by the first rather than overturning it.
+Class-imbalance handling is applied inside step 4's training data only, so the evaluation fold always retains the real outcome prevalence.
 
-### Scripts
+### Commands
 
-| File | Role |
+The pipeline is a single CLI, `tb-outcomes`. Each command writes its artefacts under `data/`.
+
+| Command | Role |
 |---|---|
-| `ML_fit_eval.py` | Fits and evaluates the 21 classical models (stage 1) |
-| `DL_fit_eval.py` | Fits and evaluates the 4 tabular deep learning models (stage 1) |
-| `calibrate_tune_ml.py` | Selects top-K by macro-averaged F1, then calibrates and tunes (stage 2) |
-| `calibrate_tune_dl.py` | Same, for the deep learning models |
-| `Figures_PreSelection.py` | Generates figures |
-| `Class_Model_Final/` | A production trial. **Not part of the benchmark reported in the paper.** |
-
-<!-- TODO: confirmar a lista acima e acrescentar os scripts que faltarem -->
+| `harmonize`, `build-cohort`, `build-features`, `build-splits` | Cohort, feature set and spatial folds |
+| `run-benchmark` | Main leaderboard: 26 models × 3 strategies at k = 50 |
+| `run-sweep`, `sweep-report` | Robustness of the leaderboard to spatial granularity (k = 27, 75) |
+| `run-ablation`, `ablation-report` | Territorial ablation: individual vs municipal vs combined feature sets |
+| `run-temporal-holdout`, `temporal-report` | Train before 2024, evaluate on 2024 |
+| `equity-report` | Performance by region, sex, race/colour, age band, schooling, municipal vulnerability and spatial fold |
+| `shap-report` | SHAP panel for the final model, out-of-fold, stratified by fold × class |
+| `run-clinical-baseline`, `utility-report` | Programmatic utility: top-k, alerts per 1,000, capture, NNS, decision curves |
 
 ### Key configuration
 
-- `random_state = 42`, propagated to the spatial clustering, the partitioning, the folds, the resampling, and the search.
-- Spatial groups: `KMeans(n_clusters=50)` on `LAT_MUNIC` / `LONG_MUNIC` projected to kilometres.
-- Partitioning: `StratifiedGroupKFold(n_splits=5)` with the cluster as the grouping unit, giving a hold-out of approximately 20%. Absence of group leakage is asserted programmatically.
-- Cost-sensitive weights, over strata defined by year × municipality:
+All protocol decisions live in `configs/` and are versioned with the code; `configs/analysis_decisions.yaml` is the authority when documents disagree.
+
+- `random_state = 42`, propagated to the spatial clustering, the folds, the resampling and the models.
+- Spatial groups: K-means on municipal coordinates, `k = 50` for the primary analysis; the sweep repeats the whole leaderboard at `k = 27` and `k = 75`.
+- Outer partition: 5 folds, municipality clusters kept intact, balanced by a bin-packing assignment.
+- Cost-sensitive weights over strata defined by **year × macroregion** (`cost_stratum: year_region`):
 
   ```
   w_g = clip(4.0 * n_min / max(1, n_maj), 0.15, 1.0)
   ```
 
-  applied **only to the majority class** (cure); minority records keep a weight of 1.0. The scheme down-weights the majority rather than up-weighting the minorities, and acts most strongly in the strata where unfavourable outcomes are rarest.
-- Variables defining the weighting strata are excluded from the feature set.
+  applied only to the majority class (cure). The historical `year × municipality` stratum is retained as a documented sensitivity analysis: it degenerates, pinning 59.4% of the weights at the floor.
+- Oversampling is capped at 3:1 rather than balancing to parity, which on this cohort would inflate the training set to ~1.9M rows.
+- Calibration is chosen per class and fold: isotonic when at least 100 out-of-fold events are available, Platt scaling otherwise.
 
 ### Leakage controls
 
-1. Class-imbalance handling is confined to training folds; the hold-out retains the real outcome prevalence.
-2. Thresholds and calibration are fitted on out-of-fold training predictions only and applied unchanged to the hold-out.
-3. Stratum-defining variables are excluded from the features.
-4. Group leakage across the partition is asserted programmatically.
+Asserted programmatically, not by convention — see `src/tb_outcomes/leakage.py` and `tests/`:
+
+1. Class-imbalance handling never reaches an evaluation fold.
+2. Calibration and thresholds are fitted only on inner out-of-fold scores of the training partition.
+3. Stratum-defining variables (`NU_ANO`, `ID_MN_RESI`) are excluded from the feature set and asserted absent.
+4. Municipality clusters never straddle an outer fold.
+5. No feature may derive from `DT_ENCERRA` or `SITUA_ENCE`; three independent barriers enforce this, because the defect passed silently once and cost an entire benchmark.
 
 ---
 
 ## Reproducing the results
 
-Because stage 1 uses library defaults with a fixed seed, re-running the code regenerates the classical results reported in the paper, including the configurations that the stage-2 search selects — those were not stored separately and do not need to be.
+```bash
+poetry install
+poetry run tb-outcomes validate-config --config configs/analysis_decisions.yaml
+poetry run tb-outcomes harmonize          # requires the SINAN/IBGE/IPEA/CNES sources
+poetry run tb-outcomes build-cohort
+poetry run tb-outcomes build-features
+poetry run tb-outcomes build-splits
+poetry run tb-outcomes run-benchmark      # add --sanity for a subsample smoke run
+poetry run pytest                         # 355 tests
+```
 
-**The deep learning results are not bit-for-bit reproducible.** No framework-level deterministic mode is set and no seed is fixed for the tensor library itself, so repeated execution yields small variations.
+The classical models run at fixed seeds and library defaults, so re-execution reproduces the reported numbers.
+
+**The deep learning results are not bit-for-bit reproducible.** No framework-level deterministic mode is set for the tensor library, so repeated execution yields small variations. Two constraints are load-bearing and must not be changed casually: `num_workers: 0` in `configs/deep_learning.yaml`, because a non-zero value deadlocks the dataloader against CUDA in this executor; and the internal metric of `pytorch_tabular` is disabled, because a validation batch of size 1 makes torchmetrics fail on a 0-dimensional tensor.
+
+Runtime, for scale: the main leaderboard and the k-sweep each take days on the hardware below, dominated by the two tabular transformers; the ablation, temporal holdout and equity analyses take hours.
 
 ### Environment
 
+Pinned in `poetry.lock`. Python 3.10.12.
+
 | Package | Version |
 |---|---|
-| scikit-learn | 1.7.2 |
-| NumPy | 1.26.4 |
-| XGBoost | 3.1.1 |
-| LightGBM | 4.6.0 |
+| scikit-learn | 1.4.2 |
+| NumPy | 1.26.2 |
+| pandas | 2.1.4 |
+| XGBoost | 2.1.0 |
+| LightGBM | 4.4.0 |
 | CatBoost | 1.2.8 |
-| pytorch-tabular | 1.1.1 |
-| PyTorch Lightning | 2.4.0 |
-| PyTorch | 2.9.1 + CUDA 12.8 |
+| SHAP | 0.49.1 |
+| PyTorch | 2.1.2 + CUDA 12.1 |
+| pytorch-tabular | 1.1.0 |
 
-<!-- TODO: completar com a versao do Python, pandas, imbalanced-learn, shap e RAPIDS (cuML/cuDF),
-     que nao constam do meta.json; e informar GPU, CPU e RAM -->
+Hardware used for the reported runs: 2 × NVIDIA RTX A5500 (24 GB each), 32 CPU threads, 124 GB RAM.
 
-```bash
-# TODO: instrucoes de execucao
-```
+> One model per job. LightGBM's scikit-learn wrapper ignores `OMP_NUM_THREADS` and opens all threads regardless; running two training jobs concurrently degrades small fits by orders of magnitude through OpenMP oversubscription.
 
 ---
 
 ## Known issues
 
-**An anomaly in the results table is unresolved.** Four models that failed to learn the task — logistic regression, complement naive Bayes, multinomial naive Bayes, and linear support vector classification — returned identical or near-identical metrics across imbalance strategies that should have produced different fits. A systematic comparison of every pairwise strategy contrast, across all 25 models and 11 metrics, locates the behaviour in these four alone; **no tree-based or deep learning model is affected**. One candidate explanation is that resampling was not applied to models whose grids fix `class_weight='balanced'`, so that two nominally distinct conditions executed the same configuration. The origin has not been traced. The affected models sit at the bottom of the ranking and none of the paper's conclusions rest on them.
+**Two support-vector variants are excluded a priori.** Exact RBF-SVC is O(n²)–O(n³) with a dense kernel, and LinearSVC/liblinear does not converge at this scale. The linear-margin role in the grid is covered by logistic regression and ridge.
 
-**The reported quantities are not all drawn from the same fits.** The leaderboard, confusion matrices, and discrimination curves come from stage 1; the bootstrap intervals come from stage 2. The uncertainty quantified does not attach to the performance ranked.
+**Deep learning results are not bit-for-bit reproducible**, as described under *Reproducing the results*.
 
-**Missingness is imputed, and it is not ignorable.** The proportion of records with an absent value roughly doubles among deaths across every comorbidity field. Median and modal imputation replaces that pattern with a central value, discarding information associated with the outcome.
+Study findings, limitations and their interpretation are reported in the manuscript, not here.
 
 ---
 

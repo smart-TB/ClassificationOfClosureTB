@@ -1,0 +1,8 @@
+# Pré-processamento. Fonte de verdade: briefing §11.2, §11.3.
+missing_token: "MISSING"       # nível para ausência em categóricas
+unknown_token: "UNKNOWN"       # categoria vista só na avaliação (perfil nativo)
+max_cardinality: 40            # acima disto, categórica é suspeita de texto livre -> erro
+contextual_pca:
+  enabled: false               # padrão: bloco contextual cru; PCA é sensibilidade
+  n_components: 1
+  sign_reference: "IPEA_IDHM"  # fixa o sinal: maior índice = maior vulnerabilidade
