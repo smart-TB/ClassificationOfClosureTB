@@ -125,3 +125,51 @@ def nivel(variavel: str, x) -> str:
 def nivel_por_eixo(eixo_ingles: str, x) -> str:
     """Como `nivel`, mas recebendo o eixo já traduzido (Region, Sex, ...)."""
     return nivel(eixo_ingles, x)
+
+
+# ---------------------------------------------------------------------------
+# Versão em português (divulgação nacional). O inglês continua sendo o idioma
+# do manuscrito submetido; isto serve à versão pt-BR.
+# ---------------------------------------------------------------------------
+
+DESFECHOS_PT = {
+    "cure": "Cura",
+    "tb_death": "Óbito por TB",
+    "treatment_interruption": "Interrupção do tratamento",
+}
+
+EIXOS_PT = {
+    "regiao": "Região",
+    "sexo": "Sexo",
+    "raca_cor": "Raça/cor",
+    "escolaridade": "Escolaridade",
+    "faixa_etaria": "Faixa etária",
+    "vulnerabilidade_municipal": "Vulnerabilidade municipal",
+    "dobra_espacial": "Dobra espacial",
+    "completude_notificacao": "Completude da notificação",
+}
+
+ESTRATEGIAS_PT = {
+    "local_cost_sensitive": "Sensível ao custo",
+    "random_oversampling": "Sobreamostragem",
+    "random_undersampling": "Subamostragem",
+}
+
+ESTRATEGIAS_EN = {
+    "local_cost_sensitive": "Cost-sensitive",
+    "random_oversampling": "Oversampling",
+    "random_undersampling": "Undersampling",
+}
+
+
+def desfecho_pt(x) -> str:
+    return DESFECHOS_PT.get(str(x), str(x))
+
+
+def eixo_pt(x) -> str:
+    return EIXOS_PT.get(str(x), str(x))
+
+
+def estrategia(x, pt: bool = False) -> str:
+    tab = ESTRATEGIAS_PT if pt else ESTRATEGIAS_EN
+    return tab.get(str(x), str(x))
