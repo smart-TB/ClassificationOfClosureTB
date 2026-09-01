@@ -65,17 +65,29 @@ FIGURAS = [
 
 
 def _esc(s) -> str:
-    return (str(s).replace("\\", "").replace("_", r"\_").replace("%", r"\%")
-            .replace("&", r"\&").replace("#", r"\#"))
+    """Escapa o texto para LaTeX e cria pontos de quebra nos sublinhados.
+
+    Nomes como `IBGE_NUMERO_DE_ESTAB_DE_ENSINO_FUNDAMENTAL` não têm espaço e transbordam a
+    coluna, invadindo a seguinte. O `\\allowbreak` após cada sublinhado dá ao LaTeX onde
+    quebrar, sem hifenizar nem alterar o texto. A remoção de contrabarras acontece ANTES na
+    cadeia, de modo que o comando inserido aqui sobrevive.
+    """
+    return (str(s).replace("\\", "").replace("_", r"\_\allowbreak ")
+            .replace("%", r"\%").replace("&", r"\&").replace("#", r"\#"))
 
 
 def _tabela(df: pd.DataFrame, caption: str, label: str, colspec: str | None = None,
-            max_linhas: int | None = None, longa: bool = False) -> str:
+            max_linhas: int | None = None, longa: bool = False,
+            fonte: str = "small", regua_por_linha: bool = False) -> str:
     """Monta a tabela em LaTeX.
 
     `longa=True` usa `longtable`, que quebra entre páginas. Sem isso uma tabela mais alta
     que a página é SILENCIOSAMENTE CORTADA pelo `table`, e o leitor perde linhas sem
     qualquer aviso. Toda tabela com dezenas de linhas precisa disso.
+
+    `regua_por_linha=True` desenha um filete entre registros. Serve às tabelas cujas
+    células ocupam várias linhas de texto: sem o filete, não se distingue onde termina um
+    registro e começa o seguinte.
     """
     d = df if max_linhas is None else df.head(max_linhas)
     cols = list(d.columns)
@@ -87,13 +99,20 @@ def _tabela(df: pd.DataFrame, caption: str, label: str, colspec: str | None = No
         vals = []
         for v in r:
             if isinstance(v, float):
-                vals.append("" if pd.isna(v) else f"{v:.3f}")
+                if pd.isna(v):
+                    vals.append("")
+                elif float(v).is_integer():
+                    vals.append(str(int(v)))
+                else:
+                    vals.append(f"{v:.3f}")
             else:
                 vals.append("" if (v is None or str(v) in ("nan", "None")) else _esc(v))
         corpo.append(" & ".join(vals) + r" \\")
+        if regua_por_linha:
+            corpo.append(r"\hline")
 
     if longa:
-        out = [r"\begingroup", r"\small", rf"\begin{{longtable}}{{{spec}}}",
+        out = [r"\begingroup", "\\" + fonte, rf"\begin{{longtable}}{{{spec}}}",
                r"\caption{{\bf " + caption + r"}}", rf"\label{{{label}}}", r"\\",
                r"\hline", cabecalho, r"\endfirsthead",
                r"\hline", cabecalho, r"\endhead",
@@ -101,7 +120,7 @@ def _tabela(df: pd.DataFrame, caption: str, label: str, colspec: str | None = No
                r"\end{longtable}", r"\endgroup"]
         return "\n".join(out)
 
-    out = [r"\begin{table}[!ht]", r"\small",
+    out = [r"\begin{table}[!ht]", "\\" + fonte,
            r"\caption{{\bf " + caption + r"}}", rf"\label{{{label}}}",
            rf"\begin{{tabular}}{{{spec}}}", r"\hline", cabecalho,
            *corpo, r"\hline", r"\end{tabular}", r"\end{table}"]
@@ -137,6 +156,8 @@ def main() -> None:
         d = pd.read_csv(p)
         d = d[["Algorithm", "Family", "Library", "Class", "Input", "Hyperparameters",
                "Evaluated"]]
+        d = d.rename(columns={"Hyperparameters": "Hyperpar.",
+                              "Evaluated": "In grid"})
         add(_tabela(d, "Description of every algorithm in the registry: family, "
                        "implementation, input representation, and the hyperparameters "
                        "actually used. All models run at library defaults, so the values "
@@ -145,8 +166,8 @@ def main() -> None:
                        "pre-registered training budget is given instead. Two support-vector "
                        "variants appear in the registry but were excluded before the "
                        "benchmark and are marked as such.",
-                    "tab:models", colspec="p{2.8cm}p{1.7cm}p{1.7cm}p{2.6cm}p{2.0cm}p{3.8cm}p{1.5cm}",
-                    longa=True))
+                    "tab:models", colspec="p{2.5cm}p{1.5cm}p{1.3cm}p{2.5cm}p{1.7cm}p{3.5cm}p{1.0cm}",
+                    longa=True, fonte="footnotesize", regua_por_linha=True))
         legendas.append(("S1 Table", "Description of the algorithms evaluated."))
         add(r"\clearpage")
 
@@ -306,8 +327,8 @@ def main() -> None:
         add(_tabela(d, "Variable dictionary for the feature set. `Form field` is the "
                        "position on the national notification form. Variable names follow "
                        "the SINAN field names, which are the labels shown in Fig 6 of the "
-                       "main text.", "tab:s10", colspec="p{4.6cm}rp{2.4cm}p{2.0cm}p{2.2cm}",
-                    longa=True))
+                       "main text.", "tab:s10", colspec="p{4.4cm}rp{2.2cm}p{1.9cm}p{2.1cm}",
+                    longa=True, fonte="footnotesize", regua_por_linha=True))
         legendas.append(("S12 Table", "Variable dictionary for the feature set."))
         add(r"\clearpage")
 

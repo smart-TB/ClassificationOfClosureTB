@@ -25,6 +25,7 @@ from tb_outcomes.models import build_registry, load_models_config
 # Parâmetros que definem a capacidade do modelo, por família. Mostrar get_params() inteiro
 # daria dezenas de colunas irrelevantes; mostrar nenhum deixaria a tabela sem informação.
 CHAVES = {
+    "dl": [],
     "boosting": ["n_estimators", "iterations", "learning_rate", "max_depth", "num_leaves",
                  "depth", "max_iter", "subsample"],
     "tree": ["n_estimators", "criterion", "max_depth", "min_samples_split",
@@ -33,19 +34,22 @@ CHAVES = {
     "discriminant": ["solver", "shrinkage", "reg_param"],
     "nb": ["alpha", "var_smoothing", "binarize", "fit_prior"],
     "neighbors": ["n_neighbors", "weights", "metric", "p"],
-    "neural net": ["hidden_layer_sizes", "activation", "alpha", "max_iter", "solver"],
+    "neural": ["hidden_layer_sizes", "activation", "alpha", "max_iter", "solver"],
+    "svm": ["C", "kernel", "gamma", "max_iter"],
     "baseline": ["strategy"],
 }
 FAMILIA_PT = {
     "boosting": "Boosting", "tree": "Árvore", "linear": "Linear",
     "discriminant": "Discriminante", "nb": "Naive Bayes", "neighbors": "Vizinhos",
-    "neural net": "Rede neural", "deep learning": "Aprendizado profundo",
+    "neural": "Rede neural", "dl": "Aprendizado profundo",
+    "svm": "Vetores de suporte",
     "baseline": "Referência",
 }
 FAMILIA_EN = {
     "boosting": "Boosting", "tree": "Tree ensemble", "linear": "Linear",
     "discriminant": "Discriminant", "nb": "Naive Bayes", "neighbors": "Neighbours",
-    "neural net": "Neural network", "deep learning": "Deep learning",
+    "neural": "Neural network", "dl": "Deep learning",
+    "svm": "Support vector",
     "baseline": "Baseline",
 }
 PERFIL = {
@@ -84,14 +88,17 @@ def main() -> None:
         if est is not None:
             lib = type(est).__module__.split(".")[0]
             # "Classifier" é sufixo de toda classe sklearn e só consome largura
-            cls = re.sub(r"Classifier$", "", type(est).__name__)
+            cls = re.sub(r"(Classifier|Analysis)$", "", type(est).__name__)
             params = est.get_params()
             chaves = CHAVES.get(fam, [])
             partes = [f"{k}={_fmt(params[k])}" for k in chaves if k in params]
             hp = "; ".join(partes) if partes else "library defaults"
         else:
             # DL: o orçamento é pré-registrado, não vem de get_params()
-            lib, cls = "pytorch-tabular", entry.family
+            # o adapter DL não expõe estimador; a "classe" aqui é a arquitetura
+            ARQ = {"category_embedding": "CategoryEmbedding", "tabnet": "TabNet",
+                   "tab_transformer": "TabTransformer", "ft_transformer": "FTTransformer"}
+            lib, cls = "pytorch-tabular", ARQ.get(nome, nome)
             hp = (f"max\\_epochs={dl['max_epochs']}; "
                   f"early\\_stopping\\_patience={dl['early_stopping_patience']}; "
                   f"batch\\_size={dl['batch_size']}; "

@@ -30,6 +30,8 @@ ALGORITMOS = {
     "bernoulli_nb": "Bernoulli naive Bayes",
     "complement_nb": "Complement naive Bayes",
     "knn": "k-nearest neighbours",
+    "linear_svc": "Linear support vector classifier",
+    "rbf_svm": "Support vector classifier (RBF kernel)",
     "mlp": "Multilayer perceptron",
     "tabnet": "TabNet",
     "ft_transformer": "FT-Transformer",
