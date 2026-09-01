@@ -975,6 +975,83 @@ def fig_rank_bump(robust_long, out_name: str = "26_rank_bump_across_k"):
     return _save(fig, out_name)
 
 
+# ---------------------------------------------------------------------------
+# Atribuição SHAP e utilidade programática (§4.2 e §3.8)
+# ---------------------------------------------------------------------------
+
+
+def fig_shap_by_class(top_n: int = 15, out_name: str = "27_shap_by_class"):
+    """Fig — atribuição SHAP por classe, com a direção do efeito.
+
+    Barra horizontal ordenada por |SHAP| médio; a cor codifica o sinal do SHAP médio, que
+    é a direção que a §4.2 exige reportar. Magnitude sem direção não diz se a variável
+    empurra para a classe ou contra ela.
+    """
+    import numpy as np
+
+    _style()
+    d = pd.read_csv(DATA_DIR / "shap_summary.csv")
+    d = d[d["_run"] == d["_run"].iloc[0]]
+    classes = [c for c in ("tb_death", "treatment_interruption", "cure")
+               if c in set(d["classe"])]
+
+    fig, axes = plt.subplots(1, len(classes), figsize=(4.6 * len(classes), 5.6), sharex=False)
+    axes = np.atleast_1d(axes)
+    for ax, classe in zip(axes, classes):
+        g = d[d["classe"] == classe].nsmallest(top_n, "rank").iloc[::-1]
+        cores = ["#e34948" if v > 0 else "#2a78d6" for v in g["mean_shap"]]
+        ax.barh(range(len(g)), g["mean_abs_shap"], color=cores, zorder=3)
+        ax.set_yticks(range(len(g)))
+        ax.set_yticklabels(g["feature"], fontsize=8)
+        ax.grid(axis="y", visible=False)
+        ax.set_xlabel("Mean |SHAP|")
+        rot = OUTCOME.get(classe, (classe, INK2))[0]
+        _titles(ax, rot, "red = pushes toward the class; blue = away")
+    fig.tight_layout()
+    return _save(fig, out_name)
+
+
+def fig_decision_curves(out_name: str = "28_decision_curves"):
+    """Fig — curva de decisão: modelo, baseline clínico e as duas referências.
+
+    O par de referências (`intervir em todos` e `não intervir`) não é formalidade: são as
+    políticas que o serviço já tem. Sem elas, a curva do modelo não significa nada.
+    """
+    _style()
+    c = pd.read_csv(DATA_DIR / "utility_decision_curve.csv")
+    classes = [x for x in ("tb_death", "treatment_interruption") if x in set(c["classe"])]
+
+    fig, axes = plt.subplots(1, len(classes), figsize=(5.4 * len(classes), 4.6))
+    axes = [axes] if len(classes) == 1 else list(axes)
+    for ax, classe in zip(axes, classes):
+        g = c[c["classe"] == classe]
+        mod = g[g["arm"] == "modelo_completo"].sort_values("threshold")
+        base = g[g["arm"] == "baseline_clinico"].sort_values("threshold")
+        # o matplotlib desta versão não aceita Series do pandas como eixo
+        x = mod["threshold"].to_numpy()
+        ax.plot(x, mod["nb_modelo"].to_numpy(), color="#2a78d6", lw=2.2,
+                label="Model", zorder=4)
+        if len(base):
+            ax.plot(base["threshold"].to_numpy(), base["nb_modelo"].to_numpy(),
+                    color="#eda100", lw=2.0, label="Clinical rule", zorder=3)
+        ax.plot(x, mod["nb_intervir_em_todos"].to_numpy(), color=INK2, lw=1.4,
+                ls="--", label="Treat all", zorder=2)
+        ax.axhline(0.0, color=INK2, lw=1.0, ls=":", label="Treat none", zorder=2)
+        # abaixo de zero a política perde para não fazer nada; o eixo mostra a faixa útil
+        ax.set_ylim(min(-0.02, float(mod["nb_modelo"].min()) - 0.01),
+                    float(mod["nb_modelo"].max()) * 1.25 + 0.01)
+        ax.set_xlabel("Threshold probability")
+        ax.set_ylabel("Net benefit")
+        ax.legend(fontsize=8.5, frameon=False)
+        rot = OUTCOME.get(classe, (classe, INK2))[0]
+        _titles(ax, rot, "above both references = the model adds value")
+    fig.tight_layout()
+    return _save(fig, out_name)
+
+
+MANUSCRIPT_EXTRA_FIGURES = [fig_shap_by_class, fig_decision_curves]
+
+
 if __name__ == "__main__":
     for fn in COHORT_ICC_FIGURES:
         print(fn())
