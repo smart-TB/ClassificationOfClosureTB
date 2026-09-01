@@ -626,7 +626,8 @@ def fig_ece_before_after() -> Path:
     ax.set_yticklabels(b["model"], fontsize=8)
     ax.invert_yaxis()
     ax.set_xlabel("ECE · TB death")
-    ax.legend(fontsize=9, frameon=False, loc="lower right")
+    ax.legend(fontsize=9, frameon=False, loc="lower right",
+              bbox_to_anchor=(1.0, -0.02))
     _titles(ax, "Expected calibration error: before vs after renormalization",
             "the SP4d design measures the distortion instead of assuming it away")
     return _save(fig, "09_ece_before_after")
@@ -675,7 +676,8 @@ def fig_guard_fractions() -> Path:
     ax.set_yticklabels(g.index, fontsize=8)
     ax.set_xlim(0, 1)
     ax.set_xlabel("Fraction of calibrator fits")
-    ax.legend(fontsize=9, frameon=False, loc="lower right")
+    ax.legend(fontsize=9, frameon=False, loc="lower right",
+              bbox_to_anchor=(1.0, -0.02))
     _titles(ax, "Isotonic↔Platt guard: where the rare class forced a fallback",
             "the guard turns the data-scarcity decision into a number (SP4d)")
     return _save(fig, "11_guard_fractions")
@@ -1049,7 +1051,102 @@ def fig_decision_curves(out_name: str = "28_decision_curves"):
     return _save(fig, out_name)
 
 
-MANUSCRIPT_EXTRA_FIGURES = [fig_shap_by_class, fig_decision_curves]
+def fig_ablation_arms(out_name: str = "29_ablation_arms"):
+    """Fig — ablação territorial: os três braços por modelo, contra o piso.
+
+    O achado é uma COMPARAÇÃO com um limiar, e comparação com limiar se lê melhor em
+    figura que em tabela: a linha do piso mostra de imediato que o braço municipal não
+    sai do chão, o que uma coluna de números não entrega na mesma velocidade.
+    """
+    import numpy as np
+
+    from tb_outcomes.robustness import leaderboard
+
+    _style()
+    ab = pd.read_csv(DATA_DIR / "ablation" / "ablation_leaderboard.csv")
+    piso = float(leaderboard(pd.read_csv(DATA_DIR / "benchmark_metrics.csv"),
+                             models=["majority_class", "stratified_random"])["f1_macro"].max())
+    from tb_outcomes.labels import algoritmo
+
+    ab = ab.sort_values("combined", ascending=True)
+    modelos = [algoritmo(m) for m in ab["model"]]
+    y = np.arange(len(modelos))
+    alt = 0.26
+    cores = {"individual": "#2a78d6", "municipal": "#e34948", "combined": "#008300"}
+    rot = {"individual": "Individual variables", "municipal": "Municipal variables",
+           "combined": "Both"}
+
+    fig, ax = plt.subplots(figsize=(9.0, 4.6))
+    ax.grid(axis="y", visible=False)
+    for i, arm in enumerate(("individual", "municipal", "combined")):
+        if arm not in ab:
+            continue
+        ax.barh(y + (i - 1) * alt, ab[arm].to_numpy(), height=alt, color=cores[arm],
+                label=rot[arm], zorder=3)
+    ax.axvline(piso, color=INK2, lw=1.6, ls="--", zorder=4)
+    ax.text(piso, len(modelos) - 0.35, f"  majority-class floor ({piso:.3f})",
+            color=INK2, fontsize=9, va="center")
+    ax.set_yticks(y)
+    ax.set_yticklabels(modelos, fontsize=9)
+    ax.set_xlabel("Macro-averaged F1")
+    ax.legend(fontsize=9, frameon=False, loc="lower right",
+              bbox_to_anchor=(1.0, -0.02))
+    _titles(ax, "Municipal variables alone do not exceed the majority-class floor",
+            "TB, Brazil · nested spatially blocked validation · whole clusters held out")
+    fig.tight_layout()
+    return _save(fig, out_name)
+
+
+def fig_equity_by_group(classe: str = "tb_death", out_name: str = "30_equity_by_group"):
+    """Fig — discriminação por subgrupo, com intervalo de confiança.
+
+    Mostra a AUC ao lado da prevalência do desfecho. É a leitura que separa iniquidade
+    real de efeito do ponto de operação: com prevalência plana, uma AUC menor é do
+    modelo, não do limiar.
+    """
+    import numpy as np
+
+    _style()
+    d = pd.read_csv(DATA_DIR / "equity_discrimination_by_group.csv")
+    d = d[(d["classe"] == classe) & (d["eixo"] == "raca_cor")]
+    d = d[~d["rotulo"].astype(str).str.contains("fora do dicion", na=False)]
+    d = d.sort_values("auc")
+    y = np.arange(len(d))
+
+    # IC de Hanley-McNeil, o mesmo usado na investigação do déficit por grupo
+    a = d["auc"].to_numpy()
+    npos = d["n_positivos"].to_numpy()
+    nneg = (d["n"] - d["n_positivos"]).to_numpy()
+    q1, q2 = a / (2 - a), 2 * a * a / (1 + a)
+    se = np.sqrt((a * (1 - a) + (npos - 1) * (q1 - a * a)
+                  + (nneg - 1) * (q2 - a * a)) / (npos * nneg))
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(9.6, 3.8),
+                                  gridspec_kw={"width_ratios": [2.1, 1]})
+    ax.grid(axis="y", visible=False)
+    ax.errorbar(a, y, xerr=1.96 * se, fmt="o", color="#2a78d6", ms=7, lw=1.6,
+                capsize=4, zorder=3)
+    ax.set_yticks(y)
+    from tb_outcomes.labels import nivel
+
+    ax.set_yticklabels([nivel("Race/colour", x) for x in d["rotulo"]],
+                       fontsize=9.5)
+    ax.set_xlabel("Area under the ROC curve (95% CI)")
+    _titles(ax, "Discrimination by race and colour",
+            f"{OUTCOME.get(classe, (classe,))[0]} · non-overlapping intervals")
+
+    ax2.grid(axis="y", visible=False)
+    ax2.barh(y, d["prevalencia"].to_numpy(), color="#b9c4cf", zorder=3)
+    ax2.set_yticks(y)
+    ax2.set_yticklabels([])
+    ax2.set_xlabel("Outcome prevalence")
+    _titles(ax2, "Prevalence", "flat across groups")
+    fig.tight_layout()
+    return _save(fig, out_name)
+
+
+MANUSCRIPT_EXTRA_FIGURES = [fig_shap_by_class, fig_decision_curves,
+                            fig_ablation_arms, fig_equity_by_group]
 
 
 if __name__ == "__main__":

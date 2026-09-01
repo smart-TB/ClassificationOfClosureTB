@@ -11,12 +11,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import sys
-
 import pandas as pd
 
-sys.path.insert(0, "scripts")
-import manuscript_labels as rot
+from tb_outcomes import labels as rot
 from tb_outcomes.robustness import leaderboard
 
 D = Path("data")
@@ -25,9 +22,6 @@ OUT = Path("manuscrito/PLOS_DigitalHealth/S1_File.tex")
 
 # (arquivo da figura, título, legenda)
 FIGURAS = [
-    ("01_ranking_f1", "Model ranking by macro-averaged F1",
-     "All algorithms under their best-performing imbalance strategy, at 50 municipality "
-     "clusters. The dashed line marks the majority-class floor."),
     ("03_strategy_heatmap", "Performance by algorithm and imbalance strategy",
      "Macro-averaged F1 for every algorithm and strategy combination. Cells left blank "
      "denote combinations that are not applicable, such as cost-sensitive weighting for "
@@ -138,6 +132,49 @@ def main() -> None:
     # ---------------------------------------------------------------- tabelas
     legendas: list[str] = []
 
+    # tabelas que saíram do corpo quando o achado passou a ser figura: os números
+    # continuam disponíveis, só não competem com a ilustração pelo espaço principal.
+    from tb_outcomes.robustness import leaderboard as _lb
+    d = _lb(pd.read_csv(D / "benchmark_metrics.csv")).sort_values(
+        "f1_macro", ascending=False).reset_index(drop=True)
+    d.insert(0, "Rank", range(1, len(d) + 1))
+    d["model"] = d["model"].map(rot.algoritmo)
+    est = {"local_cost_sensitive": "Cost-sensitive", "random_oversampling": "Oversampling",
+           "random_undersampling": "Undersampling"}
+    d["best_strategy"] = d["best_strategy"].map(lambda x: est.get(x, x))
+    d.columns = ["Rank", "Algorithm", "Best strategy", "Macro F1"]
+    add(_tabela(d, "Model ranking under nested spatially blocked validation, at 50 "
+                   "municipality clusters. Values behind Fig 2 of the main text.",
+                "tab:s1", colspec="rp{6.0cm}lr", longa=True))
+    legendas.append(("S1 Table", "Model ranking under spatially blocked validation."))
+    add(r"\clearpage")
+
+    p = D / "ablation" / "ablation_leaderboard.csv"
+    if p.exists():
+        d = pd.read_csv(p)
+        d["model"] = d["model"].map(rot.algoritmo)
+        cols = ["model"] + [c for c in ("individual", "municipal", "combined") if c in d]
+        d = d[cols]
+        d.columns = ["Algorithm", "Individual", "Municipal", "Both"]
+        add(_tabela(d, "Territorial ablation: macro-averaged F1 by feature set. Values "
+                       "behind Fig 5 of the main text.", "tab:s2", colspec="p{6.0cm}rrr"))
+        legendas.append(("S2 Table", "Territorial ablation by feature set."))
+        add(r"\clearpage")
+
+    p = D / "equity_discrimination_by_group.csv"
+    if p.exists():
+        d = pd.read_csv(p)
+        d = d[(d.eixo == "raca_cor") & (d.classe == "tb_death")].sort_values(
+            "auc", ascending=False).copy()
+        d["rotulo"] = [rot.nivel("Race/colour", x) for x in d["rotulo"]]
+        d = d[["rotulo", "n", "prevalencia", "auc", "fn_rate", "ppv"]]
+        d.columns = ["Group", "n", "Prevalence", "AUC", "False negative", "PPV"]
+        add(_tabela(d, "Discrimination for death attributed to tuberculosis by race and "
+                       "colour. Values behind Fig 7 of the main text.", "tab:s3",
+                    colspec="p{4.2cm}rrrrr"))
+        legendas.append(("S3 Table", "Discrimination by race and colour."))
+        add(r"\clearpage")
+
     p = D / "baseline_characteristics.csv"
     if p.exists():
         d = pd.read_csv(p)
@@ -158,8 +195,8 @@ def main() -> None:
                        "variable as denominator, and missingness is reported as its own "
                        "row. Levels of " + sem_dic + " are given as the SINAN code, since "
                        "the code dictionary for those fields was not available.",
-                    "tab:s1", colspec="p{3.0cm}p{5.2cm}rrr", longa=True))
-        legendas.append(("S1 Table", "Baseline characteristics of the analytic cohort."))
+                    "tab:s4", colspec="p{3.0cm}p{5.2cm}rrr", longa=True))
+        legendas.append(("S4 Table", "Baseline characteristics of the analytic cohort."))
         add(r"\clearpage")
 
     p = D / "equity_disparity.csv"
@@ -178,8 +215,8 @@ def main() -> None:
         add(_tabela(d, "False-negative rate by subgroup, under the operational decision "
                        "rule, for every axis examined. Groups whose estimate was "
                        "suppressed for small cell size are excluded from the comparison.",
-                    "tab:s2", colspec="p{2.4cm}p{2.6cm}p{3.4cm}rp{3.4cm}rr", longa=True))
-        legendas.append(("S2 Table", "False-negative rate by subgroup and axis."))
+                    "tab:s5", colspec="p{2.4cm}p{2.6cm}p{3.4cm}rp{3.4cm}rr", longa=True))
+        legendas.append(("S5 Table", "False-negative rate by subgroup and axis."))
         add(r"\clearpage")
 
     p = D / "sweep" / "rank_stability.csv"
@@ -187,8 +224,8 @@ def main() -> None:
         d = pd.read_csv(p)
         add(_tabela(d, "Rank stability across spatial granularity. Kendall's tau and "
                        "top-five overlap between the leaderboards obtained at each pair "
-                       "of cluster counts.", "tab:s3"))
-        legendas.append(("S3 Table", "Rank stability across spatial granularity."))
+                       "of cluster counts.", "tab:s6"))
+        legendas.append(("S6 Table", "Rank stability across spatial granularity."))
 
     p = D / "compute_cost_by_model.csv"
     if p.exists():
@@ -199,24 +236,24 @@ def main() -> None:
                               "min_minutos": "Min", "max_minutos": "Max",
                               "pct_do_total": "Share (\\%)"})
         add(_tabela(d, "Computational cost by algorithm, summed over imbalance "
-                       "strategies and analytical arms.", "tab:s4"))
-        legendas.append(("S4 Table", "Computational cost by algorithm."))
+                       "strategies and analytical arms.", "tab:s7"))
+        legendas.append(("S7 Table", "Computational cost by algorithm."))
         add(r"\clearpage")
 
     p = D / "fold_summary.csv"
     if p.exists():
         d = pd.read_csv(p)
         add(_tabela(d, "Composition of the outer spatial folds: number of records, "
-                       "clusters, and events per fold.", "tab:s5"))
-        legendas.append(("S5 Table", "Composition of the outer spatial folds."))
+                       "clusters, and events per fold.", "tab:s8"))
+        legendas.append(("S8 Table", "Composition of the outer spatial folds."))
 
     p = D / "cluster_summary.csv"
     if p.exists():
         d = pd.read_csv(p)
         add(_tabela(d, "Composition of the spatial clusters at the primary granularity: "
-                       "municipalities, records, and events per cluster.", "tab:s6",
+                       "municipalities, records, and events per cluster.", "tab:s9",
                     longa=True))
-        legendas.append(("S6 Table", "Composition of the spatial clusters."))
+        legendas.append(("S9 Table", "Composition of the spatial clusters."))
         add(r"\clearpage")
 
     # ---------------------------------------------------------------- figuras

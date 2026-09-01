@@ -12,12 +12,9 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-import sys
-
 import pandas as pd
 
-sys.path.insert(0, "scripts")
-import manuscript_labels as rot
+from tb_outcomes import labels as rot
 from tb_outcomes.robustness import leaderboard
 
 D = Path("data")
