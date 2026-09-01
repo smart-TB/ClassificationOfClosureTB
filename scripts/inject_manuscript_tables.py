@@ -12,8 +12,12 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import sys
+
 import pandas as pd
 
+sys.path.insert(0, "scripts")
+import manuscript_labels as rot
 from tb_outcomes.robustness import leaderboard
 
 D = Path("data")
@@ -32,7 +36,7 @@ def _wrap(nome: str, corpo: str) -> str:
 def t_cohort() -> str:
     fl = pd.read_csv(D / "cohort_flow_sensitive_tb_3class.csv")
     ex = pd.read_csv(D / "exclusion_reasons_sensitive_tb_3class.csv")
-    rot = {"municipio_irrecuperavel": "Unrecoverable municipality code",
+    motivo = {"municipio_irrecuperavel": "Unrecoverable municipality code",
            "idade_impossivel": "Impossible age",
            "fora_da_janela_declarada": "Outside the declared window",
            "seguimento_insuficiente": "Follow-up shorter than 365 days"}
@@ -48,7 +52,7 @@ def t_cohort() -> str:
     linhas.append(r"\hline")
     linhas.append(r"\multicolumn{2}{l}{\emph{Exclusions applied sequentially}} \\")
     for r in ex.itertuples():
-        linhas.append(f"\\quad {rot.get(r.reason, _esc(r.reason))} & {r.n:,} " + r"\\")
+        linhas.append(f"\\quad {motivo.get(r.reason, _esc(r.reason))} & {r.n:,} " + r"\\")
     linhas += [r"\hline", r"\end{tabular}", r"\end{table}"]
     return _wrap("cohort", "\n".join(linhas))
 
@@ -65,7 +69,7 @@ def t_leaderboard() -> str:
               r"\label{tab:leaderboard}", r"\begin{tabular}{rlcr}", r"\hline",
               r"Rank & Algorithm & Best strategy & Macro F1 \\ \hline"]
     for i, r in enumerate(lb.itertuples(), 1):
-        linhas.append(f"{i} & {_esc(r.model)} & {est.get(r.best_strategy, _esc(r.best_strategy))} "
+        linhas.append(f"{i} & {_esc(rot.algoritmo(r.model))} & {est.get(r.best_strategy, _esc(r.best_strategy))} "
                       f"& {r.f1_macro:.4f} " + r"\\")
     linhas += [r"\hline", r"\end{tabular}", r"\end{table}"]
     return _wrap("leaderboard", "\n".join(linhas))
@@ -113,7 +117,7 @@ def t_temporal() -> str:
               r"\label{tab:temporal}", r"\begin{tabular}{lccc}", r"\hline",
               r"Algorithm & Spatial & Temporal (" + ano + r") & Retained (\%) \\ \hline"]
     for r in t.itertuples():
-        linhas.append(f"{_esc(r.model)} & {r.espacial_k50:.4f} & {getattr(r, col):.4f} & "
+        linhas.append(f"{_esc(rot.algoritmo(r.model))} & {r.espacial_k50:.4f} & {getattr(r, col):.4f} & "
                       f"{r.pct_retido:.1f} " + r"\\")
     linhas += [r"\hline", r"\end{tabular}", r"\end{table}"]
     return _wrap("temporal", "\n".join(linhas))
@@ -134,7 +138,7 @@ def t_ablation() -> str:
               r"\label{tab:ablation}", r"\begin{tabular}{lccc}", r"\hline",
               r"Algorithm & Individual & Municipal & Combined \\ \hline"]
     for r in ab.itertuples():
-        linhas.append(f"{_esc(r.model)} & {r.individual:.4f} & {r.municipal:.4f} & "
+        linhas.append(f"{_esc(rot.algoritmo(r.model))} & {r.individual:.4f} & {r.municipal:.4f} & "
                       f"{r.combined:.4f} " + r"\\")
     linhas += [r"\hline", r"\end{tabular}", r"\end{table}"]
     return _wrap("ablation", "\n".join(linhas))
