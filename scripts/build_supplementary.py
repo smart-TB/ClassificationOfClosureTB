@@ -256,6 +256,22 @@ def main() -> None:
         legendas.append(("S9 Table", "Composition of the spatial clusters."))
         add(r"\clearpage")
 
+    p = D / "feature_dictionary.csv"
+    if p.exists():
+        d = pd.read_csv(p)
+        d = d[d["in_notification_set"] == True]  # noqa: E712
+        d = d[["raw_name", "form_field", "type", "source", "contextual"]].copy()
+        d["contextual"] = d["contextual"].map({True: "Municipal", False: "Individual"})
+        d.columns = ["Variable", "Form field", "Type", "Source", "Level"]
+        d = d.sort_values(["Level", "Variable"])
+        add(_tabela(d, "Variable dictionary for the feature set. `Form field` is the "
+                       "position on the national notification form. Variable names follow "
+                       "the SINAN field names, which are the labels shown in Fig 6 of the "
+                       "main text.", "tab:s10", colspec="p{4.6cm}rp{2.4cm}p{2.0cm}p{2.2cm}",
+                    longa=True))
+        legendas.append(("S10 Table", "Variable dictionary for the feature set."))
+        add(r"\clearpage")
+
     # ---------------------------------------------------------------- figuras
     for i, (arq, titulo, legenda) in enumerate(FIGURAS, 1):
         caminho = FIGS / f"{arq}.png"

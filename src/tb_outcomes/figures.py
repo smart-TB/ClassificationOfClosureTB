@@ -881,6 +881,12 @@ BENCHMARK_CE_FIGURES = [
 # ---------------------------------------------------------------------------
 
 
+def _rot_algo(model: str) -> str:
+    from tb_outcomes.labels import algoritmo
+
+    return algoritmo(model)
+
+
 def _family_color(model: str) -> str:
     # FAMILY e FAMILY_COLOR são globais do módulo (definidos acima) -> uso direto.
     return FAMILY_COLOR.get(FAMILY.get(model, "baseline"), INK2)
@@ -930,7 +936,8 @@ def fig_leaderboard_across_k(robust_long, out_name: str = "25_leaderboard_across
         # fio de ligação quando o rótulo teve de sair de cima do fim da linha
         if abs(y - y0) > (hi - lo) * 0.004:
             ax.plot([x - 1.0, x - 0.2], [y0, y], color=c, lw=0.7, alpha=0.55, zorder=2)
-        ax.text(x, y, model, color=c, va="center", fontsize=8.5, fontweight="bold")
+        ax.text(x, y, _rot_algo(model), color=c, va="center", fontsize=8.5,
+                fontweight="bold")
     pad = (hi - lo) * 0.03
     ax.set_ylim(min(lo, min(ys) - pad), max(hi, max(ys) + pad))
     ax.set_xlabel("Spatial clustering granularity k (number of municipality clusters)")
@@ -962,7 +969,7 @@ def fig_rank_bump(robust_long, out_name: str = "26_rank_bump_across_k"):
     for (x, y0, model, c), y in zip(tags, ys):
         if abs(y - y0) > 0.02:
             ax.plot([x + 0.2, x + 1.0], [y, y0], color=c, lw=0.7, alpha=0.55, zorder=2)
-        ax.text(x, y, model, color=c, va="center", ha="right",
+        ax.text(x, y, _rot_algo(model), color=c, va="center", ha="right",
                 fontsize=8.5, fontweight="bold")
     ax.set_xticks(ks)
     ax.set_xlim(ks[0] - 14, ks[-1] + 2)
@@ -997,14 +1004,16 @@ def fig_shap_by_class(top_n: int = 15, out_name: str = "27_shap_by_class"):
     classes = [c for c in ("tb_death", "treatment_interruption", "cure")
                if c in set(d["classe"])]
 
-    fig, axes = plt.subplots(1, len(classes), figsize=(4.6 * len(classes), 5.6), sharex=False)
+    # painéis EMPILHADOS, não lado a lado. A coluna de texto da PLOS é estreita: três
+    # painéis em linha reduzem os nomes das variáveis a algo ilegível na página.
+    fig, axes = plt.subplots(len(classes), 1, figsize=(7.0, 3.1 * len(classes)))
     axes = np.atleast_1d(axes)
     for ax, classe in zip(axes, classes):
         g = d[d["classe"] == classe].nsmallest(top_n, "rank").iloc[::-1]
         cores = ["#e34948" if v > 0 else "#2a78d6" for v in g["mean_shap"]]
         ax.barh(range(len(g)), g["mean_abs_shap"], color=cores, zorder=3)
         ax.set_yticks(range(len(g)))
-        ax.set_yticklabels(g["feature"], fontsize=8)
+        ax.set_yticklabels(g["feature"], fontsize=8.5)
         ax.grid(axis="y", visible=False)
         ax.set_xlabel("Mean |SHAP|")
         rot = OUTCOME.get(classe, (classe, INK2))[0]
