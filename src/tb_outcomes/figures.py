@@ -97,26 +97,50 @@ def _thousands(n: int) -> str:
 
 
 def fig_cohort_funnel() -> Path:
-    """Fig 15 — funil de atrito da coorte (recuperada -> analítica)."""
+    """Fig 15 — funil de atrito da coorte, com o MOTIVO de cada perda.
+
+    Os motivos entram na própria figura para que ela dispense a tabela de fluxo: as duas
+    diziam a mesma coisa e disputavam espaço. O texto entre as barras é a diferença
+    observada entre os estágios, e não a soma dos critérios, porque os critérios são
+    aplicados em sequência e um registro excluído por um não é recontado pelo seguinte.
+    """
     flow = pd.read_csv(DATA_DIR / f"cohort_flow_{SCHEMA}.csv")
     labels = {"recuperada": "Acquired", "declarada": "Notified (2015–2025)",
               "elegivel": "Eligible", "analitica": "Analytic"}
     flow["label"] = flow["stage"].map(labels)
     base = flow["n"].iloc[0]
 
-    fig, ax = plt.subplots(figsize=(8.4, 3.8))
+    # motivo declarado de cada transição, na ordem dos estágios
+    motivos = ["outside the declared window,\nunrecoverable municipality, impossible age",
+               "follow-up shorter than 365 days",
+               "closure outside the three-outcome scheme"]
+
+    fig, ax = plt.subplots(figsize=(8.8, 4.4))
     ax.grid(axis="y", visible=False)
     ax.grid(axis="x", zorder=0)
-    y = range(len(flow))[::-1]  # topo = primeira etapa
+    y = list(range(len(flow)))[::-1]  # topo = primeira etapa
     colors = BLUE_SEQ[1:1 + len(flow)]
-    ax.barh(list(y), flow["n"], color=colors, height=0.62, zorder=3)
+    ax.barh(y, flow["n"], color=colors, height=0.52, zorder=3)
     for yi, (_, r) in zip(y, flow.iterrows()):
         pct = 100 * r["n"] / base
-        ax.text(r["n"] + base * 0.01, yi, f"{_thousands(int(r['n']))}  ({pct:.1f}%)",
+        ax.text(r["n"] + base * 0.012, yi, f"{_thousands(int(r['n']))}  ({pct:.1f}%)",
                 va="center", ha="left", fontsize=10, color=INK)
-    ax.set_yticks(list(y))
+
+    # perda e motivo, no vão entre uma barra e a seguinte
+    ns = flow["n"].tolist()
+    for i in range(len(ns) - 1):
+        perda = ns[i] - ns[i + 1]
+        ax.annotate("", xy=(base * 0.035, y[i + 1] + 0.26),
+                    xytext=(base * 0.035, y[i] - 0.26),
+                    arrowprops=dict(arrowstyle="-|>", color=INK2, lw=1.1))
+        ax.text(base * 0.055, (y[i] + y[i + 1]) / 2,
+                f"−{_thousands(perda)}   {motivos[i]}",
+                va="center", ha="left", fontsize=8.2, color=INK2)
+
+    ax.set_yticks(y)
     ax.set_yticklabels(flow["label"])
-    ax.set_xlim(0, base * 1.18)
+    ax.set_ylim(-0.7, len(flow) - 0.3)
+    ax.set_xlim(0, base * 1.20)
     ax.set_xlabel("Number of notifications")
     _titles(ax, "Cohort attrition: from acquisition to the analytic population",
             "TB, Brazil, 2015–2025 · closed 3-outcome benchmark (cure · interruption · TB death)")
@@ -373,8 +397,9 @@ def fig_ranking_f1() -> Path:
     ax.axvline(0.289, color=INK2, ls="--", lw=1.0, zorder=1)
     ax.text(0.289, len(b) - 0.5, " majority\n baseline", fontsize=8, color=INK2, va="top")
     ax.set_yticks(list(y))
-    ax.set_yticklabels([f"{m}  [{STRAT_LABEL.get(s, s)}]" for m, s in zip(b["model"], b["strategy"])],
-                       fontsize=9)
+    ax.set_yticklabels(
+        [f"{_rot_algo(m)}  [{STRAT_LABEL.get(s, s)}]"
+         for m, s in zip(b["model"], b["strategy"])], fontsize=9)
     ax.set_xlabel("Macro-F1 (mean across 5 outer folds; bar = min–max)")
     _titles(ax, "Model ranking under nested spatial cross-validation",
             "closed 3-outcome benchmark · colour = model family · no winner promoted")
