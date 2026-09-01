@@ -132,6 +132,24 @@ def main() -> None:
     # ---------------------------------------------------------------- tabelas
     legendas: list[str] = []
 
+    p = D / "model_description.csv"
+    if p.exists():
+        d = pd.read_csv(p)
+        d = d[["Algorithm", "Family", "Library", "Class", "Input", "Hyperparameters",
+               "Evaluated"]]
+        add(_tabela(d, "Description of every algorithm in the registry: family, "
+                       "implementation, input representation, and the hyperparameters "
+                       "actually used. All models run at library defaults, so the values "
+                       "shown are the defaults of the pinned library versions rather than "
+                       "chosen settings; for the deep learning architectures the "
+                       "pre-registered training budget is given instead. Two support-vector "
+                       "variants appear in the registry but were excluded before the "
+                       "benchmark and are marked as such.",
+                    "tab:models", colspec="p{2.8cm}p{1.7cm}p{1.7cm}p{2.6cm}p{2.0cm}p{3.8cm}p{1.5cm}",
+                    longa=True))
+        legendas.append(("S1 Table", "Description of the algorithms evaluated."))
+        add(r"\clearpage")
+
     # fluxo da coorte: saiu do corpo quando a Fig 1 passou a trazer os motivos, mas os
     # números exatos por critério continuam disponíveis aqui.
     fl = pd.read_csv(D / "cohort_flow_sensitive_tb_3class.csv")
@@ -150,7 +168,7 @@ def main() -> None:
     add(_tabela(pd.DataFrame(linhas), "Cohort definition and exclusions. Stage counts and "
                 "the number removed by each criterion. Criteria are applied in sequence. "
                 "Values behind Fig 1 of the main text.", "tab:s0", colspec="p{9.0cm}r"))
-    legendas.append(("S1 Table", "Cohort definition and exclusions."))
+    legendas.append(("S2 Table", "Cohort definition and exclusions."))
     add(r"\clearpage")
 
     # tabelas que saíram do corpo quando o achado passou a ser figura: os números
@@ -167,7 +185,7 @@ def main() -> None:
     add(_tabela(d, "Model ranking under nested spatially blocked validation, at 50 "
                    "municipality clusters. Values behind Fig 2 of the main text.",
                 "tab:s1", colspec="rp{6.0cm}lr", longa=True))
-    legendas.append(("S2 Table", "Model ranking under spatially blocked validation."))
+    legendas.append(("S3 Table", "Model ranking under spatially blocked validation."))
     add(r"\clearpage")
 
     p = D / "ablation" / "ablation_leaderboard.csv"
@@ -179,7 +197,7 @@ def main() -> None:
         d.columns = ["Algorithm", "Individual", "Municipal", "Both"]
         add(_tabela(d, "Territorial ablation: macro-averaged F1 by feature set. Values "
                        "behind Fig 5 of the main text.", "tab:s2", colspec="p{6.0cm}rrr"))
-        legendas.append(("S3 Table", "Territorial ablation by feature set."))
+        legendas.append(("S4 Table", "Territorial ablation by feature set."))
         add(r"\clearpage")
 
     p = D / "equity_discrimination_by_group.csv"
@@ -193,7 +211,7 @@ def main() -> None:
         add(_tabela(d, "Discrimination for death attributed to tuberculosis by race and "
                        "colour. Values behind Fig 7 of the main text.", "tab:s3",
                     colspec="p{4.2cm}rrrrr"))
-        legendas.append(("S4 Table", "Discrimination by race and colour."))
+        legendas.append(("S5 Table", "Discrimination by race and colour."))
         add(r"\clearpage")
 
     p = D / "baseline_characteristics.csv"
@@ -217,7 +235,7 @@ def main() -> None:
                        "row. Levels of " + sem_dic + " are given as the SINAN code, since "
                        "the code dictionary for those fields was not available.",
                     "tab:s4", colspec="p{3.0cm}p{5.2cm}rrr", longa=True))
-        legendas.append(("S5 Table", "Baseline characteristics of the analytic cohort."))
+        legendas.append(("S6 Table", "Baseline characteristics of the analytic cohort."))
         add(r"\clearpage")
 
     p = D / "equity_disparity.csv"
@@ -237,7 +255,7 @@ def main() -> None:
                        "rule, for every axis examined. Groups whose estimate was "
                        "suppressed for small cell size are excluded from the comparison.",
                     "tab:s5", colspec="p{2.4cm}p{2.6cm}p{3.4cm}rp{3.4cm}rr", longa=True))
-        legendas.append(("S6 Table", "False-negative rate by subgroup and axis."))
+        legendas.append(("S7 Table", "False-negative rate by subgroup and axis."))
         add(r"\clearpage")
 
     p = D / "sweep" / "rank_stability.csv"
@@ -246,7 +264,7 @@ def main() -> None:
         add(_tabela(d, "Rank stability across spatial granularity. Kendall's tau and "
                        "top-five overlap between the leaderboards obtained at each pair "
                        "of cluster counts.", "tab:s6"))
-        legendas.append(("S7 Table", "Rank stability across spatial granularity."))
+        legendas.append(("S8 Table", "Rank stability across spatial granularity."))
 
     p = D / "compute_cost_by_model.csv"
     if p.exists():
@@ -258,7 +276,7 @@ def main() -> None:
                               "pct_do_total": "Share (\\%)"})
         add(_tabela(d, "Computational cost by algorithm, summed over imbalance "
                        "strategies and analytical arms.", "tab:s7"))
-        legendas.append(("S8 Table", "Computational cost by algorithm."))
+        legendas.append(("S9 Table", "Computational cost by algorithm."))
         add(r"\clearpage")
 
     p = D / "fold_summary.csv"
@@ -266,7 +284,7 @@ def main() -> None:
         d = pd.read_csv(p)
         add(_tabela(d, "Composition of the outer spatial folds: number of records, "
                        "clusters, and events per fold.", "tab:s8"))
-        legendas.append(("S9 Table", "Composition of the outer spatial folds."))
+        legendas.append(("S10 Table", "Composition of the outer spatial folds."))
 
     p = D / "cluster_summary.csv"
     if p.exists():
@@ -274,7 +292,7 @@ def main() -> None:
         add(_tabela(d, "Composition of the spatial clusters at the primary granularity: "
                        "municipalities, records, and events per cluster.", "tab:s9",
                     longa=True))
-        legendas.append(("S10 Table", "Composition of the spatial clusters."))
+        legendas.append(("S11 Table", "Composition of the spatial clusters."))
         add(r"\clearpage")
 
     p = D / "feature_dictionary.csv"
@@ -290,7 +308,7 @@ def main() -> None:
                        "the SINAN field names, which are the labels shown in Fig 6 of the "
                        "main text.", "tab:s10", colspec="p{4.6cm}rp{2.4cm}p{2.0cm}p{2.2cm}",
                     longa=True))
-        legendas.append(("S11 Table", "Variable dictionary for the feature set."))
+        legendas.append(("S12 Table", "Variable dictionary for the feature set."))
         add(r"\clearpage")
 
     # ---------------------------------------------------------------- figuras
