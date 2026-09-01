@@ -78,3 +78,6 @@ Thumbs.db
 # Árvore montada do depósito (resultado + material restrito); é gerada por
 # `tb-outcomes build-deposit` e vai ao Zenodo, não ao repositório de código.
 /deposit/
+
+# Manuscrito: texto, template e PDFs. É conteúdo de publicação, não código.
+/manuscrito/
