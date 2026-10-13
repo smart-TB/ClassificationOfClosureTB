@@ -118,6 +118,10 @@ GERADORES = {"byclass": t_byclass, "temporal": t_temporal, "utility": t_utility}
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("inject_ptbr_tables.py", "python scripts/editorial/tabelas_c7.py")
     tex = TEX.read_text(encoding="utf-8")
     feitas = []
     for nome, fn in GERADORES.items():

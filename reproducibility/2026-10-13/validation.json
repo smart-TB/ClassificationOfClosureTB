@@ -1,0 +1,8 @@
+{
+  "checked": "2026-10-13",
+  "tests_passed": 103,
+  "dependency_warnings": 17,
+  "cohort_reconstruction": "passed; 1326538 source, 842250 analytic, 707870 development, 92152 temporal, 42228 unused future",
+  "source_hash": "88c0d6e4750326696305b2cca50dc3c936c4693ae2e09613a6752a095acaac67",
+  "scope": "Targeted cohort, maturation, feature, temporal partition, nested selection, executor IO and GB parallel tests. No full model retraining."
+}

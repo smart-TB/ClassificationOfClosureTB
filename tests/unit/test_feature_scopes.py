@@ -32,8 +32,8 @@ def test_baseline_clinico_e_subconjunto_nomeado():
     X = pd.DataFrame({c: [0, 1] for c in dict.fromkeys(cols)})
     b = select_feature_scope(X, specs, "clinical_baseline")
     assert list(b.columns) == list(CLINICAL_BASELINE_FEATURES)
-    # idade + HIV + álcool/drogas + situação de rua, como manda a §3.8
-    assert set(b.columns) == {"IDADE", "hiv_pos_model", "AGRAVALCOO", "AGRAVDROGA", "POP_RUA"}
+    # AIDS declarada na notificação; HIV final não comprova disponibilidade basal.
+    assert set(b.columns) == {"IDADE", "AGRAVAIDS", "AGRAVALCOO", "AGRAVDROGA", "POP_RUA"}
 
 
 def test_baseline_clinico_falha_se_faltar_variavel():

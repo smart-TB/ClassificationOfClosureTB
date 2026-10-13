@@ -41,6 +41,10 @@ CONTINUAS = [("IDADE", "Age (years)")]
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("build_baseline_table.py", "python scripts/build_supplementary.py")
     cfg = load_executor_config(EXECUTOR)
     X, y, *_ = _load_benchmark_inputs(cfg, False)
     y = pd.Series(y).reset_index(drop=True)

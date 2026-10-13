@@ -3,18 +3,27 @@
 study:
   protocol_status: "retrospective_protocol"
   protocol_uri: null
-  # Maior DT_NOTIFIC observada no snapshot; confirmada em 2026-07-15.
-  data_extraction_date: "2026-04-07"
-  source_snapshot_id: "sinan-tb-2026-04-07"
+  # Data de extração informada pelo PI em 19/09/2026: 15/07/2026.
+  # Evidência: docs/manuscrito/colaboracao/codex/extraction_provenance.json.
+  # A maior DT_NOTIFIC (07/04/2026) não era evidência de extração.
+  data_extraction_date: "2026-07-15"
+  source_snapshot_id: "sinan-tb-extraction-2026-07-15-pi-declared"
   # Decisão clínica do PI (2026-07-19): benchmark fechado nos 3 desfechos de maior
   # impacto para TB sensível — cura, interrupção (códigos 2+10), óbito por TB (código 3).
   primary_target_schema: "sensitive_tb_3class"
   # Tempo zero = notificação/diagnóstico: o abandono primário (nunca iniciou) é
   # população em risco e entra como não-início/interrupção.
   primary_prediction_time: "notification"
+  # PI confirmou em 19/09/2026: contexto pré-estudo no principal;
+  # contexto contemporâneo somente em sensibilidade com disponibilidade incerta.
+  primary_context_profile: "baseline"
   minimum_followup_days: 365
+  # Auditada antes da exclusão por desfecho: 2025 permanece incompleto até com 365 dias.
+  # Formas prolongadas/incertas: 15 meses de calendário; sensibilidade: calendar_by_form.
+  # Marco: notificação; proxy de esquema esperado, não duração observada de tratamento.
+  maturation_rule: "days_by_form"
   temporal_validation_enabled: true
-  # Último ano completamente observável sob a regra de 365 dias.
+  # 2024 atende à maturação, mas ainda tem desfechos ausentes e já foi explorado.
   temporal_test_period: "2024"
   cohort_year_min: 2015
   cohort_year_max: 2025

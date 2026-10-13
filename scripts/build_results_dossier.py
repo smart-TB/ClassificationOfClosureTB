@@ -292,6 +292,10 @@ def _linhas() -> list[str]:
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("build_results_dossier.py", "python scripts/editorial/dossie_c7.py")
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(_linhas()), encoding="utf-8")
     print(f"gravado: {OUT} ({OUT.stat().st_size / 1024:.1f} KB)")

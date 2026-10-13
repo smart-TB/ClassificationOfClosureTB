@@ -1,0 +1,17 @@
+model,strategy,outer_fold,class,stage,log_loss,brier_ovr,ece_fixed,ece_adaptive,cal_slope,cal_intercept,selected_model,selected_strategy,kind,brier_multiclass,axis,recall,precision,auprc,roc_auc,f1_macro,balanced_accuracy
+nested_selection_procedure,selected_in_development,holdout_2024,0,pre_renorm,0.49536546934410797,0.16203003715834022,0.02639182965199576,0.026391829651995786,0.9859296223946771,-0.1558191179434806,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,1,pre_renorm,0.15983039730809853,0.04157576659589828,0.004876930461122283,0.005111913918387606,1.0107218580258974,0.1489078829744891,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,2,pre_renorm,0.44737203552217836,0.14314152411613285,0.021535170398106717,0.021535170398106714,0.9729212011938496,0.12700261222837392,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,__global__,pre_renorm,0.5905263210424084,,,,,,lightgbm,none,per_fold,0.34674732787037127,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,0,post_renorm,0.4996769704611637,0.1633750092629361,0.028843167709844783,0.03504733317071538,0.9832196292908468,-0.11048813243595453,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,1,post_renorm,0.16796454435549021,0.04242789565628013,0.008829189349767065,0.02045614600939631,1.1411255567147782,0.6080720497554131,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,2,post_renorm,0.45080159747915055,0.14402396921688315,0.0328525645099698,0.03126800017944422,0.9648255163839159,0.04829017577033127,lightgbm,none,per_fold,,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,__global__,post_renorm,0.6018659611537646,,,,,,lightgbm,none,per_fold,0.3498268741360994,,,,,,,
+nested_selection_procedure,selected_in_development,holdout_2024,0,,,,,,,,lightgbm,none,per_fold,,discrimination,0.9379716909647501,0.7818919123777761,0.8812397404030002,0.7715007398781643,,
+nested_selection_procedure,selected_in_development,holdout_2024,1,,,,,,,,lightgbm,none,per_fold,,discrimination,0.08541941150636803,0.5589080459770115,0.2571425896205727,0.82159127770999,,
+nested_selection_procedure,selected_in_development,holdout_2024,2,,,,,,,,lightgbm,none,per_fold,,discrimination,0.3572089579863039,0.6277443486745813,0.5511384123262214,0.7828363282225519,,
+nested_selection_procedure,selected_in_development,holdout_2024,__global__,,,,,,,,lightgbm,none,per_fold,,discrimination,,,,,0.4854543245489435,0.460200020152474
+nested_selection_procedure,selected_in_development,holdout_2024,0,,,,,,,,lightgbm,none,per_fold,,secondary_policy,0.7813627133028218,0.8366300485176952,0.8812397404030002,0.7715007398781643,,
+nested_selection_procedure,selected_in_development,holdout_2024,1,,,,,,,,lightgbm,none,per_fold,,secondary_policy,0.3339920948616601,0.2722878625134264,0.2571425896205727,0.82159127770999,,
+nested_selection_procedure,selected_in_development,holdout_2024,2,,,,,,,,lightgbm,none,per_fold,,secondary_policy,0.5808809920414585,0.5033882673723886,0.5511384123262214,0.7828363282225519,,
+nested_selection_procedure,selected_in_development,holdout_2024,__global__,,,,,,,,lightgbm,none,per_fold,,secondary_policy,,,,,0.5491392994363754,0.5654119334019801

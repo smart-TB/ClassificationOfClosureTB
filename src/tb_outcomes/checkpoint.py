@@ -14,6 +14,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from tb_outcomes.run_identity import file_sha256
+
 
 def _slug(model: str, strategy: str) -> str:
     return f"{model}__{strategy}"
@@ -26,8 +28,15 @@ def pair_paths(checkpoint_dir, model: str, strategy: str) -> tuple[Path, Path]:
 
 
 def pair_checkpoint_exists(checkpoint_dir, model: str, strategy: str) -> bool:
-    _, meta_path = pair_paths(checkpoint_dir, model, strategy)
-    return meta_path.exists()
+    oof_path, meta_path = pair_paths(checkpoint_dir, model, strategy)
+    try:
+        meta = json.loads(meta_path.read_text())
+        if meta.get("checkpoint_version") != 2 or meta["status_row"]["status"] == "error":
+            return False
+        return (not meta["has_oof"] or
+                (oof_path.is_file() and file_sha256(oof_path) == meta["parquet_sha256"]))
+    except (OSError, ValueError, KeyError):
+        return False
 
 
 def write_pair_checkpoint(checkpoint_dir, model: str, strategy: str, oof_rows,
@@ -36,8 +45,12 @@ def write_pair_checkpoint(checkpoint_dir, model: str, strategy: str, oof_rows,
     d.mkdir(parents=True, exist_ok=True)
     oof_path, meta_path = pair_paths(checkpoint_dir, model, strategy)
     if oof_rows:
-        pd.DataFrame(oof_rows).to_parquet(oof_path, index=False)
+        tmp_oof = oof_path.with_suffix(".parquet.tmp")
+        pd.DataFrame(oof_rows).to_parquet(tmp_oof, index=False)
+        tmp_oof.replace(oof_path)
     meta = {
+        "checkpoint_version": 2,
+        "parquet_sha256": file_sha256(oof_path) if oof_rows else None,
         "model": model, "strategy": strategy, "status_row": status_row,
         "metric_rows": metric_rows, "manifest_rows": manifest_rows,
         "aggregate_rows": aggregate_rows, "has_oof": bool(oof_rows),
@@ -49,6 +62,8 @@ def write_pair_checkpoint(checkpoint_dir, model: str, strategy: str, oof_rows,
 
 
 def load_pair_checkpoint(checkpoint_dir, model: str, strategy: str) -> dict:
+    if not pair_checkpoint_exists(checkpoint_dir, model, strategy):
+        raise ValueError("Checkpoint absent, historical, failed or corrupted")
     oof_path, meta_path = pair_paths(checkpoint_dir, model, strategy)
     with meta_path.open("r", encoding="utf-8") as fh:
         meta = json.load(fh)

@@ -1,5 +1,8 @@
+cluster_root: data/correction_audit/partitions
 # Executor da validação espacial aninhada (ESPECIFICACAO §1; SP4e).
-# Opção A: benchmark de defaults, sem busca. Grade de 3 estratégias (none fora).
+# Configuracao compartilhada. O launcher dl_parallel usa protocolo nested por
+# padrao e inclui none alem das tres estrategias abaixo. Artefatos legados de
+# defaults nao compoem a nova avaliacao de selecao aninhada.
 outcome_schema: sensitive_tb_3class
 strategies: [random_undersampling, random_oversampling, local_cost_sensitive]
 n_outer_folds: 5
@@ -80,9 +83,9 @@ sweep:
 # NÃO se repete aqui, para não haver duas fontes de verdade.
 #
 # DIVERGÊNCIA DECLARADA contra a §4.1, que pede "treinar até 2022, avaliar em 2023-2024":
-# 2023 NÃO é holdout limpo. Só 2024 foi reservado antes do tuning (decisão congelada em
-# 2026-07-15); 2023 participou do desenvolvimento inteiro — sweep de k, seleção de modelo,
-# ablação. Avaliá-lo seria medir em dado visto. Então: treino = tudo antes de 2024.
+# O desenvolvimento corrigido usa 2015–2023; teste = somente 2024.
+# 2024 já participou de exploração histórica e NÃO é um holdout intocado.
+# A nova separação evita novos usos na seleção, mas não restaura independência histórica.
 #
 # Conjunto: o mesmo contendor do sweep, para o leaderboard temporal ser comparável ao
 # espacial linha a linha.

@@ -11,6 +11,9 @@ Baselines são neutros: nenhum codifica fator social/clínico como regra.
 from __future__ import annotations
 
 import inspect
+import logging
+import tempfile
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -127,10 +130,22 @@ class ModelCapabilities:
     tuning_tier: str = "default_benchmark"
 
 
-def build_estimator(name: str, entry: ModelEntry):
+def build_estimator(name: str, entry: ModelEntry, *, random_state=None, params=None):
     if name in DL_MODELS:
         raise ValueError(f"{name} é DL; use o DLAdapter")
-    return _SKLEARN_FACTORIES[name]()
+    estimator = _SKLEARN_FACTORIES[name]()
+    overrides = dict(params or {})
+    valid = set(estimator.get_params()) | set(inspect.signature(type(estimator).__init__).parameters)
+    invalid = set(overrides) - valid
+    if invalid:
+        raise ValueError(f"Parâmetros desconhecidos de {name}: {sorted(invalid)}")
+    if random_state is not None:
+        if name == "catboost":
+            overrides["random_seed"] = random_state
+        elif "random_state" in estimator.get_params():
+            overrides["random_state"] = random_state
+    estimator.set_params(**overrides)
+    return estimator
 
 
 def probe_capabilities(estimator, name: str, entry: ModelEntry) -> ModelCapabilities:
@@ -182,6 +197,10 @@ class SklearnAdapter:
                 f"local_cost_sensitive é unsupported para este modelo (SP4b)"
             )
         kwargs = {}
+        # XGBoost 2.1 não recodifica categorias no predict. Preservar o mapa
+        # aprendido no treino evita que 'b' mude de código se 'a' faltar no lote.
+        if self.name == "xgboost":
+            self._category_dtypes = {c: X[c].dtype for c in self._category_columns(X)}
         if self.capabilities.sample_weight and sample_weight is not None:
             kwargs["sample_weight"] = sample_weight
         # CatBoost exige a lista de categóricas no fit; os demais boosting nativos leem o dtype.
@@ -193,6 +212,7 @@ class SklearnAdapter:
         return self
 
     def predict_raw_scores(self, X) -> np.ndarray:
+        X = self._align_categories(X)
         if self.capabilities.native_probability:
             return self._est.predict_proba(X)
         return self._est.decision_function(X)
@@ -200,7 +220,18 @@ class SklearnAdapter:
     def predict_proba_if_native(self, X):
         if not self.capabilities.native_probability:
             return None
-        return self._est.predict_proba(X)
+        return self._est.predict_proba(self._align_categories(X))
+
+    def _align_categories(self, X):
+        dtypes = getattr(self, "_category_dtypes", {})
+        if not dtypes:
+            return X
+        X = X.copy()
+        for column, dtype in dtypes.items():
+            # Categoria inédita vira NaN e segue o caminho missing do XGBoost;
+            # não atribuir o código de uma categoria conhecida arbitrária.
+            X[column] = pd.Categorical(X[column].astype(object), dtype=dtype)
+        return X
 
 
 class DLAdapter:
@@ -263,6 +294,12 @@ class DLAdapter:
                 f"{self.name} (DL) não recebe sample_weight; local_cost_sensitive é unsupported"
             )
         cfg = self._cfg()
+        torch.set_num_threads(cfg.torch_num_threads)
+        torch.set_float32_matmul_precision(cfg.matmul_precision)
+        use_gpu = torch.cuda.is_available()
+        self._device = torch.device("cuda", torch.cuda.current_device()) if use_gpu else torch.device("cpu")
+        if use_gpu and cfg.precision == "bf16-mixed" and not torch.cuda.is_bf16_supported():
+            raise ValueError("bf16-mixed solicitado em GPU sem suporte a BF16")
         pl.seed_everything(cfg.seed, workers=True)
         self._classes = sorted(np.unique(y).tolist())
         cats = [c for c in X.columns if str(X[c].dtype) in ("object", "category")]
@@ -278,8 +315,10 @@ class DLAdapter:
 
         data_config = DataConfig(
             target=[self._target], continuous_cols=conts, categorical_cols=cats,
-            validation_split=cfg.validation_split, num_workers=cfg.num_workers)
-        model_config = getattr(ptm, self._MODEL_CONFIGS[self.name])(task="classification")
+            validation_split=cfg.validation_split, num_workers=cfg.num_workers,
+            dataloader_kwargs=cfg.dataloader_kwargs())
+        rate = {} if cfg.learning_rate is None else {"learning_rate": cfg.learning_rate}
+        model_config = getattr(ptm, self._MODEL_CONFIGS[self.name])(task="classification", **rate)
         # Desliga a métrica interna de accuracy do pytorch_tabular. Num batch de validação
         # interna de tamanho 1 (que o random_oversampling produz em alguns folds, quando
         # n_val % batch_size == 1) a predição colapsa para 0-D e o torchmetrics estoura em
@@ -291,16 +330,34 @@ class DLAdapter:
         model_config.metrics = []
         model_config.metrics_params = []
         model_config.metrics_prob_input = []
-        trainer_config = TrainerConfig(
-            max_epochs=cfg.max_epochs, early_stopping="valid_loss",
-            early_stopping_mode="min", early_stopping_patience=cfg.early_stopping_patience,
-            accelerator="gpu" if torch.cuda.is_available() else "cpu", devices=1,
-            batch_size=cfg.batch_size, progress_bar="none")
-        self._model = TabularModel(
-            data_config=data_config, model_config=model_config,
-            optimizer_config=OptimizerConfig(), trainer_config=trainer_config,
-            verbose=False)
-        self._model.fit(train=train)
+        # Um processo por GPU, escolhido ANTES do import de torch pelo launcher.
+        # Cada fit tem seu diretório: modelos/dobras concorrentes não compartilham
+        # saved_models. Mantém load_best=True; limpar só DEPOIS da restauração.
+        started = time.perf_counter()
+        if cfg.checkpoint_root:
+            Path(cfg.checkpoint_root).mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix="tb-dl-", dir=cfg.checkpoint_root) as ckpt:
+            trainer_config = TrainerConfig(
+                max_epochs=cfg.max_epochs, early_stopping="valid_loss",
+                early_stopping_mode="min", early_stopping_patience=cfg.early_stopping_patience,
+                accelerator="gpu" if use_gpu else "cpu", devices=1,
+                precision=cfg.precision if use_gpu else "32-true", seed=cfg.seed,
+                batch_size=cfg.batch_size, progress_bar="none",
+                checkpoints_path=ckpt, checkpoints_kwargs={"save_weights_only": True},
+                trainer_kwargs={"enable_model_summary": False})
+            self._model = TabularModel(
+                data_config=data_config, model_config=model_config,
+                optimizer_config=OptimizerConfig(), trainer_config=trainer_config,
+                verbose=False)
+            # Sem CSVLogger compartilhado em lightning_logs/version_N; as métricas
+            # científicas e os tempos são persistidos pelo executor/coordenador.
+            self._model.logger = False
+            # fit tem seed=42 por default na biblioteca; propagar a semente configurada.
+            self._model.fit(train=train, seed=cfg.seed)
+        logging.getLogger("tb_outcomes").info(
+            "[dl-fit] model=%s n=%d device=%s precision=%s epochs=%d seconds=%.3f",
+            self.name, len(train), str(self._device), trainer_config.precision,
+            self._model.trainer.current_epoch, time.perf_counter() - started)
         return self
 
     def _impute(self, X):
@@ -311,7 +368,15 @@ class DLAdapter:
         return X
 
     def predict_raw_scores(self, X) -> np.ndarray:
-        pred = self._model.predict(self._impute(X))
+        # Aumentar SOMENTE o lote de inferência não altera o lote do otimizador.
+        old_batch = self._model.datamodule.batch_size
+        try:
+            self._model.datamodule.batch_size = self._cfg().inference_batch_size or old_batch
+            # Lightning devolve a rede à CPU no teardown do fit. Sem device explícito,
+            # predict() da biblioteca executava toda a inferência tabular na CPU.
+            pred = self._model.predict(self._impute(X), device=self._device)
+        finally:
+            self._model.datamodule.batch_size = old_batch
         prob_cols = [c for c in pred.columns if c.endswith("_probability")]
         ordered = []
         for i, c in enumerate(self._classes):
@@ -322,15 +387,27 @@ class DLAdapter:
     def predict_proba_if_native(self, X):
         return self.predict_raw_scores(X)
 
+    def close(self):
+        """Libera referências cíclicas de Trainer/DataModule entre ajustes independentes."""
+        import gc
+        import torch
+
+        self._model = None
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
 
 def build_dl_adapter(name: str, entry: ModelEntry, dl_cfg=None) -> DLAdapter:
     return DLAdapter(name, entry, dl_cfg)
 
 
-def build_adapter(name: str, entry: ModelEntry, dl_cfg=None):
+def build_adapter(name: str, entry: ModelEntry, dl_cfg=None, *, random_state=None, params=None):
     if name in DL_MODELS:
+        if params:
+            raise ValueError("Overrides de estimadores são exclusivos dos modelos tradicionais")
         return build_dl_adapter(name, entry, dl_cfg)
-    est = build_estimator(name, entry)
+    est = build_estimator(name, entry, random_state=random_state, params=params)
     caps = probe_capabilities(est, name, entry)
     return SklearnAdapter(name, est, caps)
 

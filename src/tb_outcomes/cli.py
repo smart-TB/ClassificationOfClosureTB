@@ -17,6 +17,7 @@ from tb_outcomes import data as dat
 from tb_outcomes import provenance as prov
 from tb_outcomes.config import TBD, config_hash, load_config, require_frozen
 from tb_outcomes.executor import load_executor_config
+from tb_outcomes.run_identity import correction_run_root
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("tb_outcomes")
@@ -189,7 +190,8 @@ def build_features_cmd(config: Path = typer.Option(..., "--config")) -> None:
         feat.hiv_availability_by_duration(df), DATA_DIR / "hiv_availability_by_duration.csv"
     )
 
-    X = feat.build_notification_feature_set(df, specs)
+    X = feat.build_notification_feature_set(df, specs, municipal_context=pd.read_parquet(
+        DATA_DIR / "correction_audit/baseline_context.parquet"))
     art.write_csv(feat.missingness_report(X, by=None), DATA_DIR / "missingness_overall.csv")
 
     com_desfecho = X.copy()
@@ -330,7 +332,8 @@ def preprocess_manifest_cmd(config: Path = typer.Option(..., "--config")) -> Non
     pcfg = pp.load_preprocess_config(PREPROCESS)
     df, _ = dat.load_or_build_harmonized(DATA_DIR, cfg)
     specs = feat.load_feature_config(FEATURES)
-    X = feat.build_notification_feature_set(df, specs)
+    X = feat.build_notification_feature_set(df, specs, municipal_context=pd.read_parquet(
+        DATA_DIR / "correction_audit/baseline_context.parquet"))
 
     types = pp.infer_column_types(X, specs, pcfg.max_cardinality)
     manifesto = pp.preprocessing_manifest(types, pcfg)
@@ -396,7 +399,9 @@ ANALYSIS = Path("configs/analysis_decisions.yaml")
 
 
 def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scope=None,
-                           with_municipio: bool = False, with_year: bool = False):
+                           with_municipio: bool = False, with_year: bool = False,
+                           population_role: str = "development", with_record_id: bool = False,
+                           context_profile: str | None = None, availability_profile: str = "primary"):
     """Remonta X/y/clusters/estrato/dobras da coorte real (SP4e).
 
     X e y não são persistidos: X vem de build_notification_feature_set(harmonized, specs)
@@ -410,15 +415,31 @@ def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scop
     from tb_outcomes.splits import assign_clusters_to_records, make_outer_folds
 
     cfg = load_config(ANALYSIS)
+    context_profile = context_profile or cfg.study.primary_context_profile
     df, _ = dat.load_or_build_harmonized(DATA_DIR, cfg)
     specs = feat.load_feature_config(FEATURES)
     rules = coh.load_outcome_rules(OUTCOMES)
     result = coh.build_cohort(df, cfg, rules, exec_cfg.outcome_schema)
     analytic = result.analytic
+    from tb_outcomes.temporal_partition import population_mask
+
+    # No test-year labels can enter model comparisons or spatial fold construction.
+    keep_population = population_mask(
+        analytic["NU_ANO"], int(cfg.study.temporal_test_period), population_role)
+    analytic = analytic.loc[keep_population].copy()
+    if analytic.empty:
+        raise ValueError(f"população vazia: {population_role}")
+    logger.info("População %s: %d registros, anos %s", population_role, len(analytic),
+                sorted(analytic.NU_ANO.unique().tolist()))
     if sanity and len(analytic) > exec_cfg.sanity_subsample:
         analytic = analytic.sample(exec_cfg.sanity_subsample, random_state=exec_cfg.random_state)
 
-    X = feat.build_notification_feature_set(df, specs).loc[analytic.index].reset_index(drop=True)
+    context = (pd.read_parquet(DATA_DIR / "correction_audit/baseline_context.parquet")
+               if context_profile == "baseline" else None)
+    X = feat.build_notification_feature_set(
+        df, specs, municipal_context=context, context_profile=context_profile,
+        availability_profile=availability_profile
+    ).loc[analytic.index].reset_index(drop=True)
     # ablação territorial (§3.3): o recorte vem DEPOIS da montagem, para os três braços
     # partirem exatamente do mesmo X — nenhuma derivação muda de valor por o braço ser
     # menor. 'combined' devolve o X inteiro (é o braço da rodada de produção).
@@ -430,7 +451,8 @@ def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scop
     leakage.assert_strata_out_of_features(list(X.columns))
 
     labels = analytic[f"target_{exec_cfg.outcome_schema}"]
-    classes = sorted(labels.unique())
+    classes = sorted(set(rules["schemas"][exec_cfg.outcome_schema].values())
+                     - {coh.UNRESOLVED, coh.EXCLUDED})
     code = {c: i for i, c in enumerate(classes)}
     y = labels.map(code).astype(int).reset_index(drop=True)
 
@@ -439,7 +461,7 @@ def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scop
     # k_override (SP4g/run-sweep) remonta os inputs em outro k sem alterar exec_cfg.k.
     k = k_override if k_override is not None else exec_cfg.k
     clusters_df = pd.read_parquet(
-        DATA_DIR / f"municipality_clusters_k{k}.parquet"
+        Path(exec_cfg.cluster_root) / f"municipality_clusters_k{k}.parquet"
     ).set_index("ID_MUNIC_ANALISE")
     record_clusters = assign_clusters_to_records(analytic, clusters_df).reset_index(drop=True)
     strata = build_strata(analytic, load_imbalance_config(IMBALANCE).cost_stratum).reset_index(drop=True)
@@ -449,6 +471,11 @@ def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scop
     # corte do holdout temporal (§4.1).
     municipio = analytic["ID_MUNIC_ANALISE"].reset_index(drop=True)
     ano = pd.to_numeric(analytic["NU_ANO"], errors="coerce").reset_index(drop=True)
+    # Stable within the harmonized source fingerprint, before sampling/reset_index.
+    # The source fingerprint must accompany these IDs in the run manifest (C5).
+    if not df.index.is_unique:
+        raise ValueError("índice harmonizado duplicado: impossível identificar registros")
+    record_id = pd.Series(analytic.index.astype(str), name="source_row_id").reset_index(drop=True)
 
     keep = record_clusters.notna()
     if not keep.any():
@@ -457,18 +484,16 @@ def _load_benchmark_inputs(exec_cfg, sanity: bool, k_override=None, feature_scop
             "a coorte e municipality_clusters_k*.parquet"
         )
     if not keep.all():
-        logger.warning("%d registros sem cluster removidos do benchmark", int((~keep).sum()))
-        X, y = X[keep].reset_index(drop=True), y[keep].reset_index(drop=True)
-        record_clusters = record_clusters[keep].reset_index(drop=True)
-        strata = strata[keep].reset_index(drop=True)
-        municipio = municipio[keep].reset_index(drop=True)
-        ano = ano[keep].reset_index(drop=True)
+        raise ValueError(f"{int((~keep).sum())} registros sem cluster: corrigir mapeamento; "
+                         "nenhum registro pode ser removido silenciosamente")
 
-    outer = make_outer_folds(X, record_clusters, y, exec_cfg.n_outer_folds, exec_cfg.fold_method)
+    outer = (make_outer_folds(X, record_clusters, y, exec_cfg.n_outer_folds, exec_cfg.fold_method)
+             if population_role == "development" else [])
     leakage.assert_outcome_count_coherence(y, len(y))
     base = (X, y, strata, record_clusters, outer, list(range(len(classes))), specs, classes)
     # extras na ordem fixa: município, depois ano
-    extras = ([municipio] if with_municipio else []) + ([ano] if with_year else [])
+    extras = (([municipio] if with_municipio else []) + ([ano] if with_year else [])
+              + ([record_id] if with_record_id else []))
     return (*base, *extras) if extras else base
 
 
@@ -486,6 +511,7 @@ def run_benchmark_cmd(
 
     exec_cfg = load_executor_config(EXECUTOR)
     X, y, strata, clusters, outer, classes, specs, labels = _load_benchmark_inputs(exec_cfg, sanity)
+    out = correction_run_root(sanity=sanity) / "benchmark_defaults"
     registry = build_registry(load_models_config(MODELS))
     factory = make_sklearn_fold_factory(
         X, y, strata, registry, load_imbalance_config(IMBALANCE),
@@ -493,8 +519,9 @@ def run_benchmark_cmd(
     result = run_benchmark(
         exec_cfg.models, exec_cfg.strategies, y, clusters, outer, len(classes), classes,
         factory, lambda m: registry[m].capabilities,
-        load_calibration_config(CALIBRATION), exec_cfg.n_inner_folds)
-    paths = write_benchmark_artifacts(result, DATA_DIR)
+        load_calibration_config(CALIBRATION), exec_cfg.n_inner_folds,
+        checkpoint_dir=out / "pairs")
+    paths = write_benchmark_artifacts(result, out)
     n_ok = sum(1 for r in result.status_rows if r["status"] == "ok")
     typer.echo(f"Benchmark: {n_ok}/{len(result.status_rows)} pares ok. Rótulos {labels}. {paths}")
 
@@ -517,7 +544,7 @@ def run_sweep_cmd() -> None:
     registry = build_registry(load_models_config(MODELS))
 
     for k in sweep.ks:
-        out_k = Path(sweep.out_root) / f"k{k}"
+        out_k = correction_run_root() / "sweep" / f"k{k}"
         ckpt = out_k / "pairs"
         typer.echo(f"[sweep] k={k}: {len(sweep.models)} modelos × {len(exec_cfg.strategies)} "
                    f"estratégias -> {out_k} (checkpoint em {ckpt})")
@@ -540,12 +567,10 @@ def run_sweep_cmd() -> None:
 def run_temporal_holdout_cmd() -> None:
     """Holdout temporal (§4.1): treina em tudo ANTES do ano reservado e avalia nele.
 
-    O ano de teste vem de `study.temporal_test_period` (2024). Divergência declarada contra
-    a §4.1, que pedia avaliar 2023-2024: 2023 participou de todo o desenvolvimento (sweep,
-    seleção de modelo, ablação) e não é holdout limpo — só 2024 foi reservado antes do tuning.
+    O ano de teste vem de `study.temporal_test_period` (2024). Anos posteriores
+    não entram em nenhum lado. O uso histórico de 2024 na exploração deve ser
+    declarado: a correção da máscara não restaura independência retrospectiva.
     """
-    import numpy as np
-
     from tb_outcomes.calibration import load_calibration_config
     from tb_outcomes.checkpoint import pair_checkpoint_exists, write_pair_checkpoint
     from tb_outcomes.executor import (
@@ -577,29 +602,27 @@ def run_temporal_holdout_cmd() -> None:
     if not modelos:
         raise typer.BadParameter("a seção 'temporal' não define modelos")
 
-    out = Path(temporal.out_root)
+    # Não retomar os checkpoints históricos que misturavam 2024 e 2025.
+    out = correction_run_root() / "temporal" / str(ano_teste)
     ckpt = out / "pairs"
     registry = build_registry(load_models_config(MODELS))
     X, y, strata, clusters, outer, classes, specs, labels, ano = _load_benchmark_inputs(
-        exec_cfg, False, with_year=True)
+        exec_cfg, False, with_year=True, population_role="temporal")
 
-    # `ano` é dtype anulável: `(ano < x).to_numpy()` devolveria dtype object, e `~` sobre
-    # object faz complemento de dois (True -> -2), não negação. Um ano ausente não pode ser
-    # colocado em nenhum dos lados por omissão — falha alto em vez de escolher por acaso.
-    if ano.isna().any():
-        raise typer.BadParameter(
-            f"{int(ano.isna().sum())} registros sem NU_ANO: impossível particionar no tempo")
-    treino = (ano < ano_teste).to_numpy(dtype=bool)
-    n_tr, n_te = int(treino.sum()), int((~treino).sum())
-    if n_te == 0:
-        raise typer.BadParameter(
-            f"nenhum registro em {ano_teste}; anos presentes: "
-            f"{sorted(ano.dropna().unique().tolist())}")
-    typer.echo(f"[temporal] treino = anos < {ano_teste} ({n_tr:,} registros) | "
-               f"teste = {ano_teste} ({n_te:,}) | {len(modelos)} modelos × "
+    from tb_outcomes.temporal_partition import temporal_masks
+
+    try:
+        treino, teste = temporal_masks(ano, ano_teste)
+    except ValueError as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    n_tr, n_te = int(treino.sum()), int(teste.sum())
+    n_unused = int((~(treino | teste)).sum())
+    typer.echo(f"[temporal] treino = {int(ano[treino].min())}-{int(ano[treino].max())} "
+               f"({n_tr:,} registros) | teste = {ano_teste} ({n_te:,}) | "
+               f"fora de ambos = {n_unused:,} | {len(modelos)} modelos × "
                f"{len(exec_cfg.strategies)} estratégias -> {out}")
-    for c in sorted(pd.Series(y[~treino]).unique()):
-        typer.echo(f"           classe {labels[c]}: {int((y[~treino] == c).sum()):,} no teste")
+    for c in sorted(pd.Series(y[teste]).unique()):
+        typer.echo(f"           classe {labels[c]}: {int((y[teste] == c).sum()):,} no teste")
 
     factory = make_sklearn_fold_factory(
         X, y, strata, registry, load_imbalance_config(IMBALANCE),
@@ -631,7 +654,7 @@ def run_temporal_holdout_cmd() -> None:
                 par = evaluate_temporal_pair(
                     model, strategy, y, clusters, treino, len(classes), classes,
                     factory(model, strategy), caps, cal_cfg, n_inner=exec_cfg.n_inner_folds,
-                    fold_id=f"holdout_{ano_teste}")
+                    fold_id=f"holdout_{ano_teste}", test_mask=teste)
             except Exception as exc:  # noqa: BLE001 — um par que quebra não derruba o resto
                 import traceback
                 logger.error("[temporal] %s × %s ERRO:\n%s", model, strategy,
@@ -907,7 +930,7 @@ def run_clinical_baseline_cmd() -> None:
 
     exec_cfg = load_executor_config(EXECUTOR)
     modelos = ["logistic_regression"]
-    out = DATA_DIR / "clinical_baseline"
+    out = correction_run_root() / "clinical_baseline"
     ckpt = out / "pairs"
 
     registry = build_registry(load_models_config(MODELS))
@@ -1292,7 +1315,7 @@ def run_ablation_cmd() -> None:
     registry = build_registry(load_models_config(MODELS))
 
     for scope in abl.scopes:
-        out_s = Path(abl.out_root) / scope
+        out_s = correction_run_root() / "ablation" / scope
         ckpt = out_s / "pairs"
         typer.echo(f"[ablation] braço '{scope}': {len(abl.models)} modelos × "
                    f"{len(exec_cfg.strategies)} estratégias -> {out_s} (checkpoint em {ckpt})")

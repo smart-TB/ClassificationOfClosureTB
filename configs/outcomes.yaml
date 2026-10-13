@@ -26,6 +26,20 @@ labels:
   null: "Sem encerramento (codificação de 2018 em diante)"
 
 schemas:
+  # Sensibilidade retreinada: mesma interrupção (2+10), ambos os óbitos (3+4).
+  all_cause_3class:
+    1: "cure"
+    2: "treatment_interruption"
+    10: "treatment_interruption"
+    3: "death_all_cause"
+    4: "death_all_cause"
+    5: "excluded"
+    6: "excluded"
+    7: "excluded"
+    8: "excluded"
+    9: "excluded"
+    0: "unresolved_or_censored"
+    null: "unresolved_or_censored"
   legacy_3class:
     1: "cure"
     2: "treatment_interruption"

@@ -41,3 +41,23 @@ def test_histgb_native_categorical():
 
 def test_catboost_native_categorical():
     _check_model("catboost")
+
+
+def test_xgboost_prediction_invariant_to_batch_category_set():
+    X = pd.DataFrame({"c": pd.Categorical(["a", "b", "c"] * 60)})
+    y = np.tile([0, 1, 2], 60)
+    ad = build_adapter("xgboost", ENTRIES["xgboost"], random_state=42,
+                       params={"n_estimators": 20, "n_jobs": 1})
+    ad.fit(X, y)
+    batch = pd.DataFrame({"c": pd.Categorical(["a", "b", "c"])})
+    single = pd.DataFrame({"c": pd.Categorical(["b"])})
+    expected = ad.predict_raw_scores(batch)[1]
+    np.testing.assert_allclose(ad.predict_raw_scores(single)[0], expected)
+    np.testing.assert_allclose(ad.predict_proba_if_native(single)[0], expected)
+    reordered = pd.DataFrame({"c": pd.Categorical(["b"], categories=["c", "b", "a"])})
+    np.testing.assert_allclose(ad.predict_raw_scores(reordered)[0], expected)
+    # O lote de inferência não é modificado, e inéditas não viram 'a'.
+    assert single.c.cat.categories.tolist() == ["b"]
+    unseen = pd.DataFrame({"c": pd.Categorical(["new"])})
+    assert ad._align_categories(unseen).c.isna().all()
+    assert np.isfinite(ad.predict_raw_scores(unseen)).all()

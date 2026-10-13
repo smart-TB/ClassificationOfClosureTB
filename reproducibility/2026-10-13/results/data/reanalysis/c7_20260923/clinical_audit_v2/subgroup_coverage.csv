@@ -1,0 +1,6 @@
+axis,total,missing,group,rule,ci_status,reason
+faixa_etaria,707870.0,3735.0,,,,
+dobra_espacial,707870.0,0.0,,,,
+dobra_espacial,,,0,pred_argmax,not_estimable,At least two clusters are required
+dobra_espacial,,,0,pred_policy,not_estimable,At least two clusters are required
+feature_missing_fraction,707870.0,0.0,,,,

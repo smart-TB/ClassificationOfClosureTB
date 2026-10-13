@@ -1,0 +1,8 @@
+# Calibração cross-fitted (briefing §15). isotonic_min_class_events é o parâmetro
+# pré-registrado da guarda: abaixo dele, a classe/dobra cai de isotônica para Platt.
+method: auto            # auto (guarda) | isotonic | sigmoid
+epsilon: 1.0e-6         # clip das probabilidades a [epsilon, 1-epsilon]
+sum_tolerance: 1.0e-6   # tolerância da soma-1 após renormalização
+isotonic_min_class_events: 100   # eventos OOF mínimos p/ isotônica; senão Platt
+ece_bins: 10            # bins fixos do ECE; a versão adaptativa usa quantis
+objective: f1_macro     # objetivo dos limiares secundários (§15.5)

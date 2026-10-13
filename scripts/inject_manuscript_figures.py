@@ -97,6 +97,10 @@ def remover(tex: str) -> tuple[str, list[int]]:
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("inject_manuscript_figures.py", "python scripts/editorial/figuras_c7.py (as figuras já vêm embutidas no texto)")
     tex = TEX.read_text(encoding="utf-8")
     if "--strip" in sys.argv:
         tex, feitas = remover(tex)

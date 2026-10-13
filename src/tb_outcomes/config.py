@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from typing import Literal
 
 import yaml
 from pydantic import BaseModel
@@ -28,7 +29,9 @@ class StudyConfig(BaseModel):
     source_snapshot_id: str
     primary_target_schema: str
     primary_prediction_time: str
+    primary_context_profile: Literal["baseline"] = "baseline"
     minimum_followup_days: int
+    maturation_rule: Literal["legacy_days", "calendar_by_form", "days_by_form"] = "legacy_days"
     temporal_validation_enabled: bool
     temporal_test_period: str
     cohort_year_min: int

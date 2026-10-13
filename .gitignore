@@ -1,26 +1,12 @@
-# .gitignore — repositório PÚBLICO (github.com/smart-TB/ClassificationOfClosureTB)
-#
-# POLÍTICA (decisão do PI, 2026-08-31): este repositório publica APENAS o que um revisor
-# precisa para verificar o MÉTODO — código, configuração e testes. Não publica:
-#
-#   (a) dado de paciente, em nenhuma forma;
-#   (b) RESULTADOS — tabelas, métricas e figuras são o conteúdo do manuscrito e não
-#       podem ser tornados públicos antes da publicação;
-#   (c) documentos internos de trabalho, incluindo o plano analítico e a correspondência
-#       de revisão por pares, que é confidencial.
-#
-# Resultados e artefatos de auditoria vão para o depósito de dados (Zenodo), que aceita
-# embargo até a publicação e acesso restrito — não para cá.
-#
-# ATENÇÃO: em .gitignore o `#` só inicia comentário no INÍCIO da linha. Comentário à
-# direita de um padrão vira parte do padrão e o quebra em silêncio.
+# Public repository: source code, tests and curated reproducibility releases.
+# Dataset distribution authorised by the corresponding author on 2026-10-13.
+# datasets/ and reproducibility/ contain the reviewed public snapshot.
+# Internal working data, manuscript drafts and credentials remain excluded.
 
 # ---------------------------------------------------------------------------
-# 1. Dados e resultados — TUDO fora
+# 1. Dados e resultados de trabalho
 # ---------------------------------------------------------------------------
-# Cobre o microdado (827.866 registros individuais com raça/cor, escolaridade, HIV,
-# situação de rua e privação de liberdade), as predições por paciente, os valores SHAP,
-# e também as MÉTRICAS AGREGADAS, que são resultado de publicação.
+# The reviewed public snapshot is under datasets/; this directory is working data.
 /data/
 
 # Figuras do manuscrito e manifestos de execução.
@@ -81,3 +67,6 @@ Thumbs.db
 
 # Manuscrito: texto, template e PDFs. É conteúdo de publicação, não código.
 /manuscrito/
+
+/publicacao/
+/outputs/

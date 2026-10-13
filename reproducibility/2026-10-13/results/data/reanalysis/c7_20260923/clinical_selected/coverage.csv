@@ -1,0 +1,5 @@
+model,strategy,n_unique,folds
+logistic_regression,local_cost_sensitive,707870,5
+logistic_regression,none,707870,5
+logistic_regression,random_oversampling,707870,5
+logistic_regression,random_undersampling,707870,5

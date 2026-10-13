@@ -96,24 +96,56 @@ def _thousands(n: int) -> str:
     return f"{n:,}"  # separador de milhar em inglês (vírgula)
 
 
-def fig_cohort_funnel() -> Path:
+def fig_cohort_funnel(flow_csv: Path | None = None, reasons_csv: Path | None = None,
+                      out_name: str = "15_cohort_funnel") -> Path:
     """Fig 15 — funil de atrito da coorte, com o MOTIVO de cada perda.
 
     Os motivos entram na própria figura para que ela dispense a tabela de fluxo: as duas
     diziam a mesma coisa e disputavam espaço. O texto entre as barras é a diferença
     observada entre os estágios, e não a soma dos critérios, porque os critérios são
     aplicados em sequência e um registro excluído por um não é recontado pelo seguinte.
+
+    Os rótulos das transições saem do CSV de motivos, e não de uma lista literal: um critério
+    novo no protocolo precisa aparecer aqui sozinho. A versão anterior trazia três strings
+    fixas indexadas por posição, que envelheciam em silêncio a cada critério acrescentado.
+
+    Entradas explícitas para permitir teste com fixtures sem tocar em `data/`.
     """
-    flow = pd.read_csv(DATA_DIR / f"cohort_flow_{SCHEMA}.csv")
+    from tb_outcomes.labels import motivo_exclusao, transicao_do_motivo
+
+    flow = pd.read_csv(flow_csv or DATA_DIR / f"cohort_flow_{SCHEMA}.csv")
+    reasons_csv = reasons_csv or DATA_DIR / f"exclusion_reasons_{SCHEMA}.csv"
     labels = {"recuperada": "Acquired", "declarada": "Notified (2015–2025)",
               "elegivel": "Eligible", "analitica": "Analytic"}
-    flow["label"] = flow["stage"].map(labels)
+    flow["label"] = flow["stage"].map(lambda s: labels.get(s, str(s)))
     base = flow["n"].iloc[0]
 
-    # motivo declarado de cada transição, na ordem dos estágios
-    motivos = ["outside the declared window,\nunrecoverable municipality, impossible age",
-               "follow-up shorter than 365 days",
-               "closure outside the three-outcome scheme"]
+    # motivo de cada transição, montado a partir dos critérios que de fato removeram registros
+    por_transicao: dict[str, list[str]] = {}
+    if Path(reasons_csv).is_file():
+        ex = pd.read_csv(reasons_csv)
+        for r in ex.itertuples():
+            if int(getattr(r, "n", 0)) <= 0:
+                continue
+            chave = transicao_do_motivo(r.reason)
+            por_transicao.setdefault(chave, []).append(motivo_exclusao(r.reason).lower())
+
+    def _motivo(origem: str, destino: str) -> str:
+        if destino == "analitica":
+            return "closure outside the three-outcome scheme"
+        itens = por_transicao.get(f"{origem}->{destino}", [])
+        if not itens:
+            return ""
+        texto = ", ".join(itens)
+        # quebra em duas linhas quando a lista cresce, para não invadir as barras
+        if len(texto) > 46:
+            meio = texto.find(", ", len(texto) // 2 - 12)
+            if meio > 0:
+                texto = texto[:meio] + ",\n" + texto[meio + 2:]
+        return texto
+
+    estagios = flow["stage"].tolist()
+    motivos = [_motivo(estagios[i], estagios[i + 1]) for i in range(len(estagios) - 1)]
 
     fig, ax = plt.subplots(figsize=(8.8, 4.4))
     ax.grid(axis="y", visible=False)
@@ -145,7 +177,7 @@ def fig_cohort_funnel() -> Path:
     _titles(ax, "Cohort attrition: from acquisition to the analytic population",
             "TB, Brazil, 2015–2025 · closed 3-outcome benchmark (cure · interruption · TB death)")
     ax.xaxis.set_major_formatter(lambda x, _: f"{x/1e6:.1f}M" if x else "0")
-    return _save(fig, "15_cohort_funnel")
+    return _save(fig, out_name)
 
 
 def fig_outcome_prevalence() -> Path:
@@ -358,7 +390,7 @@ FAMILY = {
     "category_embedding": "deep learning", "tabnet": "deep learning",
     "tab_transformer": "deep learning", "ft_transformer": "deep learning",
 }
-FAMILY_COLOR = {"baseline": "#52514e", "linear": "#2a78d6", "tree": "#1baf7a",
+FAMILY_COLOR = {"baseline": "#52514e", "linear": "#2a78d6", "tree": "#8c564b",
                 "boosting": "#008300", "naive bayes": "#eda100", "discriminant": "#e87ba4",
                 "neighbors": "#eb6834", "neural net": "#4a3aa7", "deep learning": "#e34948"}
 
@@ -395,7 +427,7 @@ def fig_ranking_f1() -> Path:
     ax.hlines(list(y), b["min"], b["max"], color=colors, lw=1.5, alpha=0.5, zorder=2)
     ax.scatter(b["mean"], list(y), color=colors, s=42, zorder=3)
     ax.axvline(0.289, color=INK2, ls="--", lw=1.0, zorder=1)
-    ax.text(0.289, len(b) - 0.5, " majority\n baseline", fontsize=8, color=INK2, va="top")
+    ax.text(0.289, len(b) - 0.5, " majority-class\n reference", fontsize=8, color=INK2, va="top")
     ax.set_yticks(list(y))
     ax.set_yticklabels(
         [f"{_rot_algo(m)}  [{STRAT_LABEL.get(s, s)}]"
@@ -1022,6 +1054,7 @@ def fig_shap_by_class(top_n: int = 15, out_name: str = "27_shap_by_class"):
     empurra para a classe ou contra ela.
     """
     import numpy as np
+    from matplotlib.patches import Patch
 
     _style()
     d = pd.read_csv(DATA_DIR / "shap_summary.csv")
@@ -1031,18 +1064,22 @@ def fig_shap_by_class(top_n: int = 15, out_name: str = "27_shap_by_class"):
 
     # painéis EMPILHADOS, não lado a lado. A coluna de texto da PLOS é estreita: três
     # painéis em linha reduzem os nomes das variáveis a algo ilegível na página.
-    fig, axes = plt.subplots(len(classes), 1, figsize=(7.0, 3.1 * len(classes)))
+    fig, axes = plt.subplots(len(classes), 1, figsize=(7.0, 3.6 * len(classes)))
     axes = np.atleast_1d(axes)
     for ax, classe in zip(axes, classes):
         g = d[d["classe"] == classe].nsmallest(top_n, "rank").iloc[::-1]
         cores = ["#e34948" if v > 0 else "#2a78d6" for v in g["mean_shap"]]
         ax.barh(range(len(g)), g["mean_abs_shap"], color=cores, zorder=3)
         ax.set_yticks(range(len(g)))
-        ax.set_yticklabels(g["feature"], fontsize=8.5)
+        ax.set_yticklabels(g["feature"], fontsize=7.0)
         ax.grid(axis="y", visible=False)
         ax.set_xlabel("Mean |SHAP|")
         rot = OUTCOME.get(classe, (classe, INK2))[0]
-        _titles(ax, rot, "red = pushes toward the class; blue = away")
+        # a direção do efeito era explicada por texto; passa a ser lida na própria cor
+        ax.legend(handles=[Patch(color="#e34948", label="pushes toward the class"),
+                           Patch(color="#2a78d6", label="pushes away")],
+                  loc="lower right", fontsize=8, frameon=False)
+        _titles(ax, rot, f"top {top_n} features by mean |SHAP|")
     fig.tight_layout()
     return _save(fig, out_name)
 
@@ -1118,14 +1155,16 @@ def fig_ablation_arms(out_name: str = "29_ablation_arms"):
         ax.barh(y + (i - 1) * alt, ab[arm].to_numpy(), height=alt, color=cores[arm],
                 label=rot[arm], zorder=3)
     ax.axvline(piso, color=INK2, lw=1.6, ls="--", zorder=4)
-    ax.text(piso, len(modelos) - 0.35, f"  majority-class floor ({piso:.3f})",
+    ax.text(piso, len(modelos) - 0.35, f"  majority-class reference ({piso:.3f})",
             color=INK2, fontsize=9, va="center")
     ax.set_yticks(y)
     ax.set_yticklabels(modelos, fontsize=9)
     ax.set_xlabel("Macro-averaged F1")
-    ax.legend(fontsize=9, frameon=False, loc="lower right",
-              bbox_to_anchor=(1.0, -0.02))
-    _titles(ax, "Municipal variables alone do not exceed the majority-class floor",
+    # a legenda ficava DENTRO dos eixos, sobre as barras do último modelo, e o rótulo mais
+    # longo era cortado pela borda direita; sai para baixo do eixo, na horizontal
+    ax.legend(fontsize=9, frameon=False, loc="upper center",
+              bbox_to_anchor=(0.5, -0.16), ncol=3)
+    _titles(ax, "Municipal variables alone do not exceed the majority-class reference",
             "TB, Brazil · nested spatially blocked validation · whole clusters held out")
     fig.tight_layout()
     return _save(fig, out_name)
@@ -1166,15 +1205,78 @@ def fig_equity_by_group(classe: str = "tb_death", out_name: str = "30_equity_by_
     ax.set_yticklabels([nivel("Race/colour", x) for x in d["rotulo"]],
                        fontsize=9.5)
     ax.set_xlabel("Area under the ROC curve (95% CI)")
-    _titles(ax, "Discrimination by race and colour",
-            f"{OUTCOME.get(classe, (classe,))[0]} · non-overlapping intervals")
+    # O desfecho entra no TÍTULO, e não só no subtítulo: o negrito é o que o leitor lê
+    # primeiro, e "discriminação por raça e cor" sem o desfecho não diz de que métrica se
+    # trata. O recorte por raça e cor desce para o subtítulo porque o título com as duas
+    # informações transborda a largura do painel e colide com o do painel vizinho.
+    # Sem .lower(): o rótulo começa por sigla ("TB-attributed death").
+    desfecho = OUTCOME.get(classe, (classe,))[0]
+    _titles(ax, f"Discrimination for {desfecho}",
+            "by race and colour · non-overlapping intervals")
 
     ax2.grid(axis="y", visible=False)
     ax2.barh(y, d["prevalencia"].to_numpy(), color="#b9c4cf", zorder=3)
     ax2.set_yticks(y)
     ax2.set_yticklabels([])
     ax2.set_xlabel("Outcome prevalence")
-    _titles(ax2, "Prevalence", "flat across groups")
+    _titles(ax2, "Prevalence", f"{desfecho} · flat across groups")
+    fig.tight_layout()
+    return _save(fig, out_name)
+
+
+def fig_attribution_vs_ablation(out_name: str = "31_attribution_vs_ablation"):
+    """Fig S — massa de atribuição do bloco municipal contra o seu custo de remoção.
+
+    As duas medidas respondem a perguntas diferentes por construção: o SHAP atribui com as
+    demais variáveis fixas, a ablação deixa o modelo reaprender com substitutos
+    correlacionados. Divergir, portanto, é esperado; a figura existe para mostrar a
+    MAGNITUDE da divergência, que é o que não se antecipa.
+
+    Dois painéis porque as unidades não são as mesmas: a atribuição é por classe de
+    desfecho, a retenção de desempenho é por modelo. Forçá-las num eixo só sugeriria uma
+    comparação ponto a ponto que não existe.
+    """
+    import numpy as np
+
+    from tb_outcomes.labels import algoritmo
+
+    _style()
+    d = pd.read_csv(DATA_DIR / "attribution_vs_ablation.csv")
+    porc = d.drop_duplicates("classe")
+    pmod = d.drop_duplicates("model")
+
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(11.0, 3.9))
+
+    ordem = [c for c in ("tb_death", "treatment_interruption", "cure")
+             if c in set(porc["classe"])]
+    g = porc.set_index("classe").loc[ordem]
+    y = np.arange(len(g))
+    ax.grid(axis="y", visible=False)
+    ax.barh(y, g["shap_municipal_pct"], color=[OUTCOME[c][1] for c in ordem], zorder=3)
+    for i, (v, n) in enumerate(zip(g["shap_municipal_pct"], g["municipais_no_top15"])):
+        ax.text(v + 0.8, i, f"{v:.1f}%  ·  {n}/15 top-ranked",
+                va="center", fontsize=9, color=INK2)
+    ax.set_yticks(y)
+    ax.set_yticklabels([OUTCOME[c][0] for c in ordem], fontsize=9.5)
+    ax.set_xlim(0, 72)
+    ax.set_xlabel("Share of total mean |SHAP|")
+    _titles(ax, "What attribution gives the municipal block",
+            "43 of 72 features describe the municipality")
+
+    pmod = pmod.sort_values("retido_sem_municipais_pct")
+    y2 = np.arange(len(pmod))
+    ax2.grid(axis="y", visible=False)
+    ax2.barh(y2, pmod["retido_sem_municipais_pct"], color="#52514e", zorder=3)
+    ax2.axvline(100, color=INK2, lw=1.6, ls="--", zorder=4)
+    for i, v in enumerate(pmod["retido_sem_municipais_pct"]):
+        ax2.text(v + 0.7, i, f"{v:.2f}%", va="center", fontsize=9, color=INK2)
+    ax2.set_yticks(y2)
+    ax2.set_yticklabels([algoritmo(m) for m in pmod["model"]], fontsize=9.5)
+    ax2.set_xlim(70, 112)
+    ax2.set_xlabel("Macro-F1 retained without the municipal block")
+    _titles(ax2, "What removing it actually costs",
+            "dashed line = no loss; above it, the block was harmful")
+
     fig.tight_layout()
     return _save(fig, out_name)
 

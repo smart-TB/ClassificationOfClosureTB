@@ -793,10 +793,7 @@ features:
   type: categorical
   source: SINAN
   availability: at_notification
-  dictionary_evidence: 'Campo 38: baciloscopia de escarro do diagnóstico — resultado em horas O código
-    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
-    mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria como categoria
-    quase perfeitamente colinear com ''notificado antes de 2018''.'
+  dictionary_evidence: "Baciloscopia de escarro do diagnostico, campo 38 do dicionario SINAN. Mantida no principal sob a suposicao declarada de ficha diagnostica basal. O snapshot nao registra o instante em que o resultado ficou disponivel; rapidez do exame nao comprova disponibilidade individual. Sensibilidade without_diagnostic_tests remove este campo. Codigo historico 0 e mapeado para ausente."
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -831,10 +828,7 @@ features:
   type: categorical
   source: SINAN
   availability: at_notification
-  dictionary_evidence: 'Campo 38: baciloscopia de escarro do diagnóstico — resultado em horas O código
-    0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário:
-    mapeado para <NA>. Sem isso, 0 entraria como categoria válida quase perfeitamente colinear com ''notificado
-    antes de 2018''.'
+  dictionary_evidence: "Campo historico de baciloscopia, mantido no principal sob a suposicao de investigacao diagnostica basal. Correspondencia exata do campo historico e instante individual de disponibilidade nao estao demonstrados pelo snapshot. Nao inferir disponibilidade da rapidez do ensaio. Sensibilidade without_diagnostic_tests remove este campo. Codigo historico 0 e mapeado para ausente."
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -881,18 +875,17 @@ features:
   form_field: 40
   type: categorical
   source: SINAN
-  availability: at_notification
-  dictionary_evidence: 'Campo 40: HIV precede TB. A ausência é sobretudo linha de base — 18,5 pp entre
-    óbito e cura A TEMPO IGUAL (0-7 dias). Ver spec §3.1; entra colapsada e com indicador de ausência
-    O código 0 é a codificação de ausência anterior a 2018 (vira campo vazio a partir da v5) e NÃO consta
-    no dicionário: mapeado para <NA>. Critério: >=90% dos zeros ocorrem até 2017. Sem isso, 0 entraria
-    como categoria quase perfeitamente colinear com ''notificado antes de 2018''.'
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Dicionário SINAN NET 5.0, campo 40: exame antes OU depois da
+    notificação. Em andamento pode ser reescrito no encerramento. O snapshot não
+    possui data de disponibilidade do resultado; comparação por tempo de encerramento
+    não comprova disponibilidade basal. Excluído do principal, incluindo derivada.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: hiv_availability_uncertain
   protected: false
   contextual: false
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: true
@@ -1568,16 +1561,7 @@ features:
   type: categorical
   source: SINAN
   availability: at_notification
-  dictionary_evidence: 'Campo 44: Teste Molecular Rápido TB (TMR-TB / Xpert MTB/RIF), Campo Essencial.
-    Códigos 1-5 (detectável sensível a R, detectável resistente a R, não detectável, inconclusivo, não
-    realizado): NÃO possui código ''Em andamento'', portanto não sofre a reescrita retroativa do campo
-    62 que atinge HIV e Cultura. Introduzido na v5 da ficha; a janela 2015-2025 é toda v5 e a cobertura
-    vai de 86,1% (2015) a 95,7% (2025). O Xpert retorna em ~2h: a disponibilidade nas curas é PLANA em
-    ~35-38% independente da duração — o valor não se acumula com o tempo. Resíduo declarado: nos óbitos
-    sobe de 28,7% (0-7 dias) para 38,4% (8-14) e estabiliza; gap a tempo igual de 7,5 pp, menos da metade
-    dos 17,8 pp do HIV. Decisão do PI em 2026-07-16. O código 0 é a codificação de ausência anterior a
-    2018 (vira campo vazio a partir da v5) e NÃO consta no dicionário: mapeado para <NA>. Sem isso, 0
-    entraria como categoria válida quase perfeitamente colinear com ''notificado antes de 2018''.'
+  dictionary_evidence: "Teste molecular rapido, campo 44 do dicionario SINAN. A ausencia de categoria Em andamento evita aquela recodificacao especifica, mas nao comprova que o resultado antecedeu a notificacao. Mantido por decisao previa do PI como exame diagnostico basal, com suposicao explicitada. Comparacoes por tempo ate encerramento nao demonstram disponibilidade individual. Sensibilidade without_diagnostic_tests remove este campo. Codigo historico 0 e mapeado para ausente."
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -1755,8 +1739,9 @@ features:
   type: categorical
   source: derived
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Geografia do município de análise: região e coordenadas.
+    Contexto geográfico, sem uso do encerramento; limites municipais harmonizados
+    conforme a referência territorial disponível, não uma série de publicação anual.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -1806,8 +1791,9 @@ features:
   type: numeric
   source: derived
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Geografia do município de análise: região e coordenadas.
+    Contexto geográfico, sem uso do encerramento; limites municipais harmonizados
+    conforme a referência territorial disponível, não uma série de publicação anual.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -1823,8 +1809,9 @@ features:
   type: numeric
   source: derived
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Geografia do município de análise: região e coordenadas.
+    Contexto geográfico, sem uso do encerramento; limites municipais harmonizados
+    conforme a referência territorial disponível, não uma série de publicação anual.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -1873,15 +1860,16 @@ features:
   form_field: null
   type: numeric
   source: CNES
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1890,15 +1878,16 @@ features:
   form_field: null
   type: numeric
   source: CNES
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1907,15 +1896,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1924,15 +1914,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1959,15 +1950,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1976,15 +1968,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -1993,15 +1986,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2010,15 +2004,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2027,15 +2022,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2044,15 +2040,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2061,15 +2058,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2078,15 +2076,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2095,15 +2094,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2112,15 +2112,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2129,15 +2130,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2146,15 +2148,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2163,15 +2166,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2180,15 +2184,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2197,15 +2202,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2214,15 +2220,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2231,15 +2238,16 @@ features:
   form_field: null
   type: numeric
   source: IBGE
-  availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
-  in_notification_set: true
+  availability: unknown
+  dictionary_evidence: 'Ano de referência não comprova data de publicação.
+    Excluído do principal por decisão do PI em 19/09/2026; preservado na sensibilidade
+    de contexto contemporâneo, sem alegar disponibilidade na notificação.'
+  in_notification_set: false
   derived_from: []
-  sensitivity_only: null
+  sensitivity_only: contemporary_context
   protected: false
   contextual: true
-  clinical_review: approved
+  clinical_review: pending
   clinical_approved_by: null
   clinical_approved_date: null
   zero_means_missing: false
@@ -2249,8 +2257,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2282,8 +2292,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2315,8 +2327,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2348,8 +2362,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2381,8 +2397,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2414,8 +2432,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2447,8 +2467,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2480,8 +2502,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2513,8 +2537,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2546,8 +2572,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2579,8 +2607,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2612,8 +2642,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2645,8 +2677,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2678,8 +2712,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2711,8 +2747,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2744,8 +2782,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2777,8 +2817,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2810,8 +2852,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null
@@ -2843,8 +2887,10 @@ features:
   type: numeric
   source: IPEA
   availability: at_notification
-  dictionary_evidence: Indicador municipal do ano anterior ou igual ao da notificação; o invariante 'censo
-    nunca futuro' do sub-projeto 1 garante que nenhum valor é posterior
+  dictionary_evidence: 'Principal: contexto censitário 2000/2010 congelado antes
+    do estudo, conforme lookup de 2014 e guarda de ano censitário. Atlas Brasil 2013
+    divulgado antes da coorte 2015+. Série contemporânea apenas na sensibilidade.
+    O arquivo atual não constitui uma cópia arquivada da versão publicada em 2013.'
   in_notification_set: true
   derived_from: []
   sensitivity_only: null

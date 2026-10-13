@@ -1,0 +1,90 @@
+{
+  "version": "2026-10-13",
+  "source_extraction_date": "2026-07-15",
+  "extraction_date_basis": "Declared by the study investigators for this source copy",
+  "harmonized_rows": 1326538,
+  "harmonized_columns": 168,
+  "primary_development_rows": 707870,
+  "temporal_2024_rows": 92152,
+  "unused_2025_analytic_rows": 42228,
+  "files": [
+    {
+      "file": "harmonized.parquet",
+      "restore_to": "data/harmonized.parquet",
+      "bytes": 39342227,
+      "sha256": "88c0d6e4750326696305b2cca50dc3c936c4693ae2e09613a6752a095acaac67"
+    },
+    {
+      "file": "baseline_context.parquet",
+      "restore_to": "data/correction_audit/baseline_context.parquet",
+      "bytes": 403934,
+      "sha256": "efb71f401d51cc51dd21b0fba7232fa5cd21f68f41a3bb68f69a068dc13139a5"
+    },
+    {
+      "file": "municipios_ibge.csv",
+      "restore_to": "data/municipios_ibge.csv",
+      "bytes": 177412,
+      "sha256": "5f47ea8b312ca5a34d836834b719b2ccc927d0f737960bdc1fdf7d09996d7e4d"
+    },
+    {
+      "file": "feature_dictionary.csv",
+      "restore_to": "data/feature_dictionary.csv",
+      "bytes": 40857,
+      "sha256": "f23b32e026298f88224b09d14ccf75b9e1e8b6f208a9b51ebb3e15e3de78d320"
+    },
+    {
+      "file": "feature_availability.csv",
+      "restore_to": "data/feature_availability.csv",
+      "bytes": 45178,
+      "sha256": "53c513f3ee650e3cf991e938dab9e73fc4451d0b04a6fb4855b38a65e0f0e4b5"
+    },
+    {
+      "file": "record_assignments.parquet",
+      "restore_to": "data/correction_audit/partitions/record_assignments.parquet",
+      "bytes": 4440605,
+      "sha256": "88597fcae7edab66727222d52147aa9bb09a02552bf1901318871e9c75c1e879"
+    },
+    {
+      "file": "municipality_clusters_k27.parquet",
+      "restore_to": "data/correction_audit/partitions/municipality_clusters_k27.parquet",
+      "bytes": 38008,
+      "sha256": "c81602b71fdb75b4cc3dc677b1601cb7a6643da74ce9cf67ce43cacfb800c05b"
+    },
+    {
+      "file": "municipality_clusters_k50.parquet",
+      "restore_to": "data/correction_audit/partitions/municipality_clusters_k50.parquet",
+      "bytes": 39006,
+      "sha256": "f94c4c5417643b8e2aa3146e6ffaaa4739f1de5eb2bddf5758aec0e9129fc33c"
+    },
+    {
+      "file": "municipality_clusters_k75.parquet",
+      "restore_to": "data/correction_audit/partitions/municipality_clusters_k75.parquet",
+      "bytes": 39880,
+      "sha256": "0abdd8583342a9179582070355c833f1ba73fee206ec83dbabdeaf80226a4af0"
+    },
+    {
+      "file": "centroids_k27.json",
+      "restore_to": "data/correction_audit/partitions/centroids_k27.json",
+      "bytes": 1076,
+      "sha256": "17011d45fd6df3cf472d02d3350053cda256c3bd1c11596e6d77366237bb7c8a"
+    },
+    {
+      "file": "centroids_k50.json",
+      "restore_to": "data/correction_audit/partitions/centroids_k50.json",
+      "bytes": 2001,
+      "sha256": "bb6ec7c57ea0ae39ec8f09f655f71000c25a8c34c72d7d6454256b8b26ab86eb"
+    },
+    {
+      "file": "centroids_k75.json",
+      "restore_to": "data/correction_audit/partitions/centroids_k75.json",
+      "bytes": 2992,
+      "sha256": "1be7416436bb11a989827cbf0d778a6b02a39617326f2fd89f9d3730604d48c7"
+    }
+  ],
+  "class_codes": {
+    "0": "cure",
+    "1": "death attributed to tuberculosis",
+    "2": "treatment interruption"
+  },
+  "identity_verified_against_primary_execution": true
+}

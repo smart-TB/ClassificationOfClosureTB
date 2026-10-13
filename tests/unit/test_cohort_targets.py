@@ -36,6 +36,13 @@ def test_revised_4class_merges_both_deaths():
     assert list(r) == ["death_all_cause", "death_all_cause"]
 
 
+def test_all_cause_sensitivity_keeps_primary_interruption_and_merges_deaths():
+    r = map_outcome(_df([1, 2, 10, 3, 4, 5, 0, None]), TargetSchema.ALL_CAUSE_3CLASS, RULES)
+    assert list(r) == ["cure", "treatment_interruption", "treatment_interruption",
+                       "death_all_cause", "death_all_cause", "excluded",
+                       "unresolved_or_censored", "unresolved_or_censored"]
+
+
 def test_revised_4class_groups_other_closures():
     r = map_outcome(_df([5, 6, 7, 8, 9, 10]), TargetSchema.REVISED_4CLASS, RULES)
     assert set(r) == {"other_closure"}

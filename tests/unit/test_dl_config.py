@@ -20,6 +20,25 @@ def test_dlconfig_num_workers_default_zero():
     cfg = DLConfig(max_epochs=2, early_stopping_patience=2, validation_split=0.2,
                    batch_size=256, seed=0)
     assert cfg.num_workers == 0
+    assert cfg.precision == "32-true"
+    assert cfg.dataloader_kwargs() == {}
+
+
+def test_workers_use_spawn_not_fork():
+    cfg = DLConfig(max_epochs=2, early_stopping_patience=2, validation_split=0.2,
+                   batch_size=256, seed=0, num_workers=2)
+    assert cfg.dataloader_kwargs()["multiprocessing_context"] == "spawn"
+    assert cfg.dataloader_kwargs()["persistent_workers"] is True
+
+
+@pytest.mark.parametrize("override", [{"batch_size": 0}, {"num_workers": -1},
+                                     {"precision": "typo"}, {"validation_split": 1.0}])
+def test_rejects_invalid_runtime_options(override):
+    values = dict(max_epochs=2, early_stopping_patience=2, validation_split=0.2,
+                  batch_size=256, seed=0)
+    values.update(override)
+    with pytest.raises(ValueError):
+        DLConfig(**values)
 
 
 def test_load_dl_config_reads_num_workers(tmp_path):

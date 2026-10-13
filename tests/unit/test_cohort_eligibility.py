@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 
 from tb_outcomes.cohort import apply_eligibility, audit_duplicates, compute_followup
 
@@ -24,6 +25,7 @@ def test_compute_followup_counts_days_to_extraction():
 def test_eligibility_excludes_outside_declared_window():
     df = pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2014-06-01", "2016-06-01"],
             "NU_ANO": pd.array([2014, 2016], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([3500105, 3500105], dtype="Int64"),
@@ -39,6 +41,7 @@ def test_eligibility_excludes_insufficient_followup():
     # 2025-12-01 tem ~127 dias até a extração: fora da analítica pela regra de 365.
     df = pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2025-12-01", "2020-01-01"],
             "NU_ANO": pd.array([2025, 2020], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([3500105, 3500105], dtype="Int64"),
@@ -53,6 +56,7 @@ def test_eligibility_excludes_insufficient_followup():
 def test_eligibility_excludes_missing_municipality():
     df = pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2018-01-01"],
             "NU_ANO": pd.array([2018], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([None], dtype="Int64"),
@@ -68,6 +72,7 @@ def test_eligibility_never_excludes_for_missing_feature():
     # Briefing §9.1: ausência de feature NUNCA exclui.
     df = pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2018-01-01"],
             "NU_ANO": pd.array([2018], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([3500105], dtype="Int64"),
@@ -85,6 +90,7 @@ def test_eligibility_log_has_sequential_and_non_sequential_counts():
     # não sequencial conta em ambas.
     df = pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2014-01-01"],
             "NU_ANO": pd.array([2014], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([None], dtype="Int64"),
@@ -103,3 +109,20 @@ def test_audit_duplicates_counts_exact_groups():
     aud = audit_duplicates(df, ["a", "b"]).set_index("metrica").valor
     assert int(aud["linhas_em_grupos_duplicados"]) == 2
     assert int(aud["linhas_redundantes"]) == 1
+
+
+@pytest.mark.parametrize("outcome", [1, 2, 3, None])
+def test_postmortem_entry_excluded_independently_of_outcome(outcome):
+    df = pd.DataFrame({
+        "DT_NOTIFIC": ["2020-01-01"] * 4, "NU_ANO": [2020] * 4,
+        "ID_MUNIC_ANALISE": [3500105] * 4, "ANO_NASC": [1980] * 4,
+        "TRATAMENTO": [6, "6", 1, None], "SITUA_ENCE": [outcome] * 4,
+    })
+    eligible, log = apply_eligibility(df, _Cfg())
+    assert eligible.index.tolist() == [2, 3]
+    assert log.set_index("reason").loc["notificacao_pos_obito", "n"] == 2
+
+
+def test_postmortem_check_requires_entry_column():
+    with pytest.raises(ValueError, match="TRATAMENTO ausente"):
+        apply_eligibility(pd.DataFrame(), _Cfg())

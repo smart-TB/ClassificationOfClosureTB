@@ -46,6 +46,14 @@ def _monta(tmp_path: Path, configs_extra: list[str]) -> Path:
     )
     s.ibge.to_csv(tmp_path / "data" / "indicadores_IBGE.csv", index=False)
     s.ipea.to_csv(tmp_path / "data" / "indicadores_IPEA.csv", index=False)
+    # The synthetic 2015 lookup contains 2010 census values (new municipality stays missing).
+    # Supply the explicit frozen context input now required by the production pipeline.
+    from tb_outcomes.context_features import assert_pre_study_census
+    context = s.ipea.loc[s.ipea.ANO_DIAG.eq(2015)].drop(columns="ANO_DIAG").copy()
+    assert_pre_study_census(context, [c for c in context if c.startswith("IPEA_") and not c.endswith("_ANO_CENSO")])
+    context_dir = tmp_path / "data" / "correction_audit"
+    context_dir.mkdir(exist_ok=True)
+    context.to_parquet(context_dir / "baseline_context.parquet", index=False)
     s.cnes_prof.to_parquet(tmp_path / "data" / "profissionais_CNES.parquet", index=False)
     s.cnes_estab.to_parquet(tmp_path / "data" / "estabelecimentos_CNES.parquet", index=False)
 

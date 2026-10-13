@@ -71,6 +71,10 @@ def _fmt(v) -> str:
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("build_model_table.py", "python scripts/build_supplementary.py")
     cfg = load_models_config("configs/models.yaml")
     entries = {**cfg.baselines, **cfg.models}
     registry = build_registry(cfg)

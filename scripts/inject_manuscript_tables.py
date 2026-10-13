@@ -15,6 +15,7 @@ from pathlib import Path
 import pandas as pd
 
 from tb_outcomes import labels as rot
+from tb_outcomes.labels import proveniencia
 from tb_outcomes.robustness import leaderboard
 
 D = Path("data")
@@ -33,10 +34,9 @@ def _wrap(nome: str, corpo: str) -> str:
 def t_cohort() -> str:
     fl = pd.read_csv(D / "cohort_flow_sensitive_tb_3class.csv")
     ex = pd.read_csv(D / "exclusion_reasons_sensitive_tb_3class.csv")
-    motivo = {"municipio_irrecuperavel": "Unrecoverable municipality code",
-           "idade_impossivel": "Impossible age",
-           "fora_da_janela_declarada": "Outside the declared window",
-           "seguimento_insuficiente": "Follow-up shorter than 365 days"}
+    # rótulos vêm de tb_outcomes.labels: um critério novo no protocolo aparece aqui sem
+    # edição, em vez de cair como chave crua na tabela
+    from tb_outcomes.labels import motivo_exclusao
     desc = {"recuperada": "Records returned by the acquisition pipeline",
             "declarada": "Notified between 2015 and 2025",
             "elegivel": "Eligible after quality and follow-up criteria",
@@ -49,7 +49,7 @@ def t_cohort() -> str:
     linhas.append(r"\hline")
     linhas.append(r"\multicolumn{2}{l}{\emph{Exclusions applied sequentially}} \\")
     for r in ex.itertuples():
-        linhas.append(f"\\quad {motivo.get(r.reason, _esc(r.reason))} & {r.n:,} " + r"\\")
+        linhas.append(f"\\quad {_esc(motivo_exclusao(r.reason))} & {r.n:,} " + r"\\")
     linhas += [r"\hline", r"\end{tabular}", r"\end{table}"]
     return _wrap("cohort", "\n".join(linhas))
 
@@ -87,9 +87,12 @@ def t_byclass() -> str:
 
     linhas = [r"\begin{table}[!ht]",
               r"\caption{{\bf Performance by outcome class for the selected model.} "
-              r"LightGBM with cost-sensitive reweighting. Expected calibration error is "
-              r"shown before and after the cross-fitted calibrator.}",
-              r"\label{tab:byclass}", r"\begin{tabular}{lccccc}", r"\hline",
+              r"Expected calibration error is shown before and after the cross-fitted "
+              r"calibrator. " + _esc(proveniencia(
+                  arm="spatial_main", decision_rule="pred_argmax",
+                  aggregation="mean_across_folds", role="selection_procedure")) + r".}",
+              r"\label{tab:byclass}", r"\small",
+              r"\begin{tabular}{lccccc}", r"\hline",
               r"Class & Precision & Recall & AUPRC & ECE before & ECE after \\ \hline"]
     for c in (0, 1, 2):
         linhas.append(
@@ -171,11 +174,17 @@ def t_utility() -> str:
     cls = {"tb_death": "TB death", "treatment_interruption": "Treatment interruption"}
     linhas = [r"\begin{table}[!ht]",
               r"\caption{{\bf Programmatic utility under a capacity constraint.} Positive "
-              r"predictive value, share of events captured, and number needed to screen when "
-              r"the highest-risk fraction of notifications is prioritised. The clinical rule "
-              r"uses age, HIV status, alcohol or drug use, and homelessness.}",
-              r"\label{tab:utility}", r"\begin{tabular}{llcccc}", r"\hline",
-              r"Outcome & Approach & Capacity & PPV & Captured & NNS \\ \hline"]
+              r"predictive value, share of recorded events included, and notifications "
+              r"selected per observed event when the highest-risk fraction is prioritised. "
+              r"Retrospective selection of records; no intervention was delivered or "
+              r"evaluated. The comparator is a logistic regression on age, declared AIDS, "
+              r"alcohol or drug use, and homelessness, fitted on this cohort. " + _esc(
+                  proveniencia(arm="spatial_main", decision_rule="ranking_only",
+                               aggregation="pooled_oof")) + r".}",
+              r"\label{tab:utility}", r"\small",
+              r"\begin{tabular}{llcccc}", r"\hline",
+              r"Outcome & Approach & Capacity & PPV & Events included & "
+              r"Selected per event \\ \hline"]
     for classe in ("tb_death", "treatment_interruption"):
         for k in sorted(u.k.unique()):
             for a in ("modelo_completo", "baseline_clinico"):
@@ -199,6 +208,10 @@ GERADORES = {"cohort": t_cohort, "leaderboard": t_leaderboard, "byclass": t_bycl
 
 
 def main() -> None:
+    import sys as _sys
+    _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent / "editorial"))
+    from guarda_historico import exigir_historico
+    exigir_historico("inject_manuscript_tables.py", "python scripts/editorial/tabelas_c7.py")
     tex = TEX.read_text(encoding="utf-8")
     trocadas, ausentes = [], []
     for nome, fn in GERADORES.items():

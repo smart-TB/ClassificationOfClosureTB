@@ -1,5 +1,5 @@
-# Treino DL sob a Opção A (defaults, sem busca). max_epochs e o early stopping são
-# pré-registrados; o split de validação sai do PRÓPRIO treino interno (nunca do EVAL).
+# Limites de treino DL do protocolo corrigido. A busca declarada de learning_rate
+# ocorre dentro do desenvolvimento; o early stopping usa somente o treino interno.
 max_epochs: 50
 early_stopping_patience: 8
 validation_split: 0.15
@@ -10,3 +10,17 @@ seed: 42
 # o ft_transformer na produção k=27 (thread principal em busy-spin, GPU 0%, log congelado
 # ~24min). 0 é o regime do k=50 (rodou os mesmos DL sem hang) e não muda a matemática.
 num_workers: 0
+
+# Paralelismo entre ajustes: python -m tb_outcomes.dl_parallel --gpus 0,1 ...
+# Um processo por GPU; preserva batch_size, épocas e dobras. Novos workers de
+# DataLoader, se habilitados, usam spawn + persistent_workers (não fork).
+torch_num_threads: 4
+precision: 32-true
+matmul_precision: highest
+# Piloto de 60000 registros: metade do pico de memoria nos Transformers, sem perda
+# de throughput observada. Batch de treinamento continua 1024; precisao FP32.
+inference_batch_size: 2048
+prefetch_factor: 2
+# Checkpoints temporários por fit, com restauração dos melhores pesos antes da limpeza.
+# null usa o diretório temporário do sistema; pode apontar para SSD local.
+checkpoint_root: null

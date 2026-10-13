@@ -1,0 +1,11 @@
+# Particionamento espacial. Fonte de verdade: briefing §12.
+epsg_metric: 5880          # SIRGAS 2000 / Brazil Polyconic (oficial IBGE)
+cluster_level: municipality # nunca 'notification' na análise primária (§12.1)
+k_primary: 50
+k_sensitivity: [27, 75]
+n_outer_folds: 5
+n_inner_folds: 5
+fold_assignment: binpack   # principal; 'random_group' = StratifiedGroupKFold (sensib.)
+stratify_by: outcome
+min_classes_per_fold: 3
+max_fold_size_ratio: 1.5   # teto de sanidade; bin-packing fica em ~1,0-1,1

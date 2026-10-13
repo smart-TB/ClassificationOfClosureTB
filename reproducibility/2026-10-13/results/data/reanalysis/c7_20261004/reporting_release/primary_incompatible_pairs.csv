@@ -1,0 +1,9 @@
+model,strategy,reason
+lda,local_cost_sensitive,adapter_incompatible
+qda,local_cost_sensitive,adapter_incompatible
+mlp,local_cost_sensitive,adapter_incompatible
+category_embedding,local_cost_sensitive,adapter_incompatible
+tabnet,local_cost_sensitive,adapter_incompatible
+tab_transformer,local_cost_sensitive,adapter_incompatible
+ft_transformer,local_cost_sensitive,adapter_incompatible
+knn,local_cost_sensitive,adapter_incompatible

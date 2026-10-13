@@ -27,6 +27,7 @@ def test_run_sweep_writes_per_k_artifacts(tmp_path, monkeypatch):
         models=["majority_class", "logistic_plain"])
 
     monkeypatch.setattr(cli, "load_executor_config", lambda _p: exec_cfg)
+    monkeypatch.setattr(cli, "correction_run_root", lambda: tmp_path)
     monkeypatch.setattr(cli, "_load_benchmark_inputs",
                         lambda cfg, sanity=False, k_override=None: _mini_inputs(k_override))
 

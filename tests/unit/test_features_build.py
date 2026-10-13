@@ -27,6 +27,7 @@ def _cohort():
             "ID_MUNIC_ANALISE": pd.array([3500105, 3500105], dtype="Int64"),
             "ID_MN_RESI": ["3500105", "3500105"],
             "IPEA_IDHM": [0.8, 0.8],
+            "IPEA_IDHM_ANO_CENSO": [2010, 2010],
         }
     )
 
@@ -64,10 +65,30 @@ def test_notification_and_contextual_variables_are_kept():
     assert "IPEA_IDHM" in X.columns
 
 
-def test_hiv_is_collapsed_and_derived_feature_is_added():
+def test_hiv_and_its_derivative_are_excluded_from_primary_features():
     X = build_notification_feature_set(_cohort(), SPECS)
-    assert "hiv_pos_model" in X.columns
-    assert 3 not in set(X["HIV"].dropna()), "'Em andamento' deve estar colapsado"
+    assert "HIV" not in X.columns
+    assert "hiv_pos_model" not in X.columns
+    assert "AGRAVAIDS" in X.columns
+
+
+def test_hiv_derivative_cannot_ignore_source_exclusion():
+    specs = [s.model_copy(update={"in_notification_set": False})
+             if s.raw_name == "HIV" else s for s in SPECS]
+    X = build_notification_feature_set(_cohort(), specs)
+    assert "hiv_pos_model" not in X.columns
+
+
+def test_contemporary_context_is_explicit_sensitivity_not_primary():
+    df = _cohort().assign(IBGE_PIB_PER_CAPITA=[20000, 30000],
+                          QT_PROFISSIONAIS_TOTAL=[100, 200])
+    primary = build_notification_feature_set(df, SPECS)
+    sensitivity = build_notification_feature_set(df, SPECS, context_profile="contemporary_sensitivity")
+    for col in ["IBGE_PIB_PER_CAPITA", "QT_PROFISSIONAIS_TOTAL"]:
+        assert col not in primary
+        assert col in sensitivity
+    assert "HIV" not in sensitivity
+    assert "hiv_pos_model" not in sensitivity
 
 
 def test_derived_features_are_added():

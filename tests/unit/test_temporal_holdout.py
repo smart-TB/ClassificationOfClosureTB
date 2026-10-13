@@ -10,6 +10,7 @@ import pytest
 
 from tb_outcomes.calibration import load_calibration_config
 from tb_outcomes.executor import evaluate_pair, evaluate_temporal_pair
+from tb_outcomes.temporal_partition import temporal_masks
 
 
 class _Caps:
@@ -121,3 +122,36 @@ def test_a_refatoracao_preservou_a_validacao_espacial():
                         _Caps(), _cal_cfg(), n_inner=3)
     assert len(res.oof_rows) == len(y)
     assert {r["outer_fold"] for r in res.oof_rows} == {0, 1, 2, 3, 4}
+
+
+def test_future_year_excluded_from_all_fits_and_predictions():
+    y, clusters, _ = _setup()
+    years = pd.Series(np.resize([2022, 2023, 2024, 2025], len(y)), dtype="Int64")
+    train, test = temporal_masks(years, 2024)
+    seen = []
+    result = evaluate_temporal_pair(
+        "m", "s", y, clusters, train, 3, [0, 1, 2], _factory(seen), _Caps(),
+        _cal_cfg(), n_inner=3, test_mask=test)
+    assert {r["record_pos"] for r in result.oof_rows} == set(np.flatnonzero(years == 2024))
+    for call in seen:
+        if "dev" in call:
+            assert (years.iloc[call["dev"]] < 2024).all()
+            assert (years.iloc[call["eval"]] == 2024).all()
+        if "inner_train_global" in call:
+            assert (years.iloc[call["inner_train_global"]] < 2024).all()
+
+
+@pytest.mark.parametrize("years", [[2023, 2025], [2024, 2025], [2023, None, 2024],
+                                   [2023, 2024.5], [2023, "invalid", 2024]])
+def test_temporal_partition_rejects_missing_invalid_or_empty_years(years):
+    with pytest.raises(ValueError):
+        temporal_masks(years, 2024)
+
+
+def test_temporal_pair_rejects_overlapping_and_misaligned_masks():
+    y, clusters, years = _setup()
+    train, test = temporal_masks(years, 2024)
+    for invalid in [train, test[:-1], test.astype(object)]:
+        with pytest.raises(ValueError):
+            evaluate_temporal_pair("m", "s", y, clusters, train, 3, [0, 1, 2],
+                                   _factory([]), _Caps(), _cal_cfg(), test_mask=invalid)

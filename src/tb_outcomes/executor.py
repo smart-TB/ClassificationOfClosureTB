@@ -84,6 +84,7 @@ class ExecutorConfig(BaseModel):
     n_inner_folds: int
     fold_method: str
     k: int
+    cluster_root: str = "data"
     random_state: int
     sanity_subsample: int
     models: list[str]
@@ -246,7 +247,7 @@ def evaluate_pair(model, strategy, y, record_clusters, outer_folds, n_classes, c
 
 def evaluate_temporal_pair(model, strategy, y, record_clusters, train_mask, n_classes,
                            classes, make_fold_fn, capabilities, cal_cfg, n_inner=5,
-                           fold_id="temporal_holdout") -> PairResult:
+                           fold_id="temporal_holdout", *, test_mask=None) -> PairResult:
     """Holdout temporal (ESPECIFICACAO §4.1): treina no passado, avalia no ano reservado.
 
     Uma partição só, no tempo, em vez das 5 dobras espaciais. A disciplina é idêntica à da
@@ -258,8 +259,17 @@ def evaluate_temporal_pair(model, strategy, y, record_clusters, train_mask, n_cl
     """
     y = pd.Series(y).reset_index(drop=True)
     record_clusters = pd.Series(record_clusters).reset_index(drop=True)
-    train_mask = np.asarray(train_mask, dtype=bool)
-    dev_idx, eval_idx = np.where(train_mask)[0], np.where(~train_mask)[0]
+    train_mask = np.asarray(train_mask)
+    if train_mask.shape != (len(y),) or train_mask.dtype != bool:
+        raise ValueError("máscara de treino deve ser booleana e alinhada a y")
+    # O complemento só é mantido para consumidores legados de duas populações.
+    # O CLI fornece test_mask explicitamente: anos futuros não pertencem ao teste.
+    test_mask = ~train_mask if test_mask is None else np.asarray(test_mask)
+    if test_mask.shape != (len(y),) or test_mask.dtype != bool:
+        raise ValueError("máscara de teste deve ser booleana e alinhada a y")
+    if (train_mask & test_mask).any():
+        raise ValueError("sobreposição entre treino e teste temporal")
+    dev_idx, eval_idx = np.where(train_mask)[0], np.where(test_mask)[0]
     if len(dev_idx) == 0 or len(eval_idx) == 0:
         raise ValueError(
             f"partição temporal degenerada: treino={len(dev_idx)}, teste={len(eval_idx)}")
@@ -411,13 +421,26 @@ def _take_rows(X, idx):
 
 
 def _fit_transform_predict(X_tr, y_tr, X_va, model_name, strategy, entries, feature_specs,
-                           pre_cfg, imb_cfg, strata_tr, seed, n_classes, dl_cfg=None):
+                           pre_cfg, imb_cfg, strata_tr, seed, n_classes, dl_cfg=None,
+                           params=None):
     """Uma dobra de plumbing: prepara a entrada por input_kind, reamostra o treino, ajusta, prediz.
 
     Um adapter novo por fit (o registry guarda uma instância só; refit repetido sobre
     o mesmo estimador contaminaria as dobras). O estrato de custo vem POR FORA do X.
     """
-    adapter = build_adapter(model_name, entries[model_name], dl_cfg)
+    parameter_override = {} if params is None else {"params": params}
+    from tb_outcomes.models import DL_MODELS
+
+    if model_name in DL_MODELS and params:
+        from tb_outcomes.dl_config import DLConfig, load_dl_config
+
+        if set(params) - {"learning_rate"}:
+            raise ValueError("Only learning_rate is supported in the declared DL search")
+        base = dl_cfg or load_dl_config("configs/deep_learning.yaml")
+        dl_cfg = DLConfig.model_validate({**base.model_dump(), **params})
+        parameter_override = {}
+    adapter = build_adapter(model_name, entries[model_name], dl_cfg, random_state=seed,
+                            **parameter_override)
     profile = adapter.capabilities.preprocess_profile
     types = infer_column_types(X_tr, feature_specs, pre_cfg.max_cardinality)
     input_tr, input_va = build_model_input(X_tr, X_va, types, profile, adapter.input_kind, pre_cfg)
@@ -425,8 +448,13 @@ def _fit_transform_predict(X_tr, y_tr, X_va, model_name, strategy, entries, feat
                          supports_weight=adapter.capabilities.sample_weight)
     input_tr = _take_rows(input_tr, res.train_index)
     yr = y_tr.to_numpy()[res.train_index]
-    adapter.fit(input_tr, yr, sample_weight=res.sample_weight)
-    return as_score_matrix(adapter.predict_raw_scores(input_va), n_classes)
+    try:
+        adapter.fit(input_tr, yr, sample_weight=res.sample_weight)
+        return as_score_matrix(adapter.predict_raw_scores(input_va), n_classes)
+    finally:
+        close = getattr(adapter, "close", None)
+        if close is not None:
+            close()
 
 
 def make_sklearn_fold_factory(X, y, strata, registry, imb_cfg, pre_cfg, feature_specs, seed,

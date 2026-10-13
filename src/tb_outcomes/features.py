@@ -298,15 +298,9 @@ def outcome_contamination_audit(df: pd.DataFrame, columns: list[str]) -> pd.Data
 def hiv_availability_by_duration(df: pd.DataFrame) -> pd.DataFrame:
     """Disponibilidade da sorologia por desfecho e tempo até o encerramento.
 
-    Discriminador entre dois mecanismos de ausência (spec §3.1):
-      - artefato de registro: a disponibilidade CRESCE com o tempo (houve tempo de
-        testar);
-      - linha de base: a diferença entre desfechos persiste A TEMPO IGUAL.
-
-    Medido no snapshot: a tempo igual (0-7 dias), óbito por TB tem 62,8% e cura
-    81,3%. Os 18,5 pp que o tempo não explica são linha de base — quem morre já
-    chegou menos vinculado ao serviço. É por isso que HIV entra no conjunto
-    primário apesar do resíduo de artefato.
+    Análise descritiva: condicionar no tempo até o encerramento não identifica
+    quando o exame estava disponível. Diferenças entre desfechos não provam
+    disponibilidade basal, nem distinguem mecanismos causais de ausência.
     """
     notif = pd.to_datetime(df["DT_NOTIFIC"], errors="coerce")
     encerr = pd.to_datetime(df["DT_ENCERRA"], errors="coerce")
@@ -382,12 +376,9 @@ DERIVED_FEATURES = [
 
 FEATURE_SCOPES = ("individual", "municipal", "combined", "clinical_baseline")
 
-# Baseline clínico simples da §3.8: idade + HIV + álcool/drogas + situação de rua. É o
-# comparador que decide se o modelo de 72 variáveis vale a pena — um serviço não precisa de
-# aprendizado de máquina para montar uma lista com quatro fatores de risco conhecidos.
-# Usa `hiv_pos_model` (a regra AIDS⇒HIV da §2.5) em vez do `HIV` cru, que é o indicador
-# canônico do projeto.
-CLINICAL_BASELINE_FEATURES = ("IDADE", "hiv_pos_model", "AGRAVALCOO", "AGRAVDROGA", "POP_RUA")
+# Baseline clínico: idade, AIDS declarada, álcool/drogas e situação de rua.
+# AIDS é a comorbidade registrada na notificação, não sorologia HIV final.
+CLINICAL_BASELINE_FEATURES = ("IDADE", "AGRAVAIDS", "AGRAVALCOO", "AGRAVDROGA", "POP_RUA")
 
 # Derivadas e engenheiradas que não têm FeatureSpec próprio. Todas descrevem a
 # PESSOA notificada (idade, interações com agravos, regra AIDS⇒HIV), então são
@@ -551,7 +542,9 @@ def collapse_era_zeros(df: pd.DataFrame, specs: list[FeatureSpec]) -> pd.DataFra
     return df
 
 
-def build_notification_feature_set(df: pd.DataFrame, specs: list[FeatureSpec]) -> pd.DataFrame:
+def build_notification_feature_set(df: pd.DataFrame, specs: list[FeatureSpec], *,
+                                   municipal_context=None, context_profile="baseline",
+                                   availability_profile="primary") -> pd.DataFrame:
     """Monta o X do momento da notificação.
 
     Só entra o que a config marcou in_notification_set. O FeatureSpec já proíbe,
@@ -563,6 +556,16 @@ def build_notification_feature_set(df: pd.DataFrame, specs: list[FeatureSpec]) -
     ele já passou uma vez, em silêncio, e custou o benchmark inteiro.
     """
     assert_no_outcome_in_derivation(specs)
+    from tb_outcomes.context_features import assert_pre_study_census, freeze_census_context
+
+    if context_profile not in {"baseline", "contemporary_sensitivity"}:
+        raise ValueError(f"Unknown municipal context profile: {context_profile}")
+    if availability_profile not in {"primary", "hiv_uncertain", "without_diagnostic_tests"}:
+        raise ValueError(f"Unknown availability profile: {availability_profile}")
+    if context_profile == "baseline":
+        if municipal_context is not None:
+            df = freeze_census_context(df, municipal_context)
+        assert_pre_study_census(df, [s.raw_name for s in specs if s.in_notification_set])
 
     # O código 0 vira <NA> ANTES das derivações: caso contrário normalize_agravos
     # e derive_age operariam sobre um 0 que significa ausência.
@@ -572,6 +575,15 @@ def build_notification_feature_set(df: pd.DataFrame, specs: list[FeatureSpec]) -
     enriquecido = apply_all_derivations(limpo)
 
     escolhidas = [s.raw_name for s in specs if s.in_notification_set]
+    if availability_profile == "hiv_uncertain":
+        escolhidas += [s.raw_name for s in specs if s.raw_name == "HIV"
+                       and s.sensitivity_only == "hiv_availability_uncertain"]
+    elif availability_profile == "without_diagnostic_tests":
+        escolhidas = [c for c in escolhidas if c not in {"BACILOSC_E", "BACILOSC_O", "TEST_MOLEC"}]
+    if context_profile == "contemporary_sensitivity":
+        escolhidas += [s.raw_name for s in specs if s.contextual
+                       and s.sensitivity_only == "contemporary_context"
+                       and s.raw_name not in escolhidas]
     presentes = [c for c in escolhidas if c in enriquecido.columns]
 
     faltando = sorted(set(escolhidas) - set(presentes))
@@ -589,7 +601,8 @@ def build_notification_feature_set(df: pd.DataFrame, specs: list[FeatureSpec]) -
     X = enriquecido[presentes + derivadas].copy()
     X = collapse_pending_levels(X, [c for c in COLUNAS_CONTAMINADAS if c in X.columns])
 
-    if {"HIV", "AGRAVAIDS"} <= set(limpo.columns):
+    # An excluded source must not re-enter through an automatic derivative.
+    if {"HIV", "AGRAVAIDS"} <= set(presentes):
         X["hiv_pos_model"] = derive_hiv_rule(limpo)
 
     logger.info("Conjunto de features da notificação: %d colunas.", X.shape[1])
@@ -687,10 +700,9 @@ def early_death_missingness_audit(df: pd.DataFrame, outcome_col: str) -> pd.Data
     pode refletir que o paciente morreu antes de o dado ser coletado — e o modelo
     aprenderia isso como se fosse preditivo.
 
-    Cuidado ao ler: diferença grande NÃO prova artefato. Para o HIV, medimos que a
-    maior parte do gap persiste a tempo igual (18,5 pp entre óbito e cura na faixa
-    de 0-7 dias), o que aponta linha de base, não registro. Este relatório
-    sinaliza candidatos; o discriminador é hiv_availability_by_duration.
+    Diferenças não identificam o mecanismo de ausência. Mesmo a comparação por
+    tempo de encerramento não prova disponibilidade basal. Este relatório apenas
+    sinaliza candidatos à revisão de procedência e momento de disponibilidade.
     """
     obitos = df[df[outcome_col] == CODIGO_OBITO_TB]
     curas = df[df[outcome_col] == CODIGO_CURA]

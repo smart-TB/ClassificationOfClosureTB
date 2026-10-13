@@ -1,0 +1,11 @@
+axis,total,missing,group,rule,ci_status,reason
+sexo,707870.0,62.0,,,,
+raca_cor,707870.0,49356.0,,,,
+raca_cor,,,6,pred_argmax,not_estimable,At least two clusters are required
+raca_cor,,,6,pred_policy,not_estimable,At least two clusters are required
+escolaridade,707870.0,174570.0,,,,
+faixa_etaria,707870.0,3735.0,,,,
+dobra_espacial,707870.0,0.0,,,,
+dobra_espacial,,,0,pred_argmax,not_estimable,At least two clusters are required
+dobra_espacial,,,0,pred_policy,not_estimable,At least two clusters are required
+feature_missing_fraction,707870.0,0.0,,,,

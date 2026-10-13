@@ -14,6 +14,8 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
+from tb_outcomes.maturation import assess_maturation
+
 logger = logging.getLogger(__name__)
 
 UNRESOLVED = "unresolved_or_censored"
@@ -27,11 +29,12 @@ class TargetSchema:
     REVISED_4CLASS = "revised_4class"
     ACTIONABLE_BINARY = "actionable_binary"
     SENSITIVE_TB_3CLASS = "sensitive_tb_3class"  # primário (PI 2026-07-19)
+    ALL_CAUSE_3CLASS = "all_cause_3class"
 
     @classmethod
     def all(cls) -> list[str]:
         return [cls.LEGACY_3CLASS, cls.REVISED_4CLASS, cls.ACTIONABLE_BINARY,
-                cls.SENSITIVE_TB_3CLASS]
+                cls.SENSITIVE_TB_3CLASS, cls.ALL_CAUSE_3CLASS]
 
 
 def load_outcome_rules(path: Path) -> dict:
@@ -80,7 +83,13 @@ def apply_eligibility(df: pd.DataFrame, cfg) -> tuple[pd.DataFrame, pd.DataFrame
     tirou, na ordem) e não sequencial (quantos violariam a regra isoladamente).
     """
     estudo = cfg.study
-    seguimento = compute_followup(df, estudo.data_extraction_date)
+    if "TRATAMENTO" not in df:
+        raise ValueError("TRATAMENTO ausente: impossível verificar notificações pós-óbito")
+    maturation = assess_maturation(
+        df, estudo.data_extraction_date,
+        rule=getattr(estudo, "maturation_rule", "legacy_days"),
+        minimum_days=estudo.minimum_followup_days,
+    )
     idade = pd.to_numeric(df["NU_ANO"], errors="coerce") - pd.to_numeric(
         df["ANO_NASC"], errors="coerce"
     )
@@ -91,8 +100,8 @@ def apply_eligibility(df: pd.DataFrame, cfg) -> tuple[pd.DataFrame, pd.DataFrame
         "fora_da_janela_declarada": ~pd.to_numeric(df["NU_ANO"], errors="coerce").between(
             estudo.cohort_year_min, estudo.cohort_year_max
         ),
-        "seguimento_insuficiente": seguimento.isna()
-        | (seguimento < estudo.minimum_followup_days),
+        "notificacao_pos_obito": pd.to_numeric(df["TRATAMENTO"], errors="coerce").eq(6),
+        "seguimento_insuficiente": ~maturation.mature,
     }
 
     restantes = pd.Series(True, index=df.index)
@@ -141,13 +150,15 @@ class CohortResult:
 def followup_audit(df: pd.DataFrame, cfg) -> pd.DataFrame:
     """Seguimento potencial por ano (briefing §9.3).
 
-    É o insumo da análise de censura de 180/270/365 dias. Em 2025 a proporção
-    com seguimento suficiente cai a ~27% — motivo pelo qual o ano entra na
-    coorte declarada mas não na analítica.
+    Reporta a regra configurada; maturação administrativa não garante desfecho.
     """
     d = df.copy()
     d["_followup"] = compute_followup(d, cfg.study.data_extraction_date)
-    minimo = cfg.study.minimum_followup_days
+    d["_mature"] = assess_maturation(
+        df, cfg.study.data_extraction_date,
+        rule=getattr(cfg.study, "maturation_rule", "legacy_days"),
+        minimum_days=cfg.study.minimum_followup_days,
+    ).mature
     return (
         d.groupby("NU_ANO")
         .agg(
@@ -155,8 +166,8 @@ def followup_audit(df: pd.DataFrame, cfg) -> pd.DataFrame:
             followup_mediano=("_followup", "median"),
             followup_minimo=("_followup", "min"),
             pct_followup_ge_min=(
-                "_followup",
-                lambda s: round(float((s >= minimo).mean() * 100), 2),
+                "_mature",
+                lambda s: round(float(s.mean() * 100), 2),
             ),
         )
         .reset_index()

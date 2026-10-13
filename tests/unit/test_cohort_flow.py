@@ -21,6 +21,7 @@ class _Cfg:
 def _df():
     return pd.DataFrame(
         {
+            "TRATAMENTO": 1,
             "DT_NOTIFIC": ["2018-01-01", "2019-01-01", "2020-01-01", "2014-01-01", "2025-12-01"],
             "NU_ANO": pd.array([2018, 2019, 2020, 2014, 2025], dtype="Int64"),
             "ID_MUNIC_ANALISE": pd.array([3500105] * 5, dtype="Int64"),

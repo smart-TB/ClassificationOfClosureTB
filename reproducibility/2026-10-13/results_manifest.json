@@ -1,0 +1,3507 @@
+{
+  "identity": "smarttb-c7-reporting-20261004",
+  "artifacts": [
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/recomputed_fold_metrics.csv",
+      "sha256": "0af82eb092f10f5c2f16aa18f023d4bd31e8aa5ddbced9e2a3e1765ff523f169",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/probability_metrics_pooled.csv",
+      "sha256": "519ffd754b150f59421286ba1673136a3a51a7fca58a6ce437a3dedfdf750f96",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/subgroup_metrics.csv",
+      "sha256": "63af78401af2367ccf7ed67411deeae36fb47b6c971aaac91787cc8427f42ed2",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/cluster_influence.csv",
+      "sha256": "d1a717e68c23681a34d83f46e54982783bf6e24a82f5e946674ad497652b5434",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/subgroup_coverage.csv",
+      "sha256": "830da3fdfc3ff52d4a625818b242620cd230cbacd3684c25b5b6b4d7a100e73d",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/cluster_intervals_pred_policy.csv",
+      "sha256": "d4c6b20512b8f9b67861b5d1bff410a127cfff5ddb70305e7455cf7b2c899f3d",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/checkpoint_audit.csv",
+      "sha256": "b3f680cec2de9232be9db3d0e88e9af8f18c643e2bd4b51704cf34c954903707",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/cluster_intervals_pred_argmax.csv",
+      "sha256": "4efc542872b8eab883ef9c9a18a0e9e0d123381d981f64957c3f4418c8d51347",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/subgroup_cluster_intervals.csv",
+      "sha256": "fa3ff72d6d0d73aaf36ef3081b695173b22ebd5421954bf5f74a8789ad9e8427",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/capacity_pooled.csv",
+      "sha256": "3446ed619bc75529d714b282492cece5ebbc793bc5d50339d7fab761e629fe8b",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_audit_v2/compute_cost.csv",
+      "sha256": "2c15e03bc9f4348b2c9e415a3c99e59828f159989bd8628154726f601ace4f05",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_audit_v2/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_selected/coverage.csv",
+      "sha256": "01f43b40ac1b4aec85da7a82a8639e7f4d2114272489e617cd1880d37f2f2bf6",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_selected/selected_metrics_per_fold.csv",
+      "sha256": "e6fdf6ec9d119cd250aa5d35110e06b5e13f2a2e3edf863083883be946fdc5f2",
+      "arm": "primary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9e93e52412a3d7fb5194",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/capacity_pooled.csv",
+      "sha256": "2aba9825aa1f478a3068a9e27a2d41e4b4be463cbf9f7b04cc2a3b428c880158",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/checkpoint_audit.csv",
+      "sha256": "bb5fdbc2ec4bb12266e2003eaa1140a121b5fd5ec763150090f8f7156e1a49ed",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "226a6839a63eef729634790c550f0e1ed7eccb64d7f1cb4b2a4b6edc716f387f",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/cluster_intervals_pred_policy.csv",
+      "sha256": "b548f26197b86b4f72690911c30c155af220898aa9dc8144ef3197061a2c0609",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/compute_cost.csv",
+      "sha256": "b84eb61e4064f62563b44aa1b73024b2ff57be63d62802c0579c3bb967258ae2",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/probability_metrics_pooled.csv",
+      "sha256": "a278ce1106a900ce1e600843d1ffa5a13ad1b23cd6b98f02481e6b40d4caa4a8",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/recomputed_fold_metrics.csv",
+      "sha256": "c45714a95a644321ddd08fd79b5f692547cbdf3e88e117356a2306a9943285f7",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/subgroup_cluster_intervals.csv",
+      "sha256": "8e9f1f9f38b01cf30b88d2760ecf478e2a4c0f74e218feea26e5478f3f517e45",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/subgroup_coverage.csv",
+      "sha256": "c7db6c54c89cc986c42c5edffe555dc952976138d2dda065945688598ef36fe8",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_audit/subgroup_metrics.csv",
+      "sha256": "bc41430a4411ce240f4698695f77534e81447b4af6c7678518483fc097a3879e",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_selected/coverage.csv",
+      "sha256": "d6e8e40e0b047159b306c9659b4e9a247e24942614e45951151740f33d6f28d5",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/temporal_selected/selected_metrics_per_fold.csv",
+      "sha256": "1173527c51c00e04925319191ef4687b12090d7628f27cacae4cf3b8554dd711",
+      "arm": "temporal",
+      "population": "2024, revised retrospective temporal evaluation; n=92152",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "f3cbefcebad0ea2e2b3a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/temporal_selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/recomputed_fold_metrics.csv",
+      "sha256": "c5aef6ece8702e0fad948a00d4bf1b78bc477021c998646d3d56439264726a92",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/probability_metrics_pooled.csv",
+      "sha256": "8f82bc9b78086d79fc1af8750ee172482ed51e565d9f26a7b06810205297457b",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_metrics.csv",
+      "sha256": "91e97bb51b02899857b54903061780c0f3d43e476df746f63e5652a06876e07b",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/cluster_influence.csv",
+      "sha256": "b9246d110008c52b659a73ace352780f4c4eb1507e6d9f936fec7677c98b1271",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_coverage.csv",
+      "sha256": "d70c5ea469408d5179ccdeaacdb8b49f44578c2d4416f2bcd4a1effc699ae439",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/cluster_intervals_pred_policy.csv",
+      "sha256": "d7762a7a6b3f6f5e06069e2bd404b3e28744a4609a803a52c35e7aa8723a840e",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/checkpoint_audit.csv",
+      "sha256": "ddf109e1f6e47dd3af2fcd10f456c679f6df2452200c889c3f207e6563db9dc2",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/cluster_intervals_pred_argmax.csv",
+      "sha256": "cdefe0424cd5d9d42ed6128d8390cc00e1f2a8458481ac12713e027f3059c94b",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_cluster_intervals.csv",
+      "sha256": "eac85d4aa1127511cd7e4000e94c6698feedd69520c789ac127475ebb67637be",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/capacity_pooled.csv",
+      "sha256": "0dcf8db0ff5e305fc20d57faa0a4e452d0cd1d3e222de59e674ea373b017dae0",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_audit_v2/compute_cost.csv",
+      "sha256": "6fb62b9e09f2579bd3de52817d50aed0bd4a31fb8a1e2dc96830b16fc72700b0",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_audit_v2/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_selected/coverage.csv",
+      "sha256": "ba8b3ba2aa0323ab30acc8656f8ca0c6892d3858e2339ff235e9a7dada7ffca0",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/clinical_selected/selected_metrics_per_fold.csv",
+      "sha256": "6827be016ff4cc16acb9d24cd7706482a45d7b92937a892f83ac7156c4db4d54",
+      "arm": "clinical",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "00f106da9d5d318daa9a",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/clinical_selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/recomputed_fold_metrics.csv",
+      "sha256": "51569223bbf24f39a6431d43a9000b5cc2cb26f92d836b7cf2a5055cdce9ae4e",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/probability_metrics_pooled.csv",
+      "sha256": "57168a517d543bef2fe892e35406dda9335de7c4e4dd999a421029e93fe5e108",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/subgroup_metrics.csv",
+      "sha256": "4759233307eba0e489aabdcb5b6f7287b62363b3f154e53d86b24b4613c7af52",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/cluster_influence.csv",
+      "sha256": "64b97b021af6ecf1b05b72798ea3fe1d254ec6f0bfcfd51dc23d9e2e8fa8b0c3",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/subgroup_coverage.csv",
+      "sha256": "a00e53af14eb56b0d452a64333dfb3ef3aa35fad1b9e89e9eefb916b2df09c93",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "dfb593648e33826c3d65a2013e8983d085d8188bd637f842714371f6164ea31d",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/checkpoint_audit.csv",
+      "sha256": "2a982b30e88edf3795e3462744acdceeaf64d22837d95449311a841bec7a513e",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "4b1ccdf4fd5a2c272f054a69c3ed50078109370317fb7b6770df6979be86f783",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/subgroup_cluster_intervals.csv",
+      "sha256": "172dadfe2faa2ae0b6567774ae1120c0f19e5d23d1535b7f7edb7760513379cc",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/capacity_pooled.csv",
+      "sha256": "184287165654fe2de110dd9d11b57788ec51eec66c048c62663e0cfa61f34cb9",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/audit/compute_cost.csv",
+      "sha256": "fa1c15b590382a20c6c255a77f455006135f12fc12530da6b9634d50447e0fc1",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/selected/coverage.csv",
+      "sha256": "33cc24c5cf60cfa88fd5a8506999eb54fd45d902860cd7cdfb32285498b00398",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/individual/selected/selected_metrics_per_fold.csv",
+      "sha256": "b0509a98bb3588c0e3375bb528fe85c91f5bc046f26ebae746d1a339e987403d",
+      "arm": "individual",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "3183e2f32e85f90b2f46",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/individual/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/recomputed_fold_metrics.csv",
+      "sha256": "915726c96c1084593f6b1f7896fa735b59db84c87cfd509bf43dfc1ee8181dc4",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/probability_metrics_pooled.csv",
+      "sha256": "9a4ad607187c6418378b15bcef88f4e75c06a334510ce5666151fc685b2f004b",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/subgroup_metrics.csv",
+      "sha256": "045b0ff7b1925cd862fccf935f5f0eee2acbe184031651c4246ea8da2feae14c",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/cluster_influence.csv",
+      "sha256": "55ceb8477f1f827281406a4d00328f5b3abf4323f069182ee10370c25486bc3d",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/subgroup_coverage.csv",
+      "sha256": "11737524929516d3955a69359ec8d4430a5d03c58fd5f43163c9b29710944a76",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "0b329e64047c9f3270aa14a78af389ce8df0e012da32ac9c112ab04fe3d2b52f",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/checkpoint_audit.csv",
+      "sha256": "9a07e706c9a4199f08928418e132a1e0c08d4a9526a2fc1fd3cd647376957d34",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "afc3de7a749b3d7671ea173c47ffae0ad802fa9b02ac7593f00db940714e832d",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/subgroup_cluster_intervals.csv",
+      "sha256": "bf0d312a1907d918634806f0e40d6443f7c078c8940c6be6a2e3f5480eabb3a5",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/capacity_pooled.csv",
+      "sha256": "74c95a4ebd8adab0c699b169625391e0e963ae553d5350697377b23b591e740f",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/audit/compute_cost.csv",
+      "sha256": "36195933a832ee42b17bbeb89ba5a743652d49370e11610ec309ff37e5d6f35b",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/selected/coverage.csv",
+      "sha256": "33cc24c5cf60cfa88fd5a8506999eb54fd45d902860cd7cdfb32285498b00398",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/municipal/selected/selected_metrics_per_fold.csv",
+      "sha256": "9ea4ec418011be77975ff4493c5da5859df28ecdc7be8c5fdecf9e5e5588e7bb",
+      "arm": "municipal",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "9d7812a7df80fb193efe",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/municipal/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/recomputed_fold_metrics.csv",
+      "sha256": "5b9017ad9f1abc992c435a9b36e5a359927aaed76cfc8434b3df07dd13b7361c",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/probability_metrics_pooled.csv",
+      "sha256": "84ea3c5fd1784486fd845b82013bff10024d6c09a2cb0360f8b87410f305849b",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_metrics.csv",
+      "sha256": "deec3efbf4dbd2bec0af828265bca9d1568ae830e7072e6b2ea768caa607ec6e",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_influence.csv",
+      "sha256": "5400310fcd6b684cc2437ee81de7fa682d3fc256856c8621d9f8cd35d91f8359",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_coverage.csv",
+      "sha256": "830da3fdfc3ff52d4a625818b242620cd230cbacd3684c25b5b6b4d7a100e73d",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "95df4103a1e0e51ae80e388b2c170a8c5b5cd57364e80ac4b33c216718f833dc",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/checkpoint_audit.csv",
+      "sha256": "0aeb63f323935b83d4414c9645dbb430fb01ec49c494ee83e7353daf385e22b1",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "69ea1065498152b51b62be0c5f5f84c7d2186e6f833944d8fc686fe3ef9dd6a7",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_cluster_intervals.csv",
+      "sha256": "e4baf3d98703f83b55cfad3b7263945bbe3c3744fb807a80811463c8fde0b799",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/capacity_pooled.csv",
+      "sha256": "7674558e1f352e4bd218a3b042c56b34642621e0ef9a51cea579cd282a514318",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/audit/compute_cost.csv",
+      "sha256": "6212fc5f209132b452997f74113ef58de478117b0abd00e9cdd93e8d64346abc",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/without_diagnostics/selected/selected_metrics_per_fold.csv",
+      "sha256": "ccdab1ab9d4416ea9d2881b7599ddc8e6363566d3f154522db45dbda45004d6f",
+      "arm": "without_diagnostics",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "73cf34c4446b4b22a172",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/without_diagnostics/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/recomputed_fold_metrics.csv",
+      "sha256": "259e07d572956b69d9b4a5ca5c65bf18771e843e6684de2d39a9c9d1af754bee",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/probability_metrics_pooled.csv",
+      "sha256": "9679bca928b6860ce2f313e1d89e60c654db4578161298acfcb2e4081bc82004",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/subgroup_metrics.csv",
+      "sha256": "0e739ce85f6c51aab1d81e0be7602e96d74f8587946cdcc467bd2732329c7a7a",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/cluster_influence.csv",
+      "sha256": "c515e35e502dcb859b5fb6ad338585f5eb7ca8942a7e018409b51916bcb1ffe5",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/subgroup_coverage.csv",
+      "sha256": "f4a44087d311ef1bc6bfe66440d4ed6ea5209c5ba7dd99ea8082af46f2580e57",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "558af621f3c00b1f6abb891b5a6a3551a5036db908e03a3750fdab4f2e4240b3",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/checkpoint_audit.csv",
+      "sha256": "815eb284b3d6146f36be61b96d8c11911598b377402672f6131d4cd6bd3d623c",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "ac047d153987a6a5ec57c1917d2702b6886fa7230e1cf8451194a70ddf470823",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/subgroup_cluster_intervals.csv",
+      "sha256": "9932481fbf2752c855165360a58009bd3001c5aeac73b76c63965b412ccaebd1",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/capacity_pooled.csv",
+      "sha256": "9685d5e991b677f3f932e60ac46512c7ea300c12ae9f1a8c4685869316e02a13",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/audit/compute_cost.csv",
+      "sha256": "69c659c46fdf7095caed5ffd345387e3c2ca2bd73845c4832c2b738b025bee60",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/random_group/selected/selected_metrics_per_fold.csv",
+      "sha256": "037b602285dd8d1f1a5905d60bfa5a905e50d1f9be8d2946085397a1e804a40d",
+      "arm": "random_group",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "153abd8cd9195b0393d9",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/random_group/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/recomputed_fold_metrics.csv",
+      "sha256": "9656b79fabaf45784b661222b0ffbc91a580ff0f353e5ac7423f2a2a0d428c1a",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/probability_metrics_pooled.csv",
+      "sha256": "59111fed2fa503b584e08293425944450f28b0196ef853c1956d1405f63a7a37",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/subgroup_metrics.csv",
+      "sha256": "8ba582c79ca1e78639c676bdf81e094186c8e7f2189d87b2693fea55bcca2ff5",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/cluster_influence.csv",
+      "sha256": "704ddeb74230441906fedec354140b1d8f8be53ffaf59df60c6d925ba24db75c",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/subgroup_coverage.csv",
+      "sha256": "830da3fdfc3ff52d4a625818b242620cd230cbacd3684c25b5b6b4d7a100e73d",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "76f1059cfde5d4de4dc8b85db60618a55a9bf8650eacc35363abd1c3993acfdc",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/checkpoint_audit.csv",
+      "sha256": "af6fe47bf21257b95ecb76f05f925999b649d46348d962b897f67cb72f7bab4e",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "67c01e6532cc0f944d81fe57da1d4e7361a9085ad8f43a5f351a1f8db8359d3e",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/subgroup_cluster_intervals.csv",
+      "sha256": "3d6c3e575581d59f963c93b1b5a4477ef4cf5393e93dc3eb8b2a996c68e84748",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/capacity_pooled.csv",
+      "sha256": "a5cb0c354f682dcf1e87b9861b02099c21c8af20932cf0724bb2e6bb88eb2d86",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/audit/compute_cost.csv",
+      "sha256": "9a9d6402827421680f63156208a69a992d69bdfe71119c5e2bced02348f6b3bb",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k27/selected/selected_metrics_per_fold.csv",
+      "sha256": "78882823452aaae48c5fb305c0f1888c11e4848d4dbd8113d5c7aaba14705367",
+      "arm": "k27",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "657d0a377ebb2f8e4c35",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k27/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/recomputed_fold_metrics.csv",
+      "sha256": "e252d3aa6177186dd6f47f5ad9e9dcb53f2cc0987dfb564a24152e6f36d73d75",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/probability_metrics_pooled.csv",
+      "sha256": "a8447ec5113b2a9034b95399790f0ea33becead713cea75d741d4d3576bac0e8",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/subgroup_metrics.csv",
+      "sha256": "81a9fcebeaa1c77422668039fb2b2bad40c6566057e95f84880e3e4f051f7c1f",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/cluster_influence.csv",
+      "sha256": "505c7ce1dd14e8d7556622c02f9679f009ca613afcea95156428859b5072d022",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/subgroup_coverage.csv",
+      "sha256": "f4a44087d311ef1bc6bfe66440d4ed6ea5209c5ba7dd99ea8082af46f2580e57",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "3262b994f5a134e54ab13cdfc27560cbf18b81f927777c2031a0ce55f7081e26",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/checkpoint_audit.csv",
+      "sha256": "fc2a5f71ee183f00b30df68ef31dde4b527bfc369c4284b569f85623b1be22be",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "32c991c6a7ffead17c6660b589797a662e7ba578f94a75087d943f679856cbae",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/subgroup_cluster_intervals.csv",
+      "sha256": "6889c3f32d2ced4df23a3b352ee14e4fe98866eaa6ff143c5e7e0f18f2c4cdb2",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/capacity_pooled.csv",
+      "sha256": "fa45fbfa722dfefc432859e4a99cb556a8e34e67651d957154f55ecceec61ccf",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/audit/compute_cost.csv",
+      "sha256": "792a3c0457b86fe8dc2ce39e19460066faefa34b734e0009f0bf136302f3ffbc",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/k75/selected/selected_metrics_per_fold.csv",
+      "sha256": "f3cfb622e688d2e96e994359a35507cf5836cf835bd476503a1b68974761a9b2",
+      "arm": "k75",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "ff706896fe1069af7ade",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/k75/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/recomputed_fold_metrics.csv",
+      "sha256": "61a4adc9a1c5d631727a73ece5a018f35e5fa1a5a45e12e45dcf1eafc68462cf",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/probability_metrics_pooled.csv",
+      "sha256": "b924e57d3acfde19eee34f4a9a85bdd1897c774eaf6e2ea6933d32c16a028d85",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/subgroup_metrics.csv",
+      "sha256": "40068af5a60d095c762ee866c42103118969d4a7e5329279e474eb9f64aaa98b",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/cluster_influence.csv",
+      "sha256": "970fc5236f274e0aa11665cc8d3d501fd26d2420d111822903ff4c7732019684",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/subgroup_coverage.csv",
+      "sha256": "830da3fdfc3ff52d4a625818b242620cd230cbacd3684c25b5b6b4d7a100e73d",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "9c33a801bfa16b7268b0f3af347825d7dc8f0e3237a50af9687aaa06dae4f6ba",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/checkpoint_audit.csv",
+      "sha256": "ce4006a8902d43ad8f5bf186cd294f8122f7f39a653c7a93d39d34572d920ea3",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "d48bb28dc45e9ba5997d0525762a54de8914bae2a9095684891869df6c1fe2e8",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/subgroup_cluster_intervals.csv",
+      "sha256": "a771e90f8b818cd755e754786264a5ed53f765cb7ffa99b590c7f5459787a80b",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/capacity_pooled.csv",
+      "sha256": "7b2c3eeb6be2f1378ca66ec96492885b0bf9a9b97a32b493168e5e2351ccd0b5",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/audit/compute_cost.csv",
+      "sha256": "bf96de8a3becb32a627d85ae74ad128a3094e37da36171d16caf9b6520831d34",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/contemporary/selected/selected_metrics_per_fold.csv",
+      "sha256": "836d2e644dfe2d16cfab744d1870427f4e2883dd4b32a7538638e851c8f7fdc4",
+      "arm": "contemporary",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "1ab087d1031e168433ca",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/contemporary/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/capacity_pooled.csv",
+      "sha256": "2d67b8ce946977681be21ad5684049f4a5aa3c5e9e79822207a94425b211269f",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/checkpoint_audit.csv",
+      "sha256": "1fc662ca23f3930e6bc452288da2cd5e6f6f57009947c1cfa0d88f41e3467640",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_influence.csv",
+      "sha256": "5a15904061078dc7634adb4d200cd904431aac4bea8dbfb13f27bc4706f97fd4",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "0c32e5ff262c970f16cf7cb9daf62f6982a89d9e748c2065d78ea713bb4d2419",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "3e41f2ecdfe7d5300b567eea4e2400c14a02d753c00db34820057492cd5b4c20",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/compute_cost.csv",
+      "sha256": "1b1266858a084fe6d01bde3d649da54a4c8a4966e7c6d9d6e79aa6de356704ba",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/probability_metrics_pooled.csv",
+      "sha256": "15916501bdfe9cfddfb46cc7bcc5bf9994ccf18733bcb7a5bb1753f2a291be1a",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/recomputed_fold_metrics.csv",
+      "sha256": "743a502c47f5ecefd057c6fe78c526e803bed4c3a6f53d71d202b7f81916cfc1",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_cluster_intervals.csv",
+      "sha256": "e49987b3b63bd3aa57844c37ef8dc595933131cdaf92861d72d63c91104ddaf3",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_coverage.csv",
+      "sha256": "830da3fdfc3ff52d4a625818b242620cd230cbacd3684c25b5b6b4d7a100e73d",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_metrics.csv",
+      "sha256": "0fbad445708c88c95f8588becf468e492e68157f07a61e8abb72950f73221ec8",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/selected/coverage.csv",
+      "sha256": "e35c6ec2060d7fb2a096ee2b270a133a4665ca2277e19d8585820dcaa6f331d2",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/hiv_uncertain/selected/selected_metrics_per_fold.csv",
+      "sha256": "85ac6ec042bfb0e3403afdb074d5ae5cccc70d6ad46801f1cabf4422f3e86527",
+      "arm": "hiv_uncertain",
+      "population": "2015-2023, primary outcome cohort; n=707870",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "d23d0f02f605d8237f56",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/hiv_uncertain/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/capacity_pooled.csv",
+      "sha256": "39de577e3bcf53ef63c7310076127d3ce46907d5c7a86e68a12589bd43801cd5",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/capacity_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/checkpoint_audit.csv",
+      "sha256": "1b643669d3b5a95bac27292ac8facd2cef7b884881c996c4fcdc1bb1b95e71ab",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/checkpoint_audit.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/cluster_influence.csv",
+      "sha256": "c97fe70ad1fc308621c01d3123c5d49e4abaf2c43546d474562a9229bb50aad8",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/cluster_influence.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/cluster_intervals_pred_argmax.csv",
+      "sha256": "9dbbb01041c63a72060dbc7d81dfa91b64cafab5c78ba8b8fc4e72358e651aad",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/cluster_intervals_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/cluster_intervals_pred_policy.csv",
+      "sha256": "74984fa0ab0ab3314cb6edc09bc215017af58ce3b98fc96a7fd162d48dd11cc8",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/cluster_intervals_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/compute_cost.csv",
+      "sha256": "33c07485c5767614ee4ac68f5eacfaedf2b08a6aaaaa73ec847e969a5ff33452",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "completed_job_wall_seconds_not_total_campaign_elapsed",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/compute_cost.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/probability_metrics_pooled.csv",
+      "sha256": "5c6535c84ef046668890c9407fed7a732f07c1b1a651283082b08d5b251dc437",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/probability_metrics_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/recomputed_fold_metrics.csv",
+      "sha256": "ab1376ae395203ca98795cdf1301d902591c0cdbb05dc4ab27439cd757c6211b",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/recomputed_fold_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/subgroup_cluster_intervals.csv",
+      "sha256": "3917e7e7765c5fe826748e9dc6150c5fc0a430491242025f046c59b9b8d20f49",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/subgroup_cluster_intervals.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/subgroup_coverage.csv",
+      "sha256": "157c94c75b91b04d091bc0f99255f73be821932fadb857ae1c1579163f5acacb",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/subgroup_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/audit/subgroup_metrics.csv",
+      "sha256": "0b5104ff1e84023ddf96bd15066e198011742e6e4c9a31a4382493ff7fbf996d",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/audit/subgroup_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/selected/coverage.csv",
+      "sha256": "7f60bda8f21f2e84b0c7c4af830b95e3d15c11960427c769463a79d284fb82c5",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "pooled_records_or_explicit_group; see aggregation/rule columns",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/selected/coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/all_cause/selected/selected_metrics_per_fold.csv",
+      "sha256": "7abe4c8d7c62f8f72631ead1b507bbc25e723337ed0a78d766dfcb104a04df2f",
+      "arm": "all_cause",
+      "population": "2015-2023, all-cause outcome cohort; n=742830",
+      "decision_rule": "explicit row-level stage/rule; probability metrics independent of classification rule",
+      "aggregation": "per_outer_fold",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "source_experiment_id": "362d9b0f4ea4a3f6fad8",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/all_cause/selected/selected_metrics_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/individual/paired_pred_policy.csv",
+      "sha256": "cdb80ec61a20c3fe538c33ca66bf824d5ba79d7e456319933acf04b5a49df400",
+      "arm": "primary_common_universe_vs_individual",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/individual/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/individual/paired_pred_argmax.csv",
+      "sha256": "a73b1aeb6a8c3cacf5f674fcba99748186e8222306990b2296e35328e89ad92c",
+      "arm": "primary_common_universe_vs_individual",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/individual/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/individual/decision_curves.csv",
+      "sha256": "e08f9ef088683d64742330503e1b39b3e5a76ad347e2843089af6c74662d9068",
+      "arm": "primary_common_universe_vs_individual",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/individual/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/municipal/paired_pred_policy.csv",
+      "sha256": "5831491ede833b585ea5dcd41804b893833f3366ebea81656e6092fdfc63b1a3",
+      "arm": "primary_common_universe_vs_municipal",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/municipal/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/municipal/paired_pred_argmax.csv",
+      "sha256": "b01ef68f80b1b67bcad618124fb7338aa8a0724dbc196191935db7981445e767",
+      "arm": "primary_common_universe_vs_municipal",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/municipal/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/municipal/decision_curves.csv",
+      "sha256": "79bad9ca3aa0a56b48b1f75e3a79fcea1ecb9c400216a8d4b140e87a11c6e680",
+      "arm": "primary_common_universe_vs_municipal",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/municipal/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/without_diagnostics/paired_pred_policy.csv",
+      "sha256": "e17128d8ee1319538e0078eec4c0036e4d20dcd86b896264657ef54dc582d272",
+      "arm": "primary_common_universe_vs_without_diagnostics",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/without_diagnostics/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/without_diagnostics/paired_pred_argmax.csv",
+      "sha256": "bb95c59f137b25e398a50670de96367c201dfda5711e0cbf6c83db4e0a14a5b7",
+      "arm": "primary_common_universe_vs_without_diagnostics",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/without_diagnostics/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/without_diagnostics/decision_curves.csv",
+      "sha256": "5c49cb1d18e8612a2eb58087218479a39cb33c8843f8c68a0c8f1d826e4358cc",
+      "arm": "primary_common_universe_vs_without_diagnostics",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/without_diagnostics/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/random_group/paired_pred_policy.csv",
+      "sha256": "91b8bf7da0dcae651a1264580099a1d94db77aaa36936f4c75db9a48a6a4c238",
+      "arm": "primary_common_universe_vs_random_group",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/random_group/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/random_group/paired_pred_argmax.csv",
+      "sha256": "6c59e9ef92bad156a2cc3d80a39f41de00def4e7a193b2ab81322ce82eeac0bd",
+      "arm": "primary_common_universe_vs_random_group",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/random_group/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/random_group/decision_curves.csv",
+      "sha256": "afa52fda9758cb0de539455afb0db0ff766487c43009bfab825c1b22aaef9300",
+      "arm": "primary_common_universe_vs_random_group",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/random_group/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k27/paired_pred_policy.csv",
+      "sha256": "edf387d672f7dfa54df76ba60b76405c146af39bc33f7c687837f510d7c71e56",
+      "arm": "primary_common_universe_vs_k27",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k27/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k27/paired_pred_argmax.csv",
+      "sha256": "89f2df65b42e75c1b16fb398d15cb1c87999579e5f0667328a7445706a8d2cb1",
+      "arm": "primary_common_universe_vs_k27",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k27/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k27/decision_curves.csv",
+      "sha256": "87c6bcc2653483f622963c12d2946641a87ce57730975a6ca4b4f54bdc1e6247",
+      "arm": "primary_common_universe_vs_k27",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k27/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k75/paired_pred_policy.csv",
+      "sha256": "0d1fea7e0c05399ad1dda88fd8ec89fbb8cbf320a78059d6e1f523a7527410f5",
+      "arm": "primary_common_universe_vs_k75",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k75/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k75/paired_pred_argmax.csv",
+      "sha256": "79f396cb57309558bdbe143fe99b336a9543f78624da830418ba0523dfb7177b",
+      "arm": "primary_common_universe_vs_k75",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k75/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/k75/decision_curves.csv",
+      "sha256": "4fbc3b27d64e8f2ef808e681b686730e5fedaa7cbe2ce122c6d81db273093cf7",
+      "arm": "primary_common_universe_vs_k75",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/k75/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/contemporary/paired_pred_policy.csv",
+      "sha256": "6881bf7ce2135f10ef79dd755ef379750d148e49be07aa899bac511aff45aadd",
+      "arm": "primary_common_universe_vs_contemporary",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/contemporary/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/contemporary/paired_pred_argmax.csv",
+      "sha256": "237bb2e846e755721665d45caf112e81afa37824fc405a2299fec90df43a0de4",
+      "arm": "primary_common_universe_vs_contemporary",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/contemporary/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/contemporary/decision_curves.csv",
+      "sha256": "b42ffced5b9a39cf256c744185e45ab9511163d1cbab7ba4b4a850741627e723",
+      "arm": "primary_common_universe_vs_contemporary",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/contemporary/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/hiv_uncertain/paired_pred_policy.csv",
+      "sha256": "8ec44ef50ed381687ebbe9a9f532ea1bb8548ce3498e56d8a69a4bed39160960",
+      "arm": "primary_common_universe_vs_hiv_uncertain",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_policy",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/hiv_uncertain/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/hiv_uncertain/paired_pred_argmax.csv",
+      "sha256": "3375a6beb408e15a3e1af413891b73a165ed635aa8f626c9f42666c0a57c0365",
+      "arm": "primary_common_universe_vs_hiv_uncertain",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "pred_argmax",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/hiv_uncertain/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/comparisons/hiv_uncertain/decision_curves.csv",
+      "sha256": "329a16660b70e954eadd2963ca25fa1c0f6054c3fe261b3a6d90763316c76808",
+      "arm": "primary_common_universe_vs_hiv_uncertain",
+      "population": "2015-2023; identical 707870 IDs/targets",
+      "decision_rule": "explicit rule or probability threshold",
+      "aggregation": "pooled_records; paired primary-k50 geographic cluster bootstrap; common candidate universe",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/comparisons/hiv_uncertain/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_vs_clinical/paired_pred_policy.csv",
+      "sha256": "23351bf5329b3c17ab75a004a3de58d3a5ce6900de1c1580a6a148cabdf6a022",
+      "arm": "primary_vs_clinical",
+      "population": "2015-2023; n=707870",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_vs_clinical/paired_pred_policy.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_vs_clinical/paired_pred_argmax.csv",
+      "sha256": "2e5d97cbaca3523ad42c4585f7df20de25bebf8b62be13bb344f54772eb98ac7",
+      "arm": "primary_vs_clinical",
+      "population": "2015-2023; n=707870",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_vs_clinical/paired_pred_argmax.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20260923/primary_vs_clinical/decision_curves.csv",
+      "sha256": "fe562d896d919df468e5584cde1d76bb099f2e5670e45f5943909949e3e769d9",
+      "arm": "primary_vs_clinical",
+      "population": "2015-2023; n=707870",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20260923/primary_vs_clinical/decision_curves.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/age_race_stratification/stratified_metrics.csv",
+      "sha256": "ff8db9aa4a3dc8bd89025dd70d319c36ed4ff6281c5b9ffc71d2bfb1525a2d02",
+      "arm": "age_race_stratification",
+      "population": "primary cohort; race/age completeness subset; see coverage",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/age_race_stratification/stratified_metrics.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/age_race_stratification/stratum_counts.csv",
+      "sha256": "5fe61afe4d1a507fbc167b874770bb99493d92f263b0460d91d69a05cd141b37",
+      "arm": "age_race_stratification",
+      "population": "primary cohort; race/age completeness subset; see coverage",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/age_race_stratification/stratum_counts.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/baseline_confusions/confusions_pooled.csv",
+      "sha256": "1e9110698657e32156dd04b05959aac16646058001386606b573bcb6ca6dc1d5",
+      "arm": "baselines",
+      "population": "2015-2023; n=707870 per pair",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/baseline_confusions/confusions_pooled.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/baseline_confusions/confusions_per_fold.csv",
+      "sha256": "f4ad4f1f3ac3e13029a9ffea60e8643600d3d79c348d5226188ffbba65efc0bd",
+      "arm": "baselines",
+      "population": "2015-2023; n=707870 per pair",
+      "decision_rule": "explicit row-level rule",
+      "aggregation": "explicit stratum or pooled_records",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/baseline_confusions/confusions_per_fold.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold4/seed101_summary.csv",
+      "sha256": "1acb78a128fa4042755094e2e0ada825869041717017ab169ed05f6987a306b7",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold4/seed101_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold4/seed202_summary.csv",
+      "sha256": "06f4087fe126f0c2940bd7695827f5bc85644947d159f4bce0b666cd91b7c6b5",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold4/seed202_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold4/sampling_stability.csv",
+      "sha256": "46f334de9bd53659ceead8a7e0fcb9e01571ec5ce801c0021c89e2f3e581f0b6",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold4/sampling_stability.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold4/seed42_summary.csv",
+      "sha256": "b5b2b527d48278550fd4492fd3363ed16dcef169bb3ca6b4cdc6a11903671121",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold4/seed42_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold3/seed101_summary.csv",
+      "sha256": "e6ec65e23f37b0ee6870e4697afc837f4754bd985fd62afdbcccfd7fef6591df",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold3/seed101_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold3/seed202_summary.csv",
+      "sha256": "3881629f099b2aff68d2e7939041a9fc707c5f27b5979393a0c8f2bd73459347",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold3/seed202_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold3/sampling_stability.csv",
+      "sha256": "06a48919d3a5eb3d9079c055c244bb42c1ad01dbe097f926792383bab3de8728",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold3/sampling_stability.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold3/seed42_summary.csv",
+      "sha256": "3006d4adf09b550fe0ce99e264cb297ff575df92db3f8996c2699985259b39bc",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold3/seed42_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold1/seed101_summary.csv",
+      "sha256": "49d2de4ccdd47e1ae27134a1a70220b8d30eab533e2a060f467809f33e2e34ec",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold1/seed101_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold1/seed202_summary.csv",
+      "sha256": "420152718f6235673b77e7ab28d30042fd4f1d25aa778f338fcfd917c2e00e41",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold1/seed202_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold1/sampling_stability.csv",
+      "sha256": "c57a9db2263cabb05006eb9ea121cac064b7a3ae1877df314c6aa39e5c1c9359",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold1/sampling_stability.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold1/seed42_summary.csv",
+      "sha256": "d9980a19147a1060d3949ee9f5adb25640f44e3beccdca134389908d172eeeee",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold1/seed42_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold2/seed101_summary.csv",
+      "sha256": "dff1b0ab3e8dea0775b082e27229988bb6ff97a8fc88a41f341edacd31d0e1c0",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold2/seed101_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold2/seed202_summary.csv",
+      "sha256": "53ad181b5500a9ea6d43a080f2a32e1954857bf38bc6fc10308aa98c9a90c248",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold2/seed202_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold2/sampling_stability.csv",
+      "sha256": "5426e3c4b86eb00379dd4af44254e58af654003446fa69057b408f56f18473c8",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold2/sampling_stability.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold2/seed42_summary.csv",
+      "sha256": "3a371d26073da6aed49823a192987defe6bc18b2b6be8ccc161a1b84e54a7a41",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold2/seed42_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold0/seed101_summary.csv",
+      "sha256": "af7b17b8b2fc62b732818c6f3d45cff1724648d17db59b5606e8c36e3950ad9d",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold0/seed101_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold0/seed202_summary.csv",
+      "sha256": "479ac2b61960b9aaefd86ef98d7e2d3b78df2c0ca0d982c8f838c8194b5b783a",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold0/seed202_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold0/sampling_stability.csv",
+      "sha256": "92379622b358f6b989dffb7679b729e0a7f28b338d809c06bd26af7dfd0f7d83",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold0/sampling_stability.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/attribution/fold0/seed42_summary.csv",
+      "sha256": "cfc948c3f2283f84a56ace981655eb8ab40a8147beb28698c9d1a59bd057baa7",
+      "arm": "attribution",
+      "population": "external class-balanced samples of primary selected folds",
+      "decision_rule": "raw_margin_precalibration",
+      "aggregation": "separate fold/family/sample; not population weighted",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/attribution/fold0/seed42_summary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/outcome_selection_counts.csv",
+      "sha256": "d079e28c3533b7f0db2c940a2afe2d6a758bd4b96f1f6c374ab1773aa5c02c91",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/outcome_selection_counts.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/independent_f1_checks.csv",
+      "sha256": "296e3b762bb61547319ca5c18ddc28b70603022c7d2650752b2a71a9a484afd4",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/independent_f1_checks.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/corrected_cohort_flow.csv",
+      "sha256": "47b323804f920372e9464d8584f17863be99e08c7a37983194de5c5fbb9cf181",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/corrected_cohort_flow.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/all_cause_population_counts.csv",
+      "sha256": "65cdc04464aeb80a6a2216b267ffc21039d58592510af827c1c7bb6e1cba15d4",
+      "arm": "all_cause",
+      "population": "all-cause eligible analytic notifications 2015-2025 tabulated by year; evaluation uses only 2015-2023",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "death_all_cause",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/all_cause_population_counts.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/corrected_eligibility_exclusions.csv",
+      "sha256": "0ea6d8d1c6d91164ff1c2a01cdc4ac3937d391e8a7cfe446f79bb9bbc3209bbe",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/corrected_eligibility_exclusions.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/primary_feature_dictionary.csv",
+      "sha256": "c4a9538ac72fbd8cffb3f6578bd0669fd2145b4ea5ea96d567d335316c80dc6c",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/primary_feature_dictionary.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/compute_cost_all_arms.csv",
+      "sha256": "0bde9ecda6d2543543c9ef50531e339767b1387444ef2c1d501fe73385e7d2ad",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/compute_cost_all_arms.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/included_excluded_by_group.csv",
+      "sha256": "8bb12f37eb96872126fd5c47d4b8b947f04ae60e369e1ba2279ab4a0cc19f3ad",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/included_excluded_by_group.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/candidate_coverage.csv",
+      "sha256": "1a7977d1c5bb2cc8e8c85fa42f0eb40cd2e26d7e3bbb2de6c220a78b25580c95",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/candidate_coverage.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/primary_incompatible_pairs.csv",
+      "sha256": "941a2af8298fa8e73327fe88b46091200a69bc63f73d901075d5734285a4038a",
+      "arm": "cross_arm_reporting",
+      "population": "see explicit arm/role columns and population_reconciliation.json",
+      "decision_rule": "explicit row-level rule or not_applicable",
+      "aggregation": "explicit row-level aggregation; pooled CI never attached to fold mean",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/primary_incompatible_pairs.csv"
+    },
+    {
+      "path": "data/correction_audit/partitions/population_counts.csv",
+      "sha256": "bf268ffb3aac4eea16abde34136e7a0b6e84073bc6e0960c277ee41e61b77e2f",
+      "arm": "protocol_and_provenance",
+      "population": "explicit source-specific population; not interchangeable",
+      "decision_rule": "not_applicable",
+      "aggregation": "metadata",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/correction_audit/partitions/population_counts.csv"
+    },
+    {
+      "path": "data/correction_audit/maturation/by_year_region_form.csv",
+      "sha256": "2d7ed653141ef67b154c26554aea29e30efd182517aa96c88220207a2d1a6292",
+      "arm": "protocol_and_provenance",
+      "population": "explicit source-specific population; not interchangeable",
+      "decision_rule": "not_applicable",
+      "aggregation": "metadata",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/correction_audit/maturation/by_year_region_form.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/primary_calibration_before_after.csv",
+      "sha256": "88237e6e9139d2c0dc09bf7d3faab667dc920979a0a2cab04e82aef7da996808",
+      "arm": "primary",
+      "population": "2015-2023; n=707870",
+      "decision_rule": "probabilities before/after calibration; no classification rule",
+      "aggregation": "pooled_records; calibration bins descriptive without confidence intervals",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "script_sha256": "645398410068139772cdbf609f0046b08aa0b2a9afc4080f9141da1ab348e6b7",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/primary_calibration_before_after.csv"
+    },
+    {
+      "path": "data/reanalysis/c7_20261004/reporting_release/primary_calibration_bins.csv",
+      "sha256": "1fc15e6c2f75edbce62602bfc9c48d859876f3687e81c2f748f848a95daf3301",
+      "arm": "primary",
+      "population": "2015-2023; n=707870",
+      "decision_rule": "probabilities before/after calibration; no classification rule",
+      "aggregation": "pooled_records; calibration bins descriptive without confidence intervals",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "script_sha256": "645398410068139772cdbf609f0046b08aa0b2a9afc4080f9141da1ab348e6b7",
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c7_20261004/reporting_release/primary_calibration_bins.csv"
+    },
+    {
+      "path": "data/reanalysis/c8_20261005/reporting_supplement/baseline_numeric.csv",
+      "sha256": "8023297c45cf9c6f7f01d0f4eafa8d6af987f0ae02f371098fa5b502a974e659",
+      "arm": "primary_and_temporal_r11",
+      "population": "development 2015-2023 n=707870; temporal 2024 n=92152; separate rows, never pooled between roles",
+      "decision_rule": "explicit rule column in confusion counts; not_applicable to descriptive characteristics or metadata",
+      "aggregation": "pooled_records_per_role_and_explicit_outcome_stratum; no confidence intervals",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c8_20261005/reporting_supplement/baseline_numeric.csv"
+    },
+    {
+      "path": "data/reanalysis/c8_20261005/reporting_supplement/baseline_categorical.csv",
+      "sha256": "29361ef2b070e88aead095e1af5304ee294df2a941905599fbef5ed32fffdf5f",
+      "arm": "primary_and_temporal_r11",
+      "population": "development 2015-2023 n=707870; temporal 2024 n=92152; separate rows, never pooled between roles",
+      "decision_rule": "explicit rule column in confusion counts; not_applicable to descriptive characteristics or metadata",
+      "aggregation": "pooled_records_per_role_and_explicit_outcome_stratum; no confidence intervals",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c8_20261005/reporting_supplement/baseline_categorical.csv"
+    },
+    {
+      "path": "data/reanalysis/c8_20261005/reporting_supplement/selected_confusions.csv",
+      "sha256": "5c36a640a5c0a5c2eb7201bc1dcdbc4b8eb9d9a8affafd19e4230fa995f16dfd",
+      "arm": "primary_and_temporal_r11",
+      "population": "development 2015-2023 n=707870; temporal 2024 n=92152; separate rows, never pooled between roles",
+      "decision_rule": "explicit rule column in confusion counts; not_applicable to descriptive characteristics or metadata",
+      "aggregation": "pooled_records_per_role_and_explicit_outcome_stratum; no confidence intervals",
+      "run_id": "smarttb-c7-reporting-20261004",
+      "class_labels": {
+        "0": "cure",
+        "1": "tb_death",
+        "2": "treatment_interruption"
+      },
+      "published_path": "reproducibility/2026-10-13/results/data/reanalysis/c8_20261005/reporting_supplement/selected_confusions.csv"
+    }
+  ]
+}

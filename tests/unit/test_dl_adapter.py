@@ -52,3 +52,23 @@ def test_dl_refuses_nontrivial_weight():
     ad = build_dl_adapter("category_embedding", ENTRIES["category_embedding"], FAST)
     with pytest.raises(ValueError):
         ad.fit(X, y, sample_weight=np.linspace(0.1, 2.0, len(y)))
+
+
+@pytest.mark.integration
+def test_prediction_batch_change_preserves_order_and_best_weights(tmp_path):
+    X, y = _frame()
+    cfg = FAST.model_copy(update={"checkpoint_root": str(tmp_path)})
+    ad = build_dl_adapter("category_embedding", ENTRIES["category_embedding"], cfg)
+    try:
+        ad.fit(X, y)
+        small = ad.predict_raw_scores(X.iloc[::-1])
+        old_batch = ad._model.datamodule.batch_size
+        cfg.inference_batch_size = 1024
+        large = ad.predict_raw_scores(X.iloc[::-1])
+        assert ad._model.model.device == ad._device
+        np.testing.assert_allclose(small, large, atol=1e-5, rtol=1e-4)
+        assert ad._model.datamodule.batch_size == old_batch
+        assert not list(tmp_path.iterdir())  # checkpoint temporário já restaurado e removido
+    finally:
+        ad.close()
+    assert ad._model is None
